@@ -958,7 +958,36 @@ static char *DatabaseQuery_stringifyInsert(DatabaseQuery *query) {
 }
 
 static char *DatabaseQuery_stringifyUpdate(DatabaseQuery *query) {
-  return NULL;
+  if (query == NULL || query->fieldValues == NULL) return NULL;
+  char *sql = clone_cstr("UPDATE ");
+  sql = append_cstr(sql, query->table->name);
+  sql = append_cstr(sql, " SET ");
+
+  DatabaseQueryFieldValue **fields = query->fieldValues;
+  for (unsigned int fieldIndex = 0; fieldIndex < query->fieldValuesSize; fieldIndex++) {
+    if (fieldIndex > 0) sql = append_cstr(sql, ", ");
+    sql = join_cstr(sql, (*fields)->field->name);
+    sql = join_cstr(sql, " = ");
+    sql = join_cstr(sql, (*fields)->value);
+    fields += 1;
+  }
+
+  DatabaseQueryCondition **conditions = query->conditions;
+  if (conditions) sql = append_cstr(sql, "WHERE ");
+  for (int conditionIndex = 0; conditionIndex < query->conditionsSize; ++conditionIndex) {
+    if (conditionIndex > 0) sql = append_cstr(sql, " AND ");
+    char *condition = DatabaseQuery_stringifyDatabaseQueryCondition(*conditions);
+    sql = append_cstr(sql, condition);
+    free(condition);
+    conditions += 1;
+  }
+
+  if (query->limit) {
+    sql = append_cstr(sql, "LIMIT ");
+    sql = append_cstr(sql, query->limit->limit);
+  }
+
+  return sql;
 }
 
 static char *DatabaseQuery_stringifyDelete(DatabaseQuery *query) {

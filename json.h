@@ -51,3 +51,5 @@ void JSON_set(JSON *parent, wchar_t *key, JSON *json);
 void JSON_append(JSON *array, JSON *entry);
 
 char *JSON_stringify(JSON *root);
+
+JSON *JSON_at_path(JSON *root, char **path);

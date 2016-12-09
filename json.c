@@ -145,3 +145,27 @@ JSON *JSON_number(float f) {
   json->value = f;
   return json;
 }
+
+JSON *JSON_at_path(JSON *root, char **path) {
+  JSON *found = NULL;
+  JSON *current = root;
+  while (*path) {
+    JSON **children = current->children.objects;
+    char **keys = current->children.keys;
+
+    JSON *foundChild = NULL;
+    while (*keys) {
+      if (strcmp(*keys, *path) == 0) {
+        foundChild = current = *children;
+        break;
+      }
+      keys += 1;
+      children += 1;
+    }
+
+    if ((path + 1) == NULL) found = foundChild;
+
+    path += 1;
+  }
+  return found;
+}
