@@ -22,26 +22,38 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
 
 static JSON *Database_findCollection(JSON *root, const char *name) {
   if (root == NULL) {
-    fprintf(stderr, "Attempt to looking in NULL, terminating!\n");
+    kore_log(LOG_CRIT, "Attempt to looking in NULL, terminating!");
     exit(1);
   }
+  kore_log(LOG_INFO, "Looking for collection '%s'", name);
   JSON **children = root->children.objects;
   char **keys = root->children.keys;
   JSON *object = NULL;
-  while (children && *children) {
+
+  while (*children) {
     if (strcmp(*keys, name) == 0) {
       object = *children;
     }
     keys += 1;
     children += 1;
   }
+
+  if (object == NULL) {
+    wchar_t *tmp = cstr2wcstr(name);
+    JSON_set(root, tmp, object = JSON_alloc(JSON_ARRAY));
+    free(tmp);
+  }
   return object;
 }
 
 static JSON *Database_findCurrent(JSON *array, const char *id) {
+  if (array == NULL) {
+    kore_log(LOG_CRIT, "array is NULL!!!!");
+    exit(100);
+  }
   JSON *found = NULL;
   JSON **children = array->array.objects;
-  while (*children) {
+  while (children && *children) {
     JSON *object = *children;
     JSON **fields = object->children.objects;
     char **keys = object->children.keys;
@@ -72,7 +84,11 @@ static unsigned char Database_hasAnyField(const char *name, DatabaseQueryField *
 
 static JSON *
 Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fields, struct kore_pgsql *kore_sql) {
+  kore_log(LOG_INFO, "Database_nestedSerialization");
+
   int rows = kore_pgsql_ntuples(kore_sql);
+  kore_log(LOG_INFO, "Parsing %i rows", rows);
+
   char *value = NULL;
   const char *rootTable = query->table->name;
   wchar_t *rootTableName = cstr2wcstr(rootTable);
@@ -83,34 +99,36 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
 
   unsigned long size = query->fieldsSize ? query->fieldsSize : query->returningSize;
 
-  const char *lastTableName = NULL;
-  JSON *current = NULL;
-
   for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
-    lastTableName = NULL;
-    current = root;
+    const char *lastTableName = NULL;
+    JSON *current = root;
 
+    DatabaseQueryField **ptr = fields;
     for (unsigned int fieldIndex = 0; fieldIndex < size; fieldIndex++) {
-      currentTableName = fields[fieldIndex]->table ? fields[fieldIndex]->table->name : NULL;
-      currentFieldName = fields[fieldIndex]->name;
-      currentFieldAs = fields[fieldIndex]->as;
+      currentTableName =  (*ptr)->table ? (*ptr)->table->name : NULL;
+      currentFieldName =  (*ptr)->name;
+      currentFieldAs =    (*ptr)->as;
 
       if (!currentTableName) {
-        fprintf(stderr, "  missing table name, skipping...\n");
+        kore_log(LOG_INFO, "  missing table name, skipping...");
+        ptr += 1;
         continue;
       }
       if (!currentFieldName) {
-        fprintf(stderr, "  missing field name, skipping...\n");
+        kore_log(LOG_INFO, "  missing field name, skipping...");
+        ptr += 1;
         continue;
       }
       if (!currentFieldAs) {
-        fprintf(stderr, "  missing field as, skipping...\n");
+        kore_log(LOG_INFO, "  missing field as, skipping...");
+        ptr += 1;
         continue;
       }
 
       value = kore_pgsql_getvalue(kore_sql, rowIndex, fieldIndex);
 
       if (!Database_hasAnyField(currentTableName, fields, size)) {
+        ptr += 1;
         continue;
       }
 
@@ -124,14 +142,15 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
 
       if (value == NULL || strlen(value) == 0) {
         if (old != NULL && current == NULL) current = old;
+        ptr += 1;
         continue;
       }
 
-      if (current == NULL) {
+      if (current == NULL)
         JSON_append(array, current = JSON_alloc(JSON_OBJECT));
-      }
 
       Database_setObjectValue(current, currentFieldAs, value);
+      ptr += 1;
     }
   }
 
@@ -141,6 +160,7 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
 }
 
 static JSON *Database_flatSerialization(const DatabaseQuery *query, struct kore_pgsql *kore_sql) {
+  kore_log(LOG_INFO, "Database_flatSerialization");
   int rows = kore_pgsql_ntuples(kore_sql);
   unsigned char useArray = 1;
 
@@ -194,6 +214,7 @@ static JSON *Database_flatSerialization(const DatabaseQuery *query, struct kore_
 }
 
 static DatabaseQueryField **Database_orderedFields(const DatabaseQuery *query) {
+  kore_log(LOG_INFO, "Database_orderedFields");
   DatabaseQueryField **fields = query->fields ? query->fields : query->returning;
   if (!fields) return NULL;
 
