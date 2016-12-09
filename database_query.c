@@ -447,13 +447,12 @@ DatabaseQueryField *DatabaseQuery_select(DatabaseQuery *query, char *tableName, 
 
 DatabaseQueryFieldValue *
 DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, unsigned char isString) {
+  value = clone_cstr(value);
   if (isString) {
     char *joined = join_cstr("'", value);
     SWAP_CSTR(value, joined);
     free(joined);
     value = append_cstr(value, "'");
-  } else {
-    value = clone_cstr(value);
   }
 
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
@@ -468,13 +467,12 @@ DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, unsigne
 
 DatabaseQueryFieldValue *
 DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, unsigned char isString) {
+  value = clone_cstr(value);
   if (isString) {
     char *joined = join_cstr("'", value);
     SWAP_CSTR(value, joined);
     free(joined);
     value = append_cstr(value, "'");
-  } else {
-    value = clone_cstr(value);
   }
 
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
