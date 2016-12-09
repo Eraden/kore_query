@@ -59,16 +59,16 @@ void JSON_set(JSON *parent, wchar_t *key, JSON *json) {
 }
 
 void JSON_append(JSON *array, JSON *entry) {
-  if (array->children.len == 0) {
+  if (array->array.len == 0) {
     array->array.len = 1;
     array->array.objects = calloc(sizeof(JSON *), 2);
     array->array.objects[0] = entry;
     array->array.objects[1] = 0;
   } else {
     array->array.len += 1;
-    array->array.objects = realloc(array->children.objects, sizeof(JSON *) * (array->children.len + 1));
-    array->array.objects[array->children.len - 1] = entry;
-    array->array.objects[array->children.len] = 0;
+    array->array.objects = realloc(array->array.objects, sizeof(JSON *) * (array->array.len + 1));
+    array->array.objects[array->array.len - 1] = entry;
+    array->array.objects[array->array.len] = 0;
   }
 }
 
