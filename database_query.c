@@ -470,8 +470,8 @@ DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, unsigne
   value = clone_cstr(value);
   if (isString) {
     char *joined = join_cstr("'", value);
-    SWAP_CSTR(value, joined);
-    free(joined);
+    free(value);
+    value =  joined;
     value = append_cstr(value, "'");
   }
 

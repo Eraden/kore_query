@@ -4,7 +4,7 @@
 static void Database_setObjectValue(
     JSON *object,
     const char *currentFieldAs,
-    const char *value
+    char *value
 ) {
   wchar_t *fieldName = cstr2wcstr(currentFieldAs);
   JSON_set(object, fieldName, JSON_string(value));
@@ -143,6 +143,7 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
 static JSON *Database_flatSerialization(const DatabaseQuery *query, struct kore_pgsql *kore_sql) {
   int rows = kore_pgsql_ntuples(kore_sql);
   unsigned char useArray = 1;
+
   if (DB_QUERY_IS_NON_SELECT(query) || DB_QUERY_ONLY_ONE(query)) {
     useArray = 0;
   }
@@ -167,21 +168,25 @@ static JSON *Database_flatSerialization(const DatabaseQuery *query, struct kore_
 
   unsigned long size = query->fieldsSize ? query->fieldsSize : query->returningSize;
   DatabaseQueryField **fields = query->fields ? query->fields : query->returning;
+  if (fields == NULL) rows = 0;
 
   for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
     if (useArray) {
       current = JSON_alloc(JSON_OBJECT);
       JSON_append(array, current);
     }
+
+    DatabaseQueryField **ptr = fields;
     for (unsigned int fieldIndex = 0; fieldIndex < size; fieldIndex++) {
-      currentTableName = fields[fieldIndex]->table ? fields[fieldIndex]->table->name : NULL;
-      currentFieldName = fields[fieldIndex]->name;
-      currentFieldAs = fields[fieldIndex]->as;
+      currentTableName = (*ptr)->table ? (*ptr)->table->name : NULL;
+      currentFieldName = (*ptr)->name;
+      currentFieldAs = (*ptr)->as;
       value = kore_pgsql_getvalue(kore_sql, rowIndex, fieldIndex);
 
       if (!currentTableName) continue;
       if (!currentFieldName) continue;
       Database_setObjectValue(current, currentFieldAs, value);
+      ptr += 1;
     }
   }
 
@@ -190,8 +195,11 @@ static JSON *Database_flatSerialization(const DatabaseQuery *query, struct kore_
 
 static DatabaseQueryField **Database_orderedFields(const DatabaseQuery *query) {
   DatabaseQueryField **fields = query->fields ? query->fields : query->returning;
+  if (!fields) return NULL;
+
   unsigned int fieldsSize = query->fieldsSize ? query->fieldsSize : query->returningSize;
   unsigned int tablesSize = 1;
+
   if (DB_QUERY_HAS_NO_JOINS(query)) {
     return NULL;
   } else {
@@ -224,10 +232,10 @@ static DatabaseQueryField **Database_orderedFields(const DatabaseQuery *query) {
       }
       ptr += 1;
     }
-    ptr = fields;
 
+    ptr = fields;
     for (unsigned int fieldIndex = 0; fieldIndex < fieldsSize; fieldIndex++) {
-      DatabaseQueryField *field = ptr[0];
+      DatabaseQueryField *field = *ptr;
       if (strcmp(field->table->name, tableName) == 0 && strcmp(field->name, "id") != 0 &&
           strstr(field->name, "_at") == NULL) {
         if (idFound != 0) {
@@ -241,9 +249,10 @@ static DatabaseQueryField **Database_orderedFields(const DatabaseQuery *query) {
       }
       ptr += 1;
     }
+
     ptr = fields;
     for (unsigned int fieldIndex = 0; fieldIndex < fieldsSize; fieldIndex++) {
-      DatabaseQueryField *field = ptr[0];
+      DatabaseQueryField *field = *ptr;
       if (
           strcmp(field->table->name, tableName) == 0 &&
           strcmp(field->name, "id") != 0 &&
