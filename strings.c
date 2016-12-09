@@ -62,7 +62,7 @@ char *append_cstr(char *str, char *part) {
     return str;
   }
   if (str == NULL) {
-    return JSON_clone_str(part);
+    return clone_cstr(part);
   }
   char *res = realloc(str, sizeof(char) * (strlen(str) + strlen(part) + 1));
   if (res == NULL) {

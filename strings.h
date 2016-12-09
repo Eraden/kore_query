@@ -9,6 +9,9 @@
 #include <wchar.h>
 #include <pthread.h>
 #include <locale.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define SWAP_CSTR(a, b) \
   a = (char *) (((intptr_t) a) ^ ((intptr_t) b)); \
