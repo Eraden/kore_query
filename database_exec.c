@@ -28,7 +28,7 @@ static JSON *Database_findCollection(JSON *root, const char *name) {
   JSON **children = root->children.objects;
   char **keys = root->children.keys;
   JSON *object = NULL;
-  while (*children) {
+  while (children && *children) {
     if (strcmp(*keys, name) == 0) {
       object = *children;
     }
