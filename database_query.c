@@ -470,8 +470,8 @@ DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, unsigne
   value = clone_cstr(value);
   if (isString) {
     char *joined = join_cstr("'", value);
-    SWAP_CSTR(value, joined);
-    free(joined);
+    free(value);
+    value =  joined;
     value = append_cstr(value, "'");
   }
 
@@ -970,7 +970,7 @@ static char *DatabaseQuery_stringifyUpdate(DatabaseQuery *query) {
 
   DatabaseQueryCondition **conditions = query->conditions;
   if (conditions) sql = append_cstr(sql, "WHERE ");
-  for (int conditionIndex = 0; conditionIndex < query->conditionsSize; ++conditionIndex) {
+  for (unsigned int conditionIndex = 0; conditionIndex < query->conditionsSize; conditionIndex++) {
     if (conditionIndex > 0) sql = append_cstr(sql, " AND ");
     char *condition = DatabaseQuery_stringifyDatabaseQueryCondition(*conditions);
     sql = append_cstr(sql, condition);
