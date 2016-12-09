@@ -1,3 +1,10 @@
+# Using
+
+```bash
+cd src
+git submodule add git@github.com:Eraden/kore_query.git
+```
+
 # Kore Database Query
 
 ## Building Query
