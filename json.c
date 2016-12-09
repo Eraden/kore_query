@@ -71,6 +71,52 @@ void JSON_append(JSON *array, JSON *entry) {
     array->array.objects[array->array.len] = 0;
   }
 }
+char *JSON_escape(char *string) {
+  if (string == NULL) return NULL;
+  size_t index = 0, len = 0;
+
+  char *ptr = string;
+  while (*ptr) {
+    switch (*ptr) {
+      case '\n':
+      case '\"': {
+        len += 2;
+        break;
+      }
+      default: {
+        len += 1;
+        break;
+      }
+    }
+    ptr += 1;
+  }
+  char *buffer = calloc(sizeof(char), len + 1);
+
+  ptr = string;
+  while (*ptr) {
+    switch (*ptr) {
+      case '\n': {
+        buffer[index] = '\\';
+        index += 1;
+        buffer[index] = 'n';
+        break;
+      }
+      case '\"': {
+        buffer[index] = '\\';
+        index += 1;
+        buffer[index] = *ptr;
+        break;
+      }
+      default: {
+        buffer[index] = *ptr;
+        break;
+      }
+    }
+    ptr += 1;
+    index += 1;
+  }
+  return buffer;
+}
 
 char *JSON_stringify(JSON *root) {
   if (root == NULL) return NULL;
@@ -115,7 +161,8 @@ char *JSON_stringify(JSON *root) {
     case JSON_STRING: {
       buffer = calloc(sizeof(char), strlen(root->string) + 3);
       strcat(buffer, "\"");
-      strcat(buffer, root->string);
+      char *escaped = JSON_escape(root->string);
+      strcat(buffer, escaped);
       strcat(buffer, "\"");
       break;
     }
