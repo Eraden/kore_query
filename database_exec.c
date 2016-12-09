@@ -25,7 +25,6 @@ static JSON *Database_findCollection(JSON *root, const char *name) {
     kore_log(LOG_CRIT, "Attempt to looking in NULL, terminating!");
     exit(1);
   }
-  kore_log(LOG_INFO, "Looking for collection '%s'", name);
   JSON **children = root->children.objects;
   char **keys = root->children.keys;
   JSON *object = NULL;
@@ -48,7 +47,7 @@ static JSON *Database_findCollection(JSON *root, const char *name) {
 
 static JSON *Database_findCurrent(JSON *array, const char *id) {
   if (array == NULL) {
-    kore_log(LOG_CRIT, "array is NULL!!!!");
+    kore_log(LOG_CRIT, "Database_findCurrent in collection failed, collection is NULL");
     exit(100);
   }
   JSON *found = NULL;
@@ -114,11 +113,13 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
         ptr += 1;
         continue;
       }
+
       if (!currentFieldName) {
         kore_log(LOG_INFO, "  missing field name, skipping...");
         ptr += 1;
         continue;
       }
+
       if (!currentFieldAs) {
         kore_log(LOG_INFO, "  missing field as, skipping...");
         ptr += 1;
@@ -128,11 +129,13 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
       value = kore_pgsql_getvalue(kore_sql, rowIndex, fieldIndex);
 
       if (!Database_hasAnyField(currentTableName, fields, size)) {
+        kore_log(LOG_INFO, "table has no fields, skipping...");
         ptr += 1;
         continue;
       }
 
       JSON *old = NULL;
+
       if (lastTableName == NULL || strcmp(lastTableName, currentTableName) != 0) {
         array = Database_findCollection(current, currentTableName);
         old = current;
@@ -141,13 +144,15 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
       }
 
       if (value == NULL || strlen(value) == 0) {
+        kore_log(LOG_INFO, "value is empty, skipping...");
         if (old != NULL && current == NULL) current = old;
         ptr += 1;
         continue;
       }
 
-      if (current == NULL)
+      if (current == NULL) {
         JSON_append(array, current = JSON_alloc(JSON_OBJECT));
+      }
 
       Database_setObjectValue(current, currentFieldAs, value);
       ptr += 1;
@@ -237,12 +242,10 @@ static DatabaseQueryField **Database_orderedFields(const DatabaseQuery *query) {
 
   unsigned int orderedIndex = 0;
   DatabaseQueryField **ptr = NULL;
-  const char *tableName = NULL;
-  unsigned short int idFound = 0;
 
   for (unsigned int tableIndex = 0; tableIndex < tablesSize; tableIndex++) {
-    idFound = 0;
-    tableName = tables[tableIndex];
+    unsigned short int idFound = 0;
+    const char *tableName = tables[tableIndex];
     ptr = fields;
     for (unsigned int fieldIndex = 0; fieldIndex < fieldsSize; fieldIndex++) {
       DatabaseQueryField *field = ptr[0];
