@@ -163,12 +163,11 @@ char *JSON_stringify(JSON *root) {
       break;
     }
     case JSON_STRING: {
-      buffer = calloc(sizeof(char), strlen(root->string) + 3);
-      strcat(buffer, "\"");
+      buffer = clone_cstr("\"");
       char *escaped = JSON_escape(root->string);
-      strcat(buffer, escaped);
-      strcat(buffer, "\"");
-      free(escaped);
+      if (escaped) buffer = append_cstr(buffer, escaped);
+      buffer = append_cstr(buffer, "\"");
+      if (escaped) free(escaped);
       break;
     }
     case JSON_NUMBER: {
