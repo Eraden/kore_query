@@ -1,3 +1,7 @@
+#pragma once
+
+#if defined(TEST_KORE_QUERY)
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/socket.h>
@@ -13,3 +17,5 @@
 #include <libpq-fe.h>
 
 static FILE *config_file_write(void);
+
+#endif

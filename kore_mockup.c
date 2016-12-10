@@ -1,3 +1,5 @@
+#if defined(TEST_KORE_QUERY)
+
 #include "./kore_mockup.h"
 
 #include <sys/param.h>
@@ -493,3 +495,5 @@ void kore_accesslog_worker_init(void) {}
 int kore_accesslog_write(const void *data, u_int32_t len) { return (KORE_RESULT_OK); }
 
 void kore_accesslog(struct http_request *req) { }
+
+#endif
