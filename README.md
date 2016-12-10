@@ -1,13 +1,17 @@
-# Using
+# Kore Query
+
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+
+## Using
 
 ```bash
 cd src
 git submodule add git@github.com:Eraden/kore_query.git
 ```
 
-# Kore Database Query
+## Kore Database Query
 
-## Building Query
+### Building Query
 
 ```cpp
 DatabaseQuery *query = DatabaseQuery_startSelect("posts");
@@ -25,7 +29,7 @@ Result:
 SELECT posts.id AS id, posts.title AS title, posts.content AS content, posts.created_at AS since_at FROM posts WHERE title LIKE '%hello%';
 ```
 
-## Execute Query
+### Execute Query
 
 Good only for websockets!
 
@@ -33,7 +37,7 @@ Good only for websockets!
 Database_execQuery(query); // sync
 ```
 
-# JSON
+## JSON
 
 Only for serialization purpose
 
