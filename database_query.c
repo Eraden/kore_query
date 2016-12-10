@@ -181,7 +181,18 @@ DATABASE_QUERY_ALLOC_END()
 DATABASE_QUERY_DEALLOC_START(DatabaseQueryCondition)
   DATABASE_QUERY_DEALLOC_IF_EXISTS(DatabaseQueryTable, instance->table);
   DATABASE_QUERY_DEALLOC_IF_EXISTS(DatabaseQueryField, instance->field);
-  if (instance->value) free(instance->value);
+  switch (instance->type) {
+    case DATABASE_QUERY_CONDITION_TYPE_PURE_SQL:
+      if (instance->pure) free(instance->pure);
+      break;
+    case DATABASE_QUERY_CONDITION_TYPE_VALUE:
+      if (instance->value) free(instance->value);
+      break;
+    case DATABASE_QUERY_CONDITION_TYPE_OTHER_FIELD:
+      if (instance->otherField) DatabaseQuery_freeDatabaseQueryField(instance->otherField);
+      break;
+  }
+
   if (instance->operator) free(instance->operator);
 DATABASE_QUERY_DEALLOC_END()
 

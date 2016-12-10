@@ -18,7 +18,6 @@ void JSON_free(JSON *object) {
   char **keys = NULL;
 
   children = object->array.objects;
-  if (children) free(children);
   while (children && *children) {
     JSON_free(*children);
     children += 1;

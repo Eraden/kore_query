@@ -46,9 +46,10 @@ DEF_DATABASE_QUERY_DEALLOC_START(type) {
   if (coll) { \
     type **pointer = coll; \
     for (unsigned int index = 0; index < coll##Size; index++) { \
-      DatabaseQuery_free##type ( pointer[0]); \
+      DatabaseQuery_free##type ( *pointer); \
       pointer += 1; \
     } \
+    free(coll); \
   }
 #define DATABASE_QUERY_DEALLOC_IF_EXISTS(type, instance) \
   if (instance) DatabaseQuery_free##type (instance);
