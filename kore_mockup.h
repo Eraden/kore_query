@@ -7,15 +7,19 @@
 #include <sys/socket.h>
 #include <poll.h>
 #include <time.h>
+#include <sys/param.h>
 
-#include <kore/kore.h>
-#include <kore/http.h>
-#include <kore/pgsql.h>
-//#include "./kore/includes/jsonrpc.h"
-#include <kore/tasks.h>
+#include "./vendor/kore/includes/kore.h"
+#include "./vendor/kore/includes/http.h"
+#include "./vendor/kore/includes/pgsql.h"
+#include "./vendor/kore/includes/tasks.h"
 
 #include <libpq-fe.h>
 
 static FILE *config_file_write(void);
+
+void kore__main();
+
+void kore__terminate();
 
 #endif

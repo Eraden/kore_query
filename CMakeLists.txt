@@ -3,10 +3,14 @@ project(dummy)
 
 SET(KORE_NO_TLS "TRUE")
 SET(KORE_USE_PGSQL "TRUE")
+SET(KORE_USE_TASKS "TRUE")
 SET(_GNU_SOURCE "TRUE")
 SET(TEST_KORE_QUERY "TRUE")
 
 IF (CMAKE_BUILD_TYPE MATCHES "Debug" AND CMAKE_C_COMPILER MATCHES "clang")
+  execute_process(COMMAND psql postgres -f ${CMAKE_CURRENT_SOURCE_DIR}/test/create.psql)
+  execute_process(COMMAND psql kore_query_test -f ${CMAKE_CURRENT_SOURCE_DIR}/test/setup.psql)
+  execute_process(COMMAND psql kore_query_test -f ${CMAKE_CURRENT_SOURCE_DIR}/test/seed.psql)
 
   SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -19,7 +23,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug" AND CMAKE_C_COMPILER MATCHES "clang")
   FIND_PACKAGE(YAJL REQUIRED)
   FIND_PACKAGE(PostgreSQL REQUIRED)
 
-  INCLUDE_DIRECTORIES(/usr/include /usr/local/include /usr/include/postgresql ./vendor/kore/includes)
+  INCLUDE_DIRECTORIES(/usr/include /usr/local/include /usr/include/postgresql ./vendor/kore/includes ./vendor/kore/includes)
   INCLUDE_DIRECTORIES(${CHECK_INCLUDE_DIRS})
   INCLUDE_DIRECTORIES(${YAJL_INCLUDE_DIR})
   INCLUDE_DIRECTORIES(${PostgreSQL_INCLUDE_DIRS})
@@ -31,13 +35,20 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug" AND CMAKE_C_COMPILER MATCHES "clang")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fsanitize=address -fno-omit-frame-pointer")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DKORE_NO_TLS")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DKORE_USE_PGSQL")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DKORE_USE_TASKS")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTEST_KORE_QUERY")
 
   add_executable(
       test_kore_query
 
-      kore_mockup.c
+      ./mock/accesslog.c
+      ./mock/config.c
+      ./mock/domain.c
+      ./mock/http.c
+      ./mock/kore.c
+      ./mock/pgsql.c
+
       #      ./vendor/kore/src/accesslog.c
       ./vendor/kore/src/auth.c
       #      ./vendor/kore/src/bsd.c
@@ -55,7 +66,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug" AND CMAKE_C_COMPILER MATCHES "clang")
       ./vendor/kore/src/module.c
       ./vendor/kore/src/msg.c
       ./vendor/kore/src/net.c
-      ./vendor/kore/src/pgsql.c
+      #      ./vendor/kore/src/pgsql.c
       ./vendor/kore/src/pool.c
       ./vendor/kore/src/tasks.c
       ./vendor/kore/src/timer.c
@@ -71,6 +82,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug" AND CMAKE_C_COMPILER MATCHES "clang")
 
       test/test_json.c
       test/test_database_query.c
+      test/test_database_exec.c
 
       ./test/test.c
   )

@@ -593,24 +593,11 @@ static char *DatabaseQuery_stringifyDatabaseQueryCondition(DatabaseQueryConditio
 
   fieldA = DatabaseQuery_stringifyDatabaseQueryField(condition->field);
 
-  tmp = join_cstr(NULL, fieldA);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, " ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, condition->operator);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, " ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, value);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
+  joined = clone_cstr(fieldA);
+  joined = append_cstr(joined, " ");
+  joined = append_cstr(joined, condition->operator);
+  joined = append_cstr(joined, " ");
+  joined = append_cstr(joined, value);
 
   free(fieldA);
   free(value);
@@ -688,9 +675,9 @@ static char *DatabaseQuery_stringifyDatabaseQueryJoin(DatabaseQueryJoin *join) {
       SWAP_CSTR(tmp, joined);
     }
 
-    tmp = join_cstr(joined, DatabaseQuery_stringifyDatabaseQueryCondition(conditions[0]));
-    free(joined);
-    SWAP_CSTR(tmp, joined);
+    char *condition = DatabaseQuery_stringifyDatabaseQueryCondition(*conditions);
+    joined = append_cstr(joined, condition);
+    free(condition);
 
     conditions += 1;
   }
