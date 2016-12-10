@@ -1,4 +1,4 @@
-#undef CHECK_H
+#if defined(TEST_KORE_QUERY)
 
 #include <stdlib.h>
 #include <check.h>
@@ -25,3 +25,5 @@ int main(int argc, char **argv) {
 
   return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
+
+#endif

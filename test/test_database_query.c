@@ -1,3 +1,5 @@
+#if defined(TEST_KORE_QUERY)
+
 #include "./test_database_query.h"
 
 START_TEST(empty_select_query)
@@ -58,3 +60,5 @@ void test_database_query(Suite *s) {
   tcase_add_test(tc_json, join_select_query);
   suite_add_tcase(s, tc_json);
 }
+
+#endif

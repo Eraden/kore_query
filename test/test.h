@@ -1,5 +1,7 @@
 #pragma once
 
+#if defined(TEST_KORE_QUERY)
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -13,3 +15,5 @@
 #include "../strings.h"
 #include "../json.h"
 #include "../kore_mockup.h"
+
+#endif

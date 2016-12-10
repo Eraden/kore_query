@@ -1,3 +1,5 @@
+#if defined(TEST_KORE_QUERY)
+
 #include "test_json.h"
 
 START_TEST(simple_json)
@@ -40,3 +42,5 @@ void test_json(Suite *s) {
   tcase_add_test(tc_json, json_array);
   suite_add_tcase(s, tc_json);
 }
+
+#endif
