@@ -1,5 +1,5 @@
-#include "json.h"
 #include "./strings.h"
+#include "json.h"
 
 JSON *JSON_alloc(JSONType type) {
   JSON *json = calloc(sizeof(JSON), 1);
@@ -74,6 +74,7 @@ void JSON_append(JSON *array, JSON *entry) {
     array->array.objects[array->array.len] = 0;
   }
 }
+
 char *JSON_escape(char *string) {
   if (string == NULL) return NULL;
   size_t index = 0, len = 0;

@@ -613,66 +613,42 @@ static char *DatabaseQuery_stringifyDatabaseQueryJoin(DatabaseQueryJoin *join) {
     case DATABASE_QUERY_JOIN_TYPE_NORMAL:
       break;
     case DATABASE_QUERY_JOIN_TYPE_INNER: {
-      tmp = join_cstr(joined, " INNER");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
+      joined = append_cstr(joined, " INNER");
       break;
     }
     case DATABASE_QUERY_JOIN_TYPE_LEFT: {
-      tmp = join_cstr(joined, " LEFT");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
+      joined = append_cstr(joined, " LEFT");
       break;
     }
     case DATABASE_QUERY_JOIN_TYPE_LEFT_OUTER: {
-      tmp = join_cstr(joined, " LEFT OUTER");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
+      joined = append_cstr(joined, " LEFT OUTER");
       break;
     }
     case DATABASE_QUERY_JOIN_TYPE_RIGHT: {
-      tmp = join_cstr(joined, " RIGHT");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
+      joined = append_cstr(joined, " RIGHT");
       break;
     }
     case DATABASE_QUERY_JOIN_TYPE_RIGHT_OUTER: {
-      tmp = join_cstr(joined, " RIGHT OUTER");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
+      joined = append_cstr(joined, " RIGHT OUTER");
       break;
     }
     case DATABASE_QUERY_JOIN_TYPE_FULL: {
-      tmp = join_cstr(joined, " FULL");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
+      joined = append_cstr(joined, " FULL");
       break;
     }
     case DATABASE_QUERY_JOIN_TYPE_FULL_OUTER: {
-      tmp = join_cstr(joined, " FULL OUTER");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
+      joined = append_cstr(joined, " FULL OUTER");
       break;
     }
   }
 
-  tmp = join_cstr(joined, " JOIN ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, join->table->name);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, " ON ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
+  joined = append_cstr(joined, " JOIN ");
+  joined = append_cstr(joined, join->table->name);
+  joined = append_cstr(joined, " ON ");
 
   for (unsigned int fieldIndex = 0; fieldIndex < join->conditionsSize; fieldIndex++) {
     if (fieldIndex > 0) {
-      tmp = join_cstr(joined, " AND ");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
+      joined = append_cstr(joined, " AND ");
     }
 
     char *condition = DatabaseQuery_stringifyDatabaseQueryCondition(*conditions);
@@ -968,7 +944,7 @@ static char *DatabaseQuery_stringifyUpdate(DatabaseQuery *query) {
 
   DatabaseQueryCondition **conditions = query->conditions;
   if (conditions) sql = append_cstr(sql, "WHERE ");
-  for (int conditionIndex = 0; conditionIndex < query->conditionsSize; ++conditionIndex) {
+  for (unsigned int conditionIndex = 0; conditionIndex < query->conditionsSize; ++conditionIndex) {
     if (conditionIndex > 0) sql = append_cstr(sql, " AND ");
     char *condition = DatabaseQuery_stringifyDatabaseQueryCondition(*conditions);
     sql = append_cstr(sql, condition);

@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(TEST_KORE_QUERY)
+#ifdef TEST_KORE_QUERY
 
 #include <stdlib.h>
 #include <stdio.h>
