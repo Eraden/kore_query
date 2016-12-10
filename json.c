@@ -168,6 +168,7 @@ char *JSON_stringify(JSON *root) {
       char *escaped = JSON_escape(root->string);
       strcat(buffer, escaped);
       strcat(buffer, "\"");
+      free(escaped);
       break;
     }
     case JSON_NUMBER: {
