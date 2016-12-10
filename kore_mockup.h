@@ -4,11 +4,11 @@
 #include <poll.h>
 #include <time.h>
 
-#include "kore.h"
-#include "http.h"
-#include "pgsql.h"
+#include <kore/kore.h>
+#include <kore/http.h>
+#include <kore/pgsql.h>
 //#include "./kore/includes/jsonrpc.h"
-#include "tasks.h"
+#include <kore/tasks.h>
 
 #include <libpq-fe.h>
 
