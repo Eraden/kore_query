@@ -18,10 +18,12 @@ void JSON_free(JSON *object) {
   char **keys = NULL;
 
   children = object->array.objects;
+  if (children) free(children);
   while (children && *children) {
     JSON_free(*children);
     children += 1;
   }
+  if (object->array.objects) free(object->array.objects);
 
   children = object->children.objects;
   keys = object->children.keys;
@@ -31,6 +33,8 @@ void JSON_free(JSON *object) {
     free(*keys);
     keys += 1;
   }
+  if (keys) free(object->children.keys);
+  if (children) free(object->children.objects);
 
   if (object->string && object->type == JSON_STRING)
     free(object->string);
