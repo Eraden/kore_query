@@ -324,7 +324,9 @@ DatabaseQuery *DatabaseQuery_startDelete(char *tableName) {
 DatabaseQueryCondition __attribute__((__used__)) *
 DatabaseQuery_whereField(
     DatabaseQuery *query,
-    const char *field, const char *operator, const char *value,
+    const char *field,
+    const char *operator,
+    const char *value,
     JSONType type
 ) {
   DatabaseQueryCondition *condition = DatabaseQuery_createDatabaseQueryCondition();
@@ -397,10 +399,13 @@ DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure) {
 }
 
 DatabaseQueryJoin *
-DatabaseQuery_join(DatabaseQuery *query,
-                   char *joinTableName, char *joinFieldName,
-                   char *queriedTableName, char *queriedFieldName,
-                   DatabaseQueryJoinType type
+DatabaseQuery_join(
+    DatabaseQuery *query,
+    char *joinTableName,
+    char *joinFieldName,
+    char *queriedTableName,
+    char *queriedFieldName,
+    DatabaseQueryJoinType type
 ) {
   DatabaseQueryJoin *join = DatabaseQuery_createDatabaseQueryJoin();
 
