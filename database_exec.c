@@ -1,7 +1,8 @@
 #include "json.h"
 #include "./database_exec.h"
 
-static void Database_setObjectValue(
+static void
+Database_setObjectValue(
     JSON *object,
     const char *currentFieldAs,
     char *value,
@@ -22,14 +23,24 @@ static void Database_setObjectValue(
   }
 }
 
-static JSON *Database_findCurrent(JSON *array, const char *id);
+static JSON *
+Database_findCurrent(JSON *array, const char *id);
 
-static DatabaseQueryField **Database_orderedFields(const DatabaseQuery *query);
-
-static JSON *Database_flatSerialization(const DatabaseQuery *query, struct kore_pgsql *kore_sql);
+static DatabaseQueryField **
+Database_orderedFields(const DatabaseQuery *query);
 
 static JSON *
-Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fields, struct kore_pgsql *kore_sql);
+Database_flatSerialization(
+    const DatabaseQuery *query,
+    struct kore_pgsql *kore_sql
+);
+
+static JSON *
+Database_nestedSerialization(
+    const DatabaseQuery *query,
+    DatabaseQueryField **fields,
+    struct kore_pgsql *kore_sql
+);
 
 static JSON *
 Database_findCollection(JSON *root, const char *name) {

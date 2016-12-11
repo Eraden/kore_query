@@ -435,7 +435,13 @@ DatabaseQuery_join(
   return join;
 }
 
-DatabaseQueryField *DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as, JSONType type) {
+DatabaseQueryField *
+DatabaseQuery_select(
+    DatabaseQuery *query,
+    char *tableName,
+    char *fieldName,
+    char *as, JSONType type
+) {
   DatabaseQueryTable *table = DatabaseQuery_createDatabaseQueryTable();
   table->name = clone_cstr(tableName);
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
@@ -543,7 +549,8 @@ DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, Data
   return order;
 }
 
-char DatabaseQuery_isDirty(const char *value) {
+char __attribute__((__used__))
+DatabaseQuery_isDirty(const char *value) {
   const char *ptr = value;
   while (ptr && *ptr) if (*ptr == '\'') return 1; else ptr += 1;
   return 0;
