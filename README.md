@@ -1,6 +1,6 @@
 # Kore Query
 
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./License.md)
 
 ## Using
 
@@ -98,3 +98,42 @@ char *json = JSON_stringify(root); //=> {"users":[{},{}]}
 JSON_free(root);
 free(json);
 ```
+
+## MOCK
+
+If you wish to test your stuff you can use my mockup but be aware it's not greatest stuff in the world.
+
+You just need to define `TEST_KORE_QUERY` macro and `http`, `kore` and many other things will be replaced by empty or
+fixed code.
+
+```cmake
+SET(TEST_KORE_QUERY, '1')
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTEST_KORE_QUERY")
+```
+
+```c
+#include "./src/kore_query/kore_mockup.h"
+
+int main() {
+    kore__main();
+    /// ... your code
+    kore__terminate();
+    return 0;
+}
+```
+
+There is no multi-threads here and database is a little bit override (connection is cleared after every query).
+
+Things you can test:
+
+* Database queries
+* Your code
+
+Also please consider adding memory sanitizer:
+
+```cmake
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -fsanitize=address -fno-omit-frame-pointer")
+```
+
+DO NOT add this library code as cmake subdirectory! It has own test database and code too run.
+There is no reason to test things which does not belongs to you.
