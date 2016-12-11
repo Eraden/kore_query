@@ -1,5 +1,6 @@
 #pragma once
 
+#include "./database_query_stringify.h"
 #include "./database_query.h"
 #include "./json.h"
 #include "./strings.h"
@@ -24,5 +25,11 @@ JSON *Database_execQuery(DatabaseQuery *query);
  * @param argv arguments
  * @return Parsed response
  */
-JSON *Database_execSql(const char *sql, const int fieldsCount, const char **fields, const int argc,
-                             const char **argv);
+JSON __attribute__((__used__)) *
+Database_execSql(
+    const char *sql,
+    const int fieldsCount,
+    const char **fields,
+    const int argc,
+    const char **argv
+);

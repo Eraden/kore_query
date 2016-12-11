@@ -16,4 +16,6 @@
 #include "../json.h"
 #include "../kore_mockup.h"
 
+#include "./support/ck_string.h"
+
 #endif

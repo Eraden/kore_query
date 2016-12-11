@@ -17,9 +17,7 @@
 #include <locale.h>
 
 #include "strings.h"
-
-#define IS_STRING 1
-#define ISNT_STRING 0
+#include "json.h"
 
 #define DEF_DATABASE_QUERY_ALLOC_START(type) \
 type *DatabaseQuery_create##type (void)
@@ -304,12 +302,17 @@ DatabaseQuery *DatabaseQuery_startDelete(char *tableName);
  * @param field table column
  * @param operator
  * @param value
- * @param isString if string add quotes
+ * @param type if string add quotes
  * @return
  */
 DatabaseQueryCondition *
-DatabaseQuery_whereField(DatabaseQuery *query, const char *field, const char *operator, const char *value,
-                         unsigned short int isString);
+DatabaseQuery_whereField(
+    DatabaseQuery *query,
+    const char *field,
+    const char *operator,
+    const char *value,
+    JSONType type
+);
 
 /**
  * Add where condition to query.
@@ -320,13 +323,18 @@ DatabaseQuery_whereField(DatabaseQuery *query, const char *field, const char *op
  * @param operator
  * @param value value
  * @param caller database function to call
- * @param isString if string then will add quotes
+ * @param type if string then will add quotes
  * @return
  */
-DatabaseQueryCondition *
-DatabaseQuery_whereFieldWithCall(DatabaseQuery *query,
-                                 const char *field, const char *operator, const char *value, const char *caller,
-                                 unsigned short int isString);
+DatabaseQueryCondition __attribute__((__used__)) *
+DatabaseQuery_whereFieldWithCall(
+    DatabaseQuery *query,
+    const char *field,
+    const char *operator,
+    const char *value,
+    const char *caller,
+    JSONType type
+);
 
 /**
  * Add sql where condition
@@ -334,7 +342,8 @@ DatabaseQuery_whereFieldWithCall(DatabaseQuery *query,
  * @param pure sql where part eq. "posts.title ILIKE 'hello'"
  * @return
  */
-DatabaseQueryCondition *DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure);
+DatabaseQueryCondition __attribute__((__used__)) *
+DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure);
 
 /**
  * Add join statement
@@ -347,10 +356,13 @@ DatabaseQueryCondition *DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure)
  * @return
  */
 DatabaseQueryJoin *
-DatabaseQuery_join(DatabaseQuery *query,
-                   char *joinTableName, char *joinFieldName,
-                   char *queriedTableName, char *queriedFieldName,
-                   DatabaseQueryJoinType type
+DatabaseQuery_join(
+    DatabaseQuery *query,
+    char *joinTableName,
+    char *joinFieldName,
+    char *queriedTableName,
+    char *queriedFieldName,
+    DatabaseQueryJoinType type
 );
 
 /**
@@ -359,7 +371,8 @@ DatabaseQuery_join(DatabaseQuery *query,
  * @param value number of rows
  * @return
  */
-DatabaseQueryLimit *DatabaseQuery_limit(DatabaseQuery *query, char *value);
+DatabaseQueryLimit __attribute__((__used__)) *
+DatabaseQuery_limit(DatabaseQuery *query, char *value);
 
 /**
  * Add returning statement
@@ -368,7 +381,8 @@ DatabaseQueryLimit *DatabaseQuery_limit(DatabaseQuery *query, char *value);
  * @param fieldName column
  * @return
  */
-DatabaseQueryField *DatabaseQuery_returning(DatabaseQuery *query, char *tableName, char *fieldName);
+DatabaseQueryField __attribute__((__used__)) *
+DatabaseQuery_returning(DatabaseQuery *query, char *tableName, char *fieldName);
 
 /**
  * Add column to select
@@ -378,18 +392,19 @@ DatabaseQueryField *DatabaseQuery_returning(DatabaseQuery *query, char *tableNam
  * @param as used by parser
  * @return
  */
-DatabaseQueryField *DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as);
+DatabaseQueryField __attribute__((__used__)) *
+DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as);
 
 /**
  * Add insert value
  * @param query
  * @param fieldName column name
  * @param value value
- * @param isString if string add quotes
+ * @param type if string add quotes
  * @return
  */
-DatabaseQueryFieldValue *
-DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, unsigned char isString);
+DatabaseQueryFieldValue __attribute__((__used__)) *
+DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, JSONType type);
 
 /**
  * Add distinct on statement
@@ -398,7 +413,7 @@ DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, unsigne
  * @param fieldName
  * @return
  */
-DatabaseQueryDistinct *
+DatabaseQueryDistinct __attribute__((__used__)) *
 DatabaseQuery_distinctOn(DatabaseQuery *query, char *tableName, char *fieldName);
 
 /**
@@ -409,7 +424,7 @@ DatabaseQuery_distinctOn(DatabaseQuery *query, char *tableName, char *fieldName)
  * @param direction sort direction
  * @return
  */
-DatabaseQueryOrder *
+DatabaseQueryOrder __attribute__((__used__)) *
 DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, DatabaseQueryOrderDirection direction);
 
 /**
@@ -417,21 +432,9 @@ DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, Data
  * @param query
  * @param fieldName column name
  * @param value to set
- * @param isString if string add quotes
+ * @param type if string add quotes
  * @return
  */
-DatabaseQueryFieldValue *
-DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, unsigned char isString);
+DatabaseQueryFieldValue __attribute__((__used__)) *
+DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, JSONType type);
 
-/**
- * Transform query to SQL string
- * @param query
- * @return
- */
-char *DatabaseQuery_stringify(DatabaseQuery *query);
-
-/**
- * Deallocate SQL string
- * @param sql
- */
-void DatabaseQuery_freeSQL(char *sql);

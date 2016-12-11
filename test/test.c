@@ -6,6 +6,7 @@
 #include "test_json.h"
 #include "test_database_query.h"
 #include "test_database_exec.h"
+#include "test_database_query_stringify.h"
 
 int main(int argc, char **argv) {
   setlocale(LC_ALL, "");
@@ -20,6 +21,7 @@ int main(int argc, char **argv) {
 
   test_json(s);
   test_database_query(s);
+  test_database_query_stringify(s);
   test_database_exec(s);
 
   SRunner *sr;
