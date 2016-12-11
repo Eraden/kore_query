@@ -4,11 +4,22 @@
 static void Database_setObjectValue(
     JSON *object,
     const char *currentFieldAs,
-    char *value
+    char *value,
+    DatabaseQueryField *field
 ) {
-  wchar_t *fieldName = cstr2wcstr(currentFieldAs);
-  JSON_set(object, fieldName, JSON_string(value));
-  free(fieldName);
+  switch (field->jsonType) {
+    case JSON_NUMBER: {
+      wchar_t *fieldName = cstr2wcstr(currentFieldAs);
+      JSON_set(object, fieldName, JSON_number((float) atof(value)));
+      free(fieldName);
+      break;
+    }
+    default: {
+      wchar_t *fieldName = cstr2wcstr(currentFieldAs);
+      JSON_set(object, fieldName, JSON_string(value));
+      free(fieldName);
+    }
+  }
 }
 
 static JSON *Database_findCurrent(JSON *array, const char *id);
@@ -47,7 +58,7 @@ Database_findCollection(JSON *root, const char *name) {
 }
 
 static JSON *
-Database_findCurrent(JSON *array, const char *id) {
+Database_findCurrent(JSON *array, const char *objectId) {
   if (array == NULL) {
     kore_log(LOG_CRIT, "Database_findCurrent in collection failed, collection is NULL");
     exit(100);
@@ -62,9 +73,19 @@ Database_findCurrent(JSON *array, const char *id) {
       keys += 1;
       fields += 1;
     }
-    if (*fields && strcmp((*fields)->string, id) == 0) {
-      found = object;
-      break;
+    if (*fields) {
+      switch ((*fields)->type) {
+        case JSON_NUMBER: {
+          float id = (float) atof(objectId);
+          if ((*fields)->value == id) found = object;
+          break;
+        }
+        default: {
+          if ((*fields)->string && strcmp((*fields)->string, objectId) == 0) found = object;
+          break;
+        }
+      }
+      if (found) break;
     }
     children += 1;
   }
@@ -156,7 +177,7 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
         JSON_append(array, current = JSON_alloc(JSON_OBJECT));
       }
 
-      Database_setObjectValue(current, currentFieldAs, value);
+      Database_setObjectValue(current, currentFieldAs, value, *ptr);
       ptr += 1;
     }
   }
@@ -213,7 +234,7 @@ Database_flatSerialization(const DatabaseQuery *query, struct kore_pgsql *kore_s
 
       if (!currentTableName) continue;
       if (!currentFieldName) continue;
-      Database_setObjectValue(current, currentFieldAs, value);
+      Database_setObjectValue(current, currentFieldAs, value, *ptr);
       ptr += 1;
     }
   }
@@ -366,9 +387,7 @@ Database_execSql(
         const char *field = fields[fieldIndex];
         wchar_t *fieldName = cstr2wcstr(field);
         char *value = kore_pgsql_getvalue(&kore_sql, rowIndex, fieldIndex);
-        wchar_t *wstr = cstr2wcstr(value);
-        JSON_set(child, fieldName, JSON_wstring(wstr));
-        free(wstr);
+        JSON_set(child, fieldName, JSON_string(value));
         free(fieldName);
       }
     }

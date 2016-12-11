@@ -126,6 +126,7 @@ typedef struct sDatabaseQueryField {
   char *name;
   char *as;
   DatabaseQueryTable *table;
+  JSONType jsonType;
 } DatabaseQueryField;
 
 typedef struct sDatabaseQueryLimit {
@@ -393,7 +394,7 @@ DatabaseQuery_returning(DatabaseQuery *query, char *tableName, char *fieldName);
  * @return
  */
 DatabaseQueryField __attribute__((__used__)) *
-DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as);
+DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as, JSONType type);
 
 /**
  * Add insert value
@@ -437,4 +438,11 @@ DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, Data
  */
 DatabaseQueryFieldValue __attribute__((__used__)) *
 DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, JSONType type);
+
+/**
+ * Check if value can be harmful for database
+ * @param value
+ * @return
+ */
+char DatabaseQuery_isDirty(const char *value);
 

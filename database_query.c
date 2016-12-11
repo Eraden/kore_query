@@ -152,6 +152,7 @@ DATABASE_QUERY_ALLOC_START(DatabaseQueryField)
   instance->name = NULL;
   instance->as = NULL;
   instance->table = NULL;
+  instance->jsonType = JSON_STRING;
 DATABASE_QUERY_ALLOC_END()
 
 DATABASE_QUERY_DEALLOC_START(DatabaseQueryField)
@@ -434,13 +435,14 @@ DatabaseQuery_join(
   return join;
 }
 
-DatabaseQueryField *DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as) {
+DatabaseQueryField *DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as, JSONType type) {
   DatabaseQueryTable *table = DatabaseQuery_createDatabaseQueryTable();
   table->name = clone_cstr(tableName);
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->name = clone_cstr(fieldName);
   field->as = clone_cstr(as == NULL ? fieldName : as);
   field->table = table;
+  field->jsonType = type;
   DatabaseQuery_append_DatabaseQueryField_to_DatabaseQuery_fields(query, field);
   return field;
 }
@@ -541,3 +543,8 @@ DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, Data
   return order;
 }
 
+char DatabaseQuery_isDirty(const char *value) {
+  const char *ptr = value;
+  while (ptr && *ptr) if (*ptr == '\'') return 1; else ptr += 1;
+  return 0;
+}

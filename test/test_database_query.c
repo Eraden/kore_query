@@ -24,10 +24,10 @@ END_TEST
 
 START_TEST(simple_select_query)
   DatabaseQuery *query = DatabaseQuery_startSelect("users");
-  DatabaseQuery_select(query, "users", "id", "id");
-  DatabaseQuery_select(query, "users", "login", "login");
-  DatabaseQuery_select(query, "users", "updated_at", "updated_at");
-  DatabaseQuery_select(query, "users", "created_at", "created_at");
+  DatabaseQuery_select(query, "users", "id", "id", JSON_NUMBER);
+  DatabaseQuery_select(query, "users", "login", "login", JSON_STRING);
+  DatabaseQuery_select(query, "users", "updated_at", "updated_at", JSON_STRING);
+  DatabaseQuery_select(query, "users", "created_at", "created_at", JSON_STRING);
   DatabaseQuery_freeDatabaseQuery(query);
 END_TEST
 
@@ -35,18 +35,18 @@ START_TEST(join_select_query)
   DatabaseQuery *query = DatabaseQuery_startSelect("users");
   DatabaseQuery_join(query, "posts", "user_id", "users", "id", DATABASE_QUERY_JOIN_TYPE_LEFT);
   DatabaseQuery_join(query, "comments", "post_id", "posts", "id", DATABASE_QUERY_JOIN_TYPE_LEFT);
-  DatabaseQuery_select(query, "users", "id", "id");
-  DatabaseQuery_select(query, "users", "login", "login");
-  DatabaseQuery_select(query, "users", "updated_at", "updated_at");
-  DatabaseQuery_select(query, "users", "created_at", "created_at");
-  DatabaseQuery_select(query, "posts", "id", "id");
-  DatabaseQuery_select(query, "posts", "title", "title");
-  DatabaseQuery_select(query, "posts", "content", "content");
-  DatabaseQuery_select(query, "posts", "created_at", "created_at");
-  DatabaseQuery_select(query, "comments", "id", "id");
-  DatabaseQuery_select(query, "comments", "title", "title");
-  DatabaseQuery_select(query, "comments", "content", "content");
-  DatabaseQuery_select(query, "comments", "created_at", "created_at");
+  DatabaseQuery_select(query, "users", "id", "id", JSON_NUMBER);
+  DatabaseQuery_select(query, "users", "login", "login", JSON_STRING);
+  DatabaseQuery_select(query, "users", "updated_at", "updated_at", JSON_STRING);
+  DatabaseQuery_select(query, "users", "created_at", "created_at", JSON_STRING);
+  DatabaseQuery_select(query, "posts", "id", "id", JSON_NUMBER);
+  DatabaseQuery_select(query, "posts", "title", "title", JSON_STRING);
+  DatabaseQuery_select(query, "posts", "content", "content", JSON_STRING);
+  DatabaseQuery_select(query, "posts", "created_at", "created_at", JSON_STRING);
+  DatabaseQuery_select(query, "comments", "id", "id", JSON_NUMBER);
+  DatabaseQuery_select(query, "comments", "title", "title", JSON_STRING);
+  DatabaseQuery_select(query, "comments", "content", "content", JSON_STRING);
+  DatabaseQuery_select(query, "comments", "created_at", "created_at", JSON_STRING);
   DatabaseQuery_freeDatabaseQuery(query);
 END_TEST
 

@@ -172,7 +172,12 @@ char *JSON_stringify(JSON *root) {
     }
     case JSON_NUMBER: {
       buffer = calloc(sizeof(char), 24);
-      sprintf(buffer, "%0.2f", root->value);
+      sprintf(buffer, "%3.2f", root->value);
+      char *ptr = buffer;
+      while (*ptr) {
+        if (*ptr == ',') *ptr = '.';
+        ptr += 1;
+      }
       break;
     }
   }

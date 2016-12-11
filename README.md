@@ -30,10 +30,10 @@ INSERT INTO posts (title, content) VALUES ('O''Connor Memory', 'Nothing special'
 
 ```cpp
 DatabaseQuery *query = DatabaseQuery_startSelect("posts");
-DatabaseQuery_select(query, "posts", "id", "id");
-DatabaseQuery_select(query, "posts", "title", "title");
-DatabaseQuery_select(query, "posts", "content", "content");
-DatabaseQuery_select(query, "posts", "created_at", "posted_at");
+DatabaseQuery_select(query, "posts", "id", "id", JSON_NUMBER);
+DatabaseQuery_select(query, "posts", "title", "title", JSON_STRING);
+DatabaseQuery_select(query, "posts", "content", "content", JSON_STRING);
+DatabaseQuery_select(query, "posts", "created_at", "posted_at", JSON_STRING);
 DatabaseQuery_whereField(query, "title", "LIKE", "%hello%", JSON_STRING);
 char *sql = DatabaseQuery_stringify(query);
 ```
