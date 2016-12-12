@@ -260,7 +260,11 @@ Database_hasAnyField(
 }
 
 static JSON *
-Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fields, struct kore_pgsql *kore_sql) {
+Database_nestedSerialization(
+    const DatabaseQuery *query,
+    DatabaseQueryField **fields,
+    struct kore_pgsql *kore_sql
+) {
   kore_log(LOG_INFO, "Database_nestedSerialization");
 
   int rows = kore_pgsql_ntuples(kore_sql);
@@ -318,7 +322,7 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
 
       if (lastTableName == NULL || strcmp(lastTableName, currentTableName) != 0) {
         if (!Database_isChainContains(lastTableName, currentTableName, joinChains))
-          current = root;
+          current = old;
         array = Database_findCollection(current, currentTableName);
         old = current;
         current = Database_findCurrent(array, value);
