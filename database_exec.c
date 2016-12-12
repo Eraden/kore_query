@@ -20,6 +20,11 @@ Database_nestedSerialization(
     struct kore_pgsql *kore_sql
 );
 
+static char **Database_chainPaths(
+    const DatabaseJoinChains *joinChains,
+    const char *name
+);
+
 
 static DatabaseJoinChains *
 Database_buildJoinChains(
@@ -177,6 +182,27 @@ Database_findCollection(JSON *root, const char *name) {
   return object;
 }
 
+static char **
+Database_chainPaths(
+    const DatabaseJoinChains *joinChains,
+    const char *name
+) {
+  DatabaseJoinChain **chains = joinChains->chains;
+  DatabaseJoinChain *found = NULL;
+  while (*chains && found == NULL) {
+    char **paths = (*chains)->chain;
+    while (*paths && found == NULL) {
+      if (strcmp(*paths, name) == 0) found = *chains;
+      else paths += 1;
+    }
+    chains += 1;
+  }
+
+  if (found == NULL)
+    return NULL;
+  return found->chain;
+}
+
 static char
 Database_isChainContains(
     const char *lastTableName,
@@ -186,25 +212,38 @@ Database_isChainContains(
   if (lastTableName == NULL)
     return 1;
 
-  DatabaseJoinChain **chains = joinChains->chains;
-  DatabaseJoinChain *found = NULL;
-  while (*chains && found == NULL) {
-    char **paths = (*chains)->chain;
-    while (*paths && found == NULL) {
-      if (strcmp(*paths, lastTableName) == 0) found = *chains;
-      else paths += 1;
-    }
-    chains += 1;
-  }
+  char **paths = Database_chainPaths(joinChains, lastTableName);
+  if (!paths)
+    return 1;
 
-  if (found == NULL)
-    return 0;
-  char **paths = found->chain;
   while (*paths) {
     if (strcmp(*paths, name) == 0) return 1;
     else paths += 1;
   }
   return 0;
+}
+
+static JSON *
+Database_findLastMatchingCollection(
+    JSON *root,
+    const DatabaseJoinChains *joinChains,
+    const char *currentTableName
+) {
+  JSON *current = root;
+  char **paths = Database_chainPaths(joinChains, currentTableName);
+
+  while (*paths) {
+    if (strcmp(*paths, currentTableName) == 0)
+      break;
+    JSON *collection = Database_findCollection(current, *paths);
+    if (*(paths + 1) && collection->array.objects)
+      current = collection->array.objects[ collection->array.len - 1 ];
+    else
+      current = collection;
+    paths += 1;
+  }
+
+  return current;
 }
 
 static JSON *
@@ -322,7 +361,8 @@ Database_nestedSerialization(
 
       if (lastTableName == NULL || strcmp(lastTableName, currentTableName) != 0) {
         if (!Database_isChainContains(lastTableName, currentTableName, joinChains))
-          current = old;
+          current = Database_findLastMatchingCollection(root, joinChains, currentTableName);
+
         array = Database_findCollection(current, currentTableName);
         old = current;
         current = Database_findCurrent(array, value);
