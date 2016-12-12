@@ -9,6 +9,16 @@
 #define DB_QUERY_HAS_NO_JOINS(query) query->joinsSize == 0
 #define DB_QUERY_ONLY_ONE(query) (query->limit == NULL || strcmp(query->limit->limit, "1") == 0)
 
+typedef struct sDatabaseJoinChain {
+  char **chain;
+  size_t len;
+} DatabaseJoinChain;
+
+typedef struct sDatabaseJoinChains {
+  DatabaseJoinChain **chains;
+  size_t len;
+} DatabaseJoinChains;
+
 /**
  * Execute query synchronously (good only for web-sockets)
  * @param query
@@ -33,3 +43,11 @@ Database_execSql(
     const int argc,
     const char **argv
 );
+
+unsigned char
+Database_hasAnyField(
+    const char *name,
+    DatabaseQueryField **fields,
+    unsigned long fieldsSize
+);
+

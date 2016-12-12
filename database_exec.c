@@ -1,6 +1,134 @@
 #include "json.h"
 #include "./database_exec.h"
 
+static JSON *
+Database_findCurrent(JSON *array, const char *id);
+
+static DatabaseQueryField **
+Database_orderedFields(const DatabaseQuery *query);
+
+static JSON *
+Database_flatSerialization(
+    const DatabaseQuery *query,
+    struct kore_pgsql *kore_sql
+);
+
+static JSON *
+Database_nestedSerialization(
+    const DatabaseQuery *query,
+    DatabaseQueryField **fields,
+    struct kore_pgsql *kore_sql
+);
+
+
+static DatabaseJoinChains *
+Database_buildJoinChains(
+    const DatabaseQuery *query,
+    DatabaseQueryField **fields,
+    unsigned long fieldsSize
+) {
+  DatabaseJoinChains *joinChains = calloc(sizeof(DatabaseJoinChains), 1);
+
+  DatabaseQueryJoin **joins = calloc(sizeof(DatabaseQueryJoin *), query->joinsSize);
+  DatabaseQueryJoin **release = joins;
+
+  memcpy(joins, query->joins, sizeof(DatabaseQueryJoin *) * query->joinsSize);
+  unsigned int len = query->joinsSize;
+
+  while (len) {
+    DatabaseQueryJoin *join = *joins;
+    if (!join) {
+      len -= 1;
+      continue;
+    }
+    *joins = NULL;
+    DatabaseQueryCondition *condition = *join->conditions;
+
+    DatabaseJoinChain *joinChain = calloc(sizeof(DatabaseJoinChain), 1);
+    joinChain->len = 2;
+    joinChain->chain = calloc(sizeof(char **), joinChain->len + 1);
+
+    if (joinChains->chains == NULL) {
+      joinChains->len = 1;
+      joinChains->chains = calloc(sizeof(DatabaseJoinChain **), joinChains->len + 1);
+    } else {
+      joinChains->len += 1;
+      joinChains->chains = realloc(joinChains->chains, sizeof(DatabaseJoinChain **) * (joinChains->len + 1));
+      joinChains->chains[joinChains->len] = 0;
+    }
+    joinChains->chains[joinChains->len - 1] = joinChain;
+
+    char *queriedTable = condition->otherField->table->name;
+    char *joinedTable = condition->field->table->name;
+    joinChain->chain[0] = queriedTable;
+    joinChain->chain[1] = joinedTable;
+
+    unsigned int nextLen = len - 1;
+
+    while (nextLen) {
+      if (*(joins + 1) == NULL) {
+        nextLen -= 1;
+        continue;
+      }
+      DatabaseQueryJoin *nextJoin = *(joins + 1);
+      DatabaseQueryCondition *nextCondition = *nextJoin->conditions;
+
+      char *nextQueriedTable = nextCondition->otherField->table->name;
+      char *nextJoinedTable = nextCondition->field->table->name;
+
+      if (strcmp(joinedTable, nextQueriedTable) == 0) {
+        joinChain->len += 1;
+        joinChain->chain = realloc(joinChain->chain, sizeof(char **) * (joinChain->len + 1));
+        joinChain->chain[joinChain->len - 1] = nextJoinedTable;
+        joinChain->chain[joinChain->len] = 0;
+        *(joins + 1) = NULL;
+      }
+
+      nextLen -= 1;
+    }
+
+    joins += 1;
+    len -= 1;
+  }
+
+  // optimize paths
+  DatabaseJoinChain **chains = joinChains->chains;
+  while (*chains) {
+    char **paths = (*chains)->chain;
+    while (*paths) {
+      if (!Database_hasAnyField(*paths, fields, fieldsSize)) {
+        char **write = paths, **read = paths;
+        read += 1;
+        while (*write) {
+          *write = *read;
+          if (*(read + 1) == NULL) *read = NULL;
+          read += 1;
+          write += 1;
+        }
+      }
+      paths += 1;
+    }
+    chains += 1;
+  }
+
+
+  free(release);
+
+  return joinChains;
+}
+
+static void Database_freeChains(DatabaseJoinChains *chains) {
+  if (!chains) return;
+  DatabaseJoinChain **ptr = chains->chains;
+  while (ptr && *ptr) {
+    free((*ptr)->chain);
+    free(*ptr);
+    ptr += 1;
+  }
+  free(chains->chains);
+  free(chains);
+}
+
 static void
 Database_setObjectValue(
     JSON *object,
@@ -22,25 +150,6 @@ Database_setObjectValue(
     }
   }
 }
-
-static JSON *
-Database_findCurrent(JSON *array, const char *id);
-
-static DatabaseQueryField **
-Database_orderedFields(const DatabaseQuery *query);
-
-static JSON *
-Database_flatSerialization(
-    const DatabaseQuery *query,
-    struct kore_pgsql *kore_sql
-);
-
-static JSON *
-Database_nestedSerialization(
-    const DatabaseQuery *query,
-    DatabaseQueryField **fields,
-    struct kore_pgsql *kore_sql
-);
 
 static JSON *
 Database_findCollection(JSON *root, const char *name) {
@@ -66,6 +175,36 @@ Database_findCollection(JSON *root, const char *name) {
     free(tmp);
   }
   return object;
+}
+
+static char
+Database_isChainContains(
+    const char *lastTableName,
+    const char *name,
+    const DatabaseJoinChains *joinChains
+) {
+  if (lastTableName == NULL)
+    return 1;
+
+  DatabaseJoinChain **chains = joinChains->chains;
+  DatabaseJoinChain *found = NULL;
+  while (*chains && found == NULL) {
+    char **paths = (*chains)->chain;
+    while (*paths && found == NULL) {
+      if (strcmp(*paths, lastTableName) == 0) found = *chains;
+      else paths += 1;
+    }
+    chains += 1;
+  }
+
+  if (found == NULL)
+    return 0;
+  char **paths = found->chain;
+  while (*paths) {
+    if (strcmp(*paths, name) == 0) return 1;
+    else paths += 1;
+  }
+  return 0;
 }
 
 static JSON *
@@ -103,7 +242,12 @@ Database_findCurrent(JSON *array, const char *objectId) {
   return found;
 }
 
-static unsigned char Database_hasAnyField(const char *name, DatabaseQueryField **fields, unsigned long fieldsSize) {
+unsigned char
+Database_hasAnyField(
+    const char *name,
+    DatabaseQueryField **fields,
+    unsigned long fieldsSize
+) {
   DatabaseQueryField **it = fields;
   for (unsigned long i = 0; i < fieldsSize; i++) {
     DatabaseQueryField *field = it[0];
@@ -131,6 +275,8 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
   free(rootTableName);
 
   unsigned long size = query->fieldsSize ? query->fieldsSize : query->returningSize;
+
+  DatabaseJoinChains *joinChains = Database_buildJoinChains(query, fields, size);
 
   for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
     const char *lastTableName = NULL;
@@ -171,6 +317,8 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
       JSON *old = NULL;
 
       if (lastTableName == NULL || strcmp(lastTableName, currentTableName) != 0) {
+        if (!Database_isChainContains(lastTableName, currentTableName, joinChains))
+          current = root;
         array = Database_findCollection(current, currentTableName);
         old = current;
         current = Database_findCurrent(array, value);
@@ -192,6 +340,8 @@ Database_nestedSerialization(const DatabaseQuery *query, DatabaseQueryField **fi
       ptr += 1;
     }
   }
+
+  Database_freeChains(joinChains);
 
   free(fields);
 

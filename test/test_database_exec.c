@@ -3,7 +3,11 @@
 #include "./test_database_exec.h"
 
 static DatabaseJoinChains *
-Database_buildJoinChains(DatabaseQuery *query) {
+Database_buildJoinChains(
+    DatabaseQuery *query,
+    DatabaseQueryField **fields,
+    unsigned int fieldsSize
+) {
   DatabaseJoinChains *joinChains = calloc(sizeof(DatabaseJoinChains), 1);
 
   DatabaseQueryJoin **joins = calloc(sizeof(DatabaseQueryJoin *), query->joinsSize);
@@ -27,7 +31,7 @@ Database_buildJoinChains(DatabaseQuery *query) {
 
     if (joinChains->chains == NULL) {
       joinChains->len = 1;
-      joinChains->chains = calloc(sizeof(DatabaseJoinChain**), joinChains->len + 1);
+      joinChains->chains = calloc(sizeof(DatabaseJoinChain **), joinChains->len + 1);
     } else {
       joinChains->len += 1;
       joinChains->chains = realloc(joinChains->chains, sizeof(DatabaseJoinChain **) * (joinChains->len + 1));
@@ -68,6 +72,27 @@ Database_buildJoinChains(DatabaseQuery *query) {
     len -= 1;
   }
 
+  // optimize paths
+  DatabaseJoinChain **chains = joinChains->chains;
+  while (*chains) {
+    char **paths = (*chains)->chain;
+    while (*paths) {
+      if (!Database_hasAnyField(*paths, fields, fieldsSize)) {
+        char **write = paths, **read = paths;
+        read += 1;
+        while (*write) {
+          *write = *read;
+          if (*(read + 1) == NULL) *read = NULL;
+          read += 1;
+          write += 1;
+        }
+      }
+      paths += 1;
+    }
+    chains += 1;
+  }
+
+
   free(release);
 
   return joinChains;
@@ -99,7 +124,8 @@ START_TEST(join_chain)
   DatabaseQuery_select(query, "disciplines", "id", "id", JSON_NUMBER);
   DatabaseQuery_select(query, "disciplines", "name", "name", JSON_STRING);
 
-  DatabaseJoinChains *chains = Database_buildJoinChains(query);
+  fprintf(stderr, "attempt to build chains...\n");
+  DatabaseJoinChains *chains = Database_buildJoinChains(query, query->fields, query->fieldsSize);
 
   fprintf(stderr, "chains length: %lu\n", chains->len);
   DatabaseJoinChain **chainsPtr = chains->chains;
@@ -176,10 +202,10 @@ END_TEST
 
 void test_database_exec(Suite *s) {
   TCase *tc_query = tcase_create("Database query exec");
+  tcase_add_test(tc_query, join_chain);
   tcase_add_test(tc_query, simple_query_exec);
   tcase_add_test(tc_query, join_query_exec);
   tcase_add_test(tc_query, join_query_exec_stringify);
-  tcase_add_test(tc_query, join_chain);
   suite_add_tcase(s, tc_query);
 }
 
