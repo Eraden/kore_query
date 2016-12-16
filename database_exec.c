@@ -1,6 +1,35 @@
 #include "json.h"
 #include "./database_exec.h"
 
+#ifdef TEST_KORE_QUERY
+static void print_joins(DatabaseJoinChains *joinChains) {
+  fprintf(stderr, "\n");
+  DatabaseJoinChain **chainsPtr = joinChains->chains;
+  while (chainsPtr && *chainsPtr) {
+    char **tables = (*chainsPtr)->chain;
+    fprintf(stderr, "| ");
+    while (tables && *tables) {
+      fprintf(stderr, " %-20s |", *tables);
+      tables += 1;
+    }
+    fprintf(stderr, "\n");
+    chainsPtr += 1;
+  }
+  fprintf(stderr, "\n");
+}
+#define INSPECT_CHAINS(joinChains) print_joins(joinChains);
+#define DEBUG_INFO(str) kore_log(LOG_INFO, str);
+#else
+#define INSPECT_CHAINS(joinChains)
+#define DEBUG_INFO(str)
+#endif
+
+#ifdef INSPECT_SQL
+#define PRINT_SQL(sql) kore_log(LOG_INFO, "SQL: %s", sql)
+#else
+#define PRINT_SQL(sql)
+#endif
+
 static JSON *
 Database_findCurrent(JSON *array, const char *id);
 
@@ -25,6 +54,103 @@ static char **Database_chainPaths(
     const char *name
 );
 
+static void Database_appendJoinToJoins(DatabaseJoinChains *joinChains, DatabaseJoinChain *joinChain) {
+  if (joinChains->chains == NULL) {
+    joinChains->len = 1;
+    joinChains->chains = calloc(sizeof(DatabaseJoinChain **), joinChains->len + 1);
+  } else {
+    joinChains->len += 1;
+    joinChains->chains = realloc(joinChains->chains, sizeof(DatabaseJoinChain **) * (joinChains->len + 1));
+    joinChains->chains[joinChains->len] = 0;
+  }
+  joinChains->chains[joinChains->len - 1] = joinChain;
+}
+
+static void Database_appendTableToJoin(DatabaseJoinChain *joinChain, char *tableName) {
+  if (joinChain->len == 0) {
+    joinChain->len = 1;
+    joinChain->chain = calloc(sizeof(char **), joinChain->len + 1);
+    joinChain->chain[joinChain->len - 1] = tableName;
+  } else {
+    joinChain->len += 1;
+    joinChain->chain = realloc(joinChain->chain, sizeof(char **) * (joinChain->len + 1));
+    joinChain->chain[joinChain->len - 1] = tableName;
+  }
+  joinChain->chain[joinChain->len] = 0;
+}
+
+static DatabaseJoinChain *DatabaseJoinChain_clone(DatabaseJoinChain *join) {
+  DatabaseJoinChain *clone = calloc(sizeof(DatabaseJoinChain), 1);
+  clone->len = 0;
+  clone->chain = NULL;
+
+  char **tables = join->chain;
+  size_t times = join->len - 1;
+  while (times) {
+    Database_appendTableToJoin(clone, *tables);
+    tables += 1;
+    times -= 1;
+  }
+  return clone;
+}
+
+static int
+Database_appendTableToEveryTableChain(
+    DatabaseJoinChains *joinChains,
+    char *toFind,
+    char *toAdd
+) {
+  if (!toFind) return 0;
+  if (!toAdd) return 0;
+
+  int found = 0;
+  const size_t chainsSize = joinChains->len;
+  size_t chainsIndex = 0;
+  // Check already if added?
+  while (chainsIndex < chainsSize) {
+    DatabaseJoinChain *join = *(joinChains->chains + chainsIndex);
+    const size_t chainSize = join->len;
+    size_t chainIndex = 0;
+    while (chainIndex < chainSize) {
+      if (
+          strcmp(join->chain[chainIndex], toFind) == 0 &&
+          join->chain[chainIndex + 1] != NULL &&
+          strcmp(join->chain[chainIndex + 1], toAdd) == 0
+          ) {
+        return 1;
+      }
+      chainIndex += 1;
+    }
+    chainsIndex += 1;
+  }
+
+  // Append
+  chainsIndex = 0;
+  while (chainsIndex < chainsSize) {
+    DatabaseJoinChain *join = *(joinChains->chains + chainsIndex);
+    const size_t chainSize = join->len;
+    size_t chainIndex = 0;
+    while (chainIndex < chainSize) {
+      if (strcmp(join->chain[chainIndex], toFind) == 0) {
+        found = 1;
+
+        if (chainIndex + 1 == chainSize) {
+          Database_appendTableToJoin(join, toAdd);
+        } else {
+          DatabaseJoinChain *clone = DatabaseJoinChain_clone(join);
+          Database_appendJoinToJoins(joinChains, clone);
+          Database_appendTableToJoin(clone, toAdd);
+          chainsIndex = chainsSize - 1;
+          found = 1;
+        }
+        break;
+      }
+      chainIndex += 1;
+    }
+    chainsIndex += 1;
+  }
+  return found;
+}
 
 static DatabaseJoinChains *
 Database_buildJoinChains(
@@ -33,7 +159,6 @@ Database_buildJoinChains(
     unsigned long fieldsSize
 ) {
   DatabaseJoinChains *joinChains = calloc(sizeof(DatabaseJoinChains), 1);
-
   DatabaseQueryJoin **joins = calloc(sizeof(DatabaseQueryJoin *), query->joinsSize);
   DatabaseQueryJoin **release = joins;
 
@@ -42,65 +167,56 @@ Database_buildJoinChains(
 
   while (len) {
     DatabaseQueryJoin *join = *joins;
-    if (!join) {
+    if (*(joins) == NULL) {
       len -= 1;
       continue;
     }
-    *joins = NULL;
     DatabaseQueryCondition *condition = *join->conditions;
-
-    DatabaseJoinChain *joinChain = calloc(sizeof(DatabaseJoinChain), 1);
-    joinChain->len = 2;
-    joinChain->chain = calloc(sizeof(char **), joinChain->len + 1);
-
-    if (joinChains->chains == NULL) {
-      joinChains->len = 1;
-      joinChains->chains = calloc(sizeof(DatabaseJoinChain **), joinChains->len + 1);
-    } else {
-      joinChains->len += 1;
-      joinChains->chains = realloc(joinChains->chains, sizeof(DatabaseJoinChain **) * (joinChains->len + 1));
-      joinChains->chains[joinChains->len] = 0;
-    }
-    joinChains->chains[joinChains->len - 1] = joinChain;
 
     char *queriedTable = condition->otherField->table->name;
     char *joinedTable = condition->field->table->name;
-    joinChain->chain[0] = queriedTable;
-    joinChain->chain[1] = joinedTable;
-
+    if (len == query->joinsSize) {
+      DatabaseJoinChain *joinChain = calloc(sizeof(DatabaseJoinChain), 1);
+      joinChain->len = 0;
+      joinChain->chain = NULL;
+      Database_appendJoinToJoins(joinChains, joinChain);
+      Database_appendTableToJoin(joinChain, queriedTable);
+      Database_appendTableToJoin(joinChain, joinedTable);
+    } else if (!Database_appendTableToEveryTableChain(joinChains, queriedTable, joinedTable)) {
+      len -= 1;
+      if (len == 0) break;
+      joins += 1;
+      continue;
+    }
     unsigned int nextLen = len - 1;
+    DatabaseQueryJoin **nextJoins = joins + 1;
 
     while (nextLen) {
       if (*(joins + 1) == NULL) {
         nextLen -= 1;
         continue;
       }
-      DatabaseQueryJoin *nextJoin = *(joins + 1);
+      DatabaseQueryJoin *nextJoin = *nextJoins;
       DatabaseQueryCondition *nextCondition = *nextJoin->conditions;
 
       char *nextQueriedTable = nextCondition->otherField->table->name;
       char *nextJoinedTable = nextCondition->field->table->name;
-
       if (strcmp(joinedTable, nextQueriedTable) == 0) {
-        joinChain->len += 1;
-        joinChain->chain = realloc(joinChain->chain, sizeof(char **) * (joinChain->len + 1));
-        joinChain->chain[joinChain->len - 1] = nextJoinedTable;
-        joinChain->chain[joinChain->len] = 0;
-        *(joins + 1) = NULL;
+        Database_appendTableToEveryTableChain(joinChains, nextQueriedTable, nextJoinedTable);
       }
 
       nextLen -= 1;
+      nextJoins += 1;
     }
-
-    joins += 1;
     len -= 1;
+    if (len == 0) break;
+    joins += 1;
   }
-
   // optimize paths
   DatabaseJoinChain **chains = joinChains->chains;
-  while (*chains) {
+  while (chains && *chains) {
     char **paths = (*chains)->chain;
-    while (*paths) {
+    while (paths && *paths) {
       if (!Database_hasAnyField(*paths, fields, fieldsSize)) {
         char **write = paths, **read = paths;
         read += 1;
@@ -115,10 +231,7 @@ Database_buildJoinChains(
     }
     chains += 1;
   }
-
-
   free(release);
-
   return joinChains;
 }
 
@@ -162,11 +275,15 @@ Database_findCollection(JSON *root, const char *name) {
     kore_log(LOG_CRIT, "Attempt to looking in NULL, terminating!");
     exit(1);
   }
+  if (name == NULL) {
+    kore_log(LOG_CRIT, "name is NULL, terminating!");
+    exit(1);
+  }
   JSON **children = root->children.objects;
   char **keys = root->children.keys;
   JSON *object = NULL;
 
-  while (*children) {
+  while (children && *children) {
     if (strcmp(*keys, name) == 0) {
       object = *children;
     }
@@ -231,15 +348,16 @@ Database_findLastMatchingCollection(
 ) {
   JSON *current = root;
   char **paths = Database_chainPaths(joinChains, currentTableName);
-
-  while (*paths) {
-    if (strcmp(*paths, currentTableName) == 0)
+  while (paths && *paths) {
+    if (strcmp(*paths, currentTableName) == 0) {
       break;
+    }
     JSON *collection = Database_findCollection(current, *paths);
-    if (*(paths + 1) && collection->array.objects)
-      current = collection->array.objects[ collection->array.len - 1 ];
-    else
+    if (*(paths + 1) && collection->array.objects) {
+      current = collection->array.objects[collection->array.len - 1];
+    } else {
       current = collection;
+    }
     paths += 1;
   }
 
@@ -304,11 +422,8 @@ Database_nestedSerialization(
     DatabaseQueryField **fields,
     struct kore_pgsql *kore_sql
 ) {
-  kore_log(LOG_INFO, "Database_nestedSerialization");
-
+  DEBUG_INFO("Database_nestedSerialization");
   int rows = kore_pgsql_ntuples(kore_sql);
-  kore_log(LOG_INFO, "Parsing %i rows", rows);
-
   char *value = NULL;
   const char *rootTable = query->table->name;
   wchar_t *rootTableName = cstr2wcstr(rootTable);
@@ -320,48 +435,37 @@ Database_nestedSerialization(
   unsigned long size = query->fieldsSize ? query->fieldsSize : query->returningSize;
 
   DatabaseJoinChains *joinChains = Database_buildJoinChains(query, fields, size);
-
   for (int rowIndex = 0; rowIndex < rows; rowIndex++) {
     const char *lastTableName = NULL;
     JSON *current = root;
-
     DatabaseQueryField **ptr = fields;
     for (unsigned int fieldIndex = 0; fieldIndex < size; fieldIndex++) {
       currentTableName = (*ptr)->table ? (*ptr)->table->name : NULL;
       currentFieldName = (*ptr)->name;
       currentFieldAs = (*ptr)->as;
-
       if (!currentTableName) {
-        // kore_log(LOG_INFO, "  missing table name, skipping...");
         ptr += 1;
         continue;
       }
-
       if (!currentFieldName) {
-        // kore_log(LOG_INFO, "  missing field name, skipping...");
         ptr += 1;
         continue;
       }
 
       if (!currentFieldAs) {
-        // kore_log(LOG_INFO, "  missing field as, skipping...");
         ptr += 1;
         continue;
       }
-
       value = kore_pgsql_getvalue(kore_sql, rowIndex, fieldIndex);
-
       if (!Database_hasAnyField(currentTableName, fields, size)) {
-        // kore_log(LOG_INFO, "table has no fields, skipping...");
         ptr += 1;
         continue;
       }
-
       JSON *old = NULL;
-
       if (lastTableName == NULL || strcmp(lastTableName, currentTableName) != 0) {
-        if (!Database_isChainContains(lastTableName, currentTableName, joinChains))
+        if (!Database_isChainContains(lastTableName, currentTableName, joinChains)) {
           current = Database_findLastMatchingCollection(root, joinChains, currentTableName);
+        }
 
         array = Database_findCollection(current, currentTableName);
         old = current;
@@ -394,7 +498,7 @@ Database_nestedSerialization(
 
 static JSON *
 Database_flatSerialization(const DatabaseQuery *query, struct kore_pgsql *kore_sql) {
-  kore_log(LOG_INFO, "Database_flatSerialization");
+  DEBUG_INFO("Database_flatSerialization");
   int rows = kore_pgsql_ntuples(kore_sql);
   unsigned char useArray = 1;
 
@@ -449,7 +553,7 @@ Database_flatSerialization(const DatabaseQuery *query, struct kore_pgsql *kore_s
 
 static DatabaseQueryField **
 Database_orderedFields(const DatabaseQuery *query) {
-  kore_log(LOG_INFO, "Database_orderedFields");
+  DEBUG_INFO("Database_orderedFields")
   DatabaseQueryField **fields = query->fields ? query->fields : query->returning;
   if (!fields) return NULL;
 
@@ -544,6 +648,7 @@ Database_execQuery(DatabaseQuery *query) {
     return result;
   }
 
+  PRINT_SQL(sql);
   unsigned char queryResult = (unsigned char) kore_pgsql_query(&kore_sql, sql);
   DatabaseQuery_freeSQL(sql);
 
@@ -601,3 +706,4 @@ Database_execSql(
   kore_pgsql_cleanup(&kore_sql);
   return array;
 }
+
