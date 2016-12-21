@@ -87,3 +87,4 @@ CTestTestfile.cmake
 cmake-build-debug/
 
 vendor/kore/*
+doc

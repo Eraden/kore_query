@@ -1,3 +1,21 @@
+/**
+ * @file serialize.h
+ * @author Adrian Eraden Woźniak
+ * @date 21.12.2016
+ * @brief Transform db exec JSON into response JSON
+ * @example
+ * @code
+ *  JSONPath path[3] = {
+ *      { .type=JSON_STRING, .name="accounts" },
+ *      { .type=JSON_NUMBER, .index=0 },
+ *      { .type=JSON_UNDEFINED, .name=NULL }
+ *  };
+ *  JSON *root = Database_exec(query);
+ *  JSON *accounts = JSON_alloc(JSON_OBJECT);
+ *  kore_serialization_scrapeAndMerge(accounts, root, path, JSON_DEEP);
+ * @endcode
+ */
+
 #pragma once
 
 #include "./json.h"
@@ -32,10 +50,8 @@ int kore_serialization_createCounter(JSON *target, JSON *source, JSONPath *path)
  * @param oldPath in source object or array
  * @param newPath in target object or array
  *
- *
  * @note
  *  This will always use simple clone on children
- * @example
  * @code
  *  // JSON *target == { "users": [] }
  *  // JSON *source == { "hello": { "world": [ "John" ] } }
@@ -50,5 +66,6 @@ int kore_serialization_createCounter(JSON *target, JSON *source, JSONPath *path)
  *  };
  *  char succeed = kore_serialization_mergePaths(target, source, oldPath, newPath);
  *  // JSON *target == { "users": [] } because array will not be cloned deeply
+ * @endcode
  */
 int kore_serialization_mergePaths(JSON *target, JSON *source, JSONPath *oldPath, JSONPath *newPath);
