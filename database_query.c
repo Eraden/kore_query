@@ -50,7 +50,6 @@ SQL_escape_string(const char *string) {
   free(sql);
   sql = buff;
   return sql;
-
 }
 
 char *

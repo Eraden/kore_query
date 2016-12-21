@@ -80,6 +80,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug" AND CMAKE_C_COMPILER MATCHES "clang")
       ./database_exec.c
       ./database_query.c
       ./database_query_stringify.c
+      ./serialize.c
 
       test/test_json.c
       test/test_database_query.c

@@ -82,11 +82,17 @@ char *SQL_escape_string(const char *string);
  */
 char *SQL_prepare_sql(const char *query, const int argsSize, const char **args);
 
+/**
+ * Sorting direction
+ */
 typedef enum eDatabaseQueryOrderDirection {
   DATABASE_QUERY_ORDER_ASC = 1,
   DATABASE_QUERY_ORDER_DESC = 2,
 } DatabaseQueryOrderDirection;
 
+/**
+ * Type of SQL query
+ */
 typedef enum eDatabaseQueryType {
   DATABASE_QUERY_TYPE_SELECT = 1,
   DATABASE_QUERY_TYPE_INSERT = 2,
@@ -94,12 +100,18 @@ typedef enum eDatabaseQueryType {
   DATABASE_QUERY_TYPE_DELETE = 4,
 } DatabaseQueryType;
 
+/**
+ * Condition type
+ */
 typedef enum eDatabaseQueryConditionType {
   DATABASE_QUERY_CONDITION_TYPE_PURE_SQL = 1,
   DATABASE_QUERY_CONDITION_TYPE_VALUE = 2,
   DATABASE_QUERY_CONDITION_TYPE_OTHER_FIELD = 3,
 } DatabaseQueryConditionType;
 
+/**
+ * Join type
+ */
 typedef enum eDatabaseQueryJoinType {
   DATABASE_QUERY_JOIN_TYPE_NORMAL = 0,
   DATABASE_QUERY_JOIN_TYPE_INNER,
@@ -118,10 +130,17 @@ typedef struct sDatabaseQueryCondition DatabaseQueryCondition;
 typedef struct sDatabaseQueryJoin DatabaseQueryJoin;
 typedef struct sDatabaseQuery DatabaseQuery;
 
+/**
+ * Queried table data
+ */
 typedef struct sDatabaseQueryTable {
   char *name;
 } DatabaseQueryTable;
 
+/**
+ * Queried table column data.
+ *
+ */
 typedef struct sDatabaseQueryField {
   char *name;
   char *as;
@@ -129,10 +148,16 @@ typedef struct sDatabaseQueryField {
   JSONType jsonType;
 } DatabaseQueryField;
 
+/**
+ * Query rows limit
+ */
 typedef struct sDatabaseQueryLimit {
   char *limit;
 } DatabaseQueryLimit;
 
+/**
+ * Condition data
+ */
 typedef struct sDatabaseQueryCondition {
   DatabaseQueryTable *table;
   DatabaseQueryField *field;
@@ -145,6 +170,9 @@ typedef struct sDatabaseQueryCondition {
   DatabaseQueryConditionType type;
 } DatabaseQueryCondition;
 
+/**
+ * Distinct on data
+ */
 typedef struct sDatabaseQueryDistinct {
   DatabaseQueryField **fields;
   unsigned int fieldsSize;
@@ -153,6 +181,9 @@ typedef struct sDatabaseQueryDistinct {
 /// alias for insert and update
 typedef struct sDatabaseQueryCondition DatabaseQueryFieldValue;
 
+/**
+ * Join data
+ */
 typedef struct sDatabaseQueryJoin {
   DatabaseQueryTable *table;
   DatabaseQueryCondition **conditions;
@@ -160,12 +191,18 @@ typedef struct sDatabaseQueryJoin {
   DatabaseQueryJoinType type;
 } DatabaseQueryJoin;
 
+/**
+ * Order data
+ */
 typedef struct sDatabaseQueryOrder {
   DatabaseQueryField *field;
   DatabaseQueryOrderDirection direction;
   char *pure;
 } DatabaseQueryOrder;
 
+/**
+ * Full query data
+ */
 typedef struct sDatabaseQuery {
   /**
    * Main table
@@ -317,8 +354,7 @@ DatabaseQuery_whereField(
 
 /**
  * Add where condition to query.
- * Example result:
- *  posts.title = lower('Hello');
+ *
  * @param query
  * @param field table column
  * @param operator
@@ -326,6 +362,11 @@ DatabaseQuery_whereField(
  * @param caller database function to call
  * @param type if string then will add quotes
  * @return
+ *
+ * @example
+ * @code
+ *  DatabaseQuery_whereFieldWithCall(query, "title", "=", "Hello", "lower", JSON_STRING);
+ *  // posts.title = lower('Hello')
  */
 DatabaseQueryCondition __attribute__((__used__)) *
 DatabaseQuery_whereFieldWithCall(
@@ -339,15 +380,21 @@ DatabaseQuery_whereFieldWithCall(
 
 /**
  * Add sql where condition
+ *
  * @param query
  * @param pure sql where part eq. "posts.title ILIKE 'hello'"
  * @return
+ *
+ * @example
+ * @code
+ *  DatabaseQuery_whereSQL(query, "posts.title ILIKE 'hello'");
  */
 DatabaseQueryCondition __attribute__((__used__)) *
 DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure);
 
 /**
  * Add join statement
+ *
  * @param query
  * @param joinTableName table to join
  * @param joinFieldName join ON
@@ -355,6 +402,11 @@ DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure);
  * @param queriedFieldName
  * @param type join type
  * @return
+ *
+ * @example
+ * @code
+ *  DatabaseQuery *query = DatabaseQuery_startSelect("accounts");
+ *  DatabaseQuery_join(query, "profiles", "account_id", "accounts", "id", DATABASE_QUERY_JOIN_TYPE_INNER);
  */
 DatabaseQueryJoin *
 DatabaseQuery_join(
@@ -368,9 +420,12 @@ DatabaseQuery_join(
 
 /**
  * Add limit statement
+ *
  * @param query
  * @param value number of rows
  * @return
+ *
+ * @note Be careful with joins and limit because it will affect all tables!
  */
 DatabaseQueryLimit __attribute__((__used__)) *
 DatabaseQuery_limit(DatabaseQuery *query, char *value);
@@ -441,8 +496,15 @@ DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, JSONTyp
 
 /**
  * Check if value can be harmful for database
+ *
  * @param value
  * @return
+ *
+ * @example
+ * @code
+ *  DatabaseQuery_isDirty(";"); // 1
+ *  DatabaseQuery_isDirty("'"); // 1
+ *  DatabaseQuery_isDirty("\n"); // 0
  */
 char DatabaseQuery_isDirty(const char *value);
 

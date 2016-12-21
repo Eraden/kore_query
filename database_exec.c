@@ -384,11 +384,11 @@ Database_findCurrent(JSON *array, const char *objectId) {
       switch ((*fields)->type) {
         case JSON_NUMBER: {
           float id = (float) atof(objectId);
-          if ((*fields)->value == id) found = object;
+          if (JSON_AS_NUMBER((*fields)) == id) found = object;
           break;
         }
         default: {
-          if ((*fields)->string && strcmp((*fields)->string, objectId) == 0) found = object;
+          if (JSON_AS_STRING((*fields)) && strcmp(JSON_AS_STRING((*fields)), objectId) == 0) found = object;
           break;
         }
       }
@@ -561,7 +561,10 @@ Database_orderedFields(const DatabaseQuery *query) {
   unsigned int tablesSize = 1;
 
   if (DB_QUERY_HAS_NO_JOINS(query)) {
-    return NULL;
+    DatabaseQueryField **ordered = calloc(sizeof(DatabaseQueryField *), fieldsSize);
+    memcpy(ordered, fields, sizeof(DatabaseQueryField *) * fieldsSize);
+    return ordered;
+//    return NULL;
   } else {
     tablesSize += query->joinsSize;
   }
@@ -706,4 +709,3 @@ Database_execSql(
   kore_pgsql_cleanup(&kore_sql);
   return array;
 }
-

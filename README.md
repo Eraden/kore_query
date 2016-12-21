@@ -90,10 +90,29 @@ Only for serialization purpose
 JSON *root = JSON_alloc(JSON_OBJECT);
 JSON *array = JSON_alloc(JSON_ARRAY);
 JSON_set(root, L"users", array);
+
 for (int i = 0; i < 2; i++) {
   JSON *child = JSON_alloc(JSON_OBJECT);
   JSON_append(array, child);
 }
+
+JSON_EACH_PAIR(root, rootKey, rootChild)
+    if (strcmp(rootKey, "some-key") == 0) /* do something */;
+    JSON_EACH_PAIR_NEXT
+JSON_END_EACH
+
+JSON_EACH(array, arrayIndex, arrayEntry)
+    if (arrayIndex != 0) kore_log(LOG_INFO, ", ");
+    JSON_EACH_NEXT
+JSON_END_EACH
+
+JSONPath path[3] = {
+    { .type=JSON_STRING, .name="users" },
+    { .type=JSON_NUMBER, .index=1 },
+    { .type=JSON_UNDEFINED, .name=NULL },
+};
+JSON *child = JSON_find(source, path);
+
 char *json = JSON_stringify(root); //=> {"users":[{},{}]}
 JSON_free(root);
 free(json);
