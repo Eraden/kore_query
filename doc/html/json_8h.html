@@ -1,0 +1,780 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>KoreQuery: Dokumentacja pliku json.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">KoreQuery
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Strona&#160;główna</span></a></li>
+      <li><a href="annotated.html"><span>Klasy</span></a></li>
+      <li class="current"><a href="files.html"><span>Pliki</span></a></li>
+      <li><a href="examples.html"><span>Przykłady</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Szukaj" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Lista&#160;plików</span></a></li>
+      <li><a href="globals.html"><span>Składowe&#160;plików</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Komponenty</a> &#124;
+<a href="#define-members">Definicje</a> &#124;
+<a href="#typedef-members">Definicje typów</a> &#124;
+<a href="#enum-members">Wyliczenia</a> &#124;
+<a href="#func-members">Funkcje</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentacja pliku json.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>JSON response type.  
+<a href="#details">Więcej...</a></p>
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;strings.h&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Wykres zależności załączania dla json.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="json_8h__incl.png" border="0" usemap="#json_8h" alt=""/></div>
+<map name="json_8h" id="json_8h">
+<area shape="rect" id="node5" href="strings_8h_source.html" title="strings.h" alt="" coords="485,80,557,107"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+Ten wykres pokazuje, które pliki bezpośrednio lub pośrednio załączają ten plik:</div>
+<div class="dyncontent">
+<div class="center"><img src="json_8h__dep__incl.png" border="0" usemap="#json_8hdep" alt=""/></div>
+<map name="json_8hdep" id="json_8hdep">
+<area shape="rect" id="node2" href="database__query_8h_source.html" title="database_query.h" alt="" coords="32,80,157,107"/>
+<area shape="rect" id="node5" href="serialize_8h_source.html" title="serialize.h" alt="" coords="182,80,263,107"/>
+<area shape="rect" id="node3" href="database__query__stringify_8h_source.html" title="database_query_stringify.h" alt="" coords="5,155,184,181"/>
+<area shape="rect" id="node4" href="database__exec_8h_source.html" title="database_exec.h" alt="" coords="34,229,155,256"/>
+</map>
+</div>
+</div>
+<p><a href="json_8h_source.html">Idź do kodu źródłowego tego pliku.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Komponenty</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unioneJSONValue.html">eJSONValue</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsJSON.html">sJSON</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsJSONPath.html">sJSONPath</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Definicje</h2></td></tr>
+<tr class="memitem:a0970d8f80a6acb5006309383a51b9ed0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>JSON_EACH_PAIR</b>(expr,  ENTRY_KEY,  ENTRY_NAME)</td></tr>
+<tr class="separator:a0970d8f80a6acb5006309383a51b9ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac48d6b2f8f0adbbd8437de1cb273667"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>JSON_EACH_PAIR_NEXT</b></td></tr>
+<tr class="separator:aac48d6b2f8f0adbbd8437de1cb273667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e13c5cdd8813b3cfc264836b70c94f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>JSON_EACH</b>(expr,  ENTRY_INDEX,  ENTRY_NAME)</td></tr>
+<tr class="separator:a8e13c5cdd8813b3cfc264836b70c94f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b53445a30bbe35cc742b3fb4fdb16c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b53445a30bbe35cc742b3fb4fdb16c0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>JSON_EACH_NEXT</b>&#160;&#160;&#160;childrenPtr += 1;</td></tr>
+<tr class="separator:a5b53445a30bbe35cc742b3fb4fdb16c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa83a532be60f2a03959b6d27bfc3625"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa83a532be60f2a03959b6d27bfc3625"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>JSON_END_EACH</b>&#160;&#160;&#160;} } }</td></tr>
+<tr class="separator:aaa83a532be60f2a03959b6d27bfc3625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2b3f23c713d7e12cea71d2c7ce6fb04"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2b3f23c713d7e12cea71d2c7ce6fb04"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>JSON_AS_NUMBER</b>(obj)&#160;&#160;&#160;obj-&gt;jsonValue.value</td></tr>
+<tr class="separator:af2b3f23c713d7e12cea71d2c7ce6fb04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf15341d57eda1e4826b2952e9339262"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf15341d57eda1e4826b2952e9339262"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>JSON_AS_STRING</b>(obj)&#160;&#160;&#160;obj-&gt;jsonValue.string</td></tr>
+<tr class="separator:aaf15341d57eda1e4826b2952e9339262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Definicje typów</h2></td></tr>
+<tr class="memitem:a883822215fcdb974b95ff5339b5ecab4"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structsJSON.html">sJSON</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a></td></tr>
+<tr class="separator:a883822215fcdb974b95ff5339b5ecab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f3747cfbfe6c68ae7b67184bd731728"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structsJSONPath.html">sJSONPath</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a0f3747cfbfe6c68ae7b67184bd731728">JSONPath</a></td></tr>
+<tr class="separator:a0f3747cfbfe6c68ae7b67184bd731728"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af761d54284482a1af5a01d8f52845b49"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="json_8h.html#acab6725e93cbfcfcf4273259977127a1">eJSONType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#af761d54284482a1af5a01d8f52845b49">JSONType</a></td></tr>
+<tr class="separator:af761d54284482a1af5a01d8f52845b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7eaa79e9cdd0740c01726c3ba06e3e"><td class="memItemLeft" align="right" valign="top">typedef union <a class="el" href="unioneJSONValue.html">eJSONValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#acb7eaa79e9cdd0740c01726c3ba06e3e">JSONValue</a></td></tr>
+<tr class="separator:acb7eaa79e9cdd0740c01726c3ba06e3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82504dc7a921c3161c7fd45d4215e7b0"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="json_8h.html#a7a8b3184f1ecbd8fcfdb66bd9514d2b3">eJSONCloneType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a></td></tr>
+<tr class="separator:a82504dc7a921c3161c7fd45d4215e7b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Wyliczenia</h2></td></tr>
+<tr class="memitem:acab6725e93cbfcfcf4273259977127a1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#acab6725e93cbfcfcf4273259977127a1">eJSONType</a> { <br />
+&#160;&#160;<b>JSON_UNDEFINED</b> = 0, 
+<b>JSON_STRING</b> = 1, 
+<b>JSON_NUMBER</b> = 1 &lt;&lt; 1, 
+<b>JSON_OBJECT</b> = 1 &lt;&lt; 2, 
+<br />
+&#160;&#160;<b>JSON_ARRAY</b> = 1 &lt;&lt; 3, 
+<b>JSON_NULL</b> = 1 &lt;&lt; 4
+<br />
+ }</td></tr>
+<tr class="separator:acab6725e93cbfcfcf4273259977127a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a8b3184f1ecbd8fcfdb66bd9514d2b3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a7a8b3184f1ecbd8fcfdb66bd9514d2b3">eJSONCloneType</a> { <b>JSON_SIMPLE</b> = 0, 
+<b>JSON_DEEP</b> = 1
+ }</td></tr>
+<tr class="separator:a7a8b3184f1ecbd8fcfdb66bd9514d2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funkcje</h2></td></tr>
+<tr class="memitem:ad8fd00eaccc81958c5a65f805e5c00ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#ad8fd00eaccc81958c5a65f805e5c00ba">JSON_alloc</a> (<a class="el" href="json_8h.html#af761d54284482a1af5a01d8f52845b49">JSONType</a> type)</td></tr>
+<tr class="separator:ad8fd00eaccc81958c5a65f805e5c00ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8564e11a595dfb8e42182c28147b1d70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a8564e11a595dfb8e42182c28147b1d70">JSON_string</a> (char *str)</td></tr>
+<tr class="separator:a8564e11a595dfb8e42182c28147b1d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcecc56303be7d8c3b1e835d058d5a2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#abcecc56303be7d8c3b1e835d058d5a2d">JSON_number</a> (float n)</td></tr>
+<tr class="separator:abcecc56303be7d8c3b1e835d058d5a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5db034af6e012802315e2e5587a54df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#ac5db034af6e012802315e2e5587a54df">JSON_free</a> (<a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *object)</td></tr>
+<tr class="separator:ac5db034af6e012802315e2e5587a54df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b79fc03b1dffbc61cbbe9b817ef8ae6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a0b79fc03b1dffbc61cbbe9b817ef8ae6">JSON_set</a> (<a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *parent, wchar_t *key, <a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *json)</td></tr>
+<tr class="separator:a0b79fc03b1dffbc61cbbe9b817ef8ae6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9460db2cd54a7462fca0aab59aaea12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#ae9460db2cd54a7462fca0aab59aaea12">JSON_append</a> (<a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *array, <a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *entry)</td></tr>
+<tr class="separator:ae9460db2cd54a7462fca0aab59aaea12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88f3755b96cc3a6ca0adbd35e0092280"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a88f3755b96cc3a6ca0adbd35e0092280">JSON_stringify</a> (<a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *root)</td></tr>
+<tr class="separator:a88f3755b96cc3a6ca0adbd35e0092280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ea42f7260d5909a1287aca8676a7f3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a6ea42f7260d5909a1287aca8676a7f3c">JSON_find</a> (<a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *source, <a class="el" href="json_8h.html#a0f3747cfbfe6c68ae7b67184bd731728">JSONPath</a> *path)</td></tr>
+<tr class="separator:a6ea42f7260d5909a1287aca8676a7f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6e8a1f93227d3017c1e3b5e1bb03591"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#ac6e8a1f93227d3017c1e3b5e1bb03591">JSON_escape</a> (char *string)</td></tr>
+<tr class="separator:ac6e8a1f93227d3017c1e3b5e1bb03591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d72929696e1de3ab3b8ad39a684dded"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#a5d72929696e1de3ab3b8ad39a684dded">JSON_clone</a> (<a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *obj, <a class="el" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a> deep)</td></tr>
+<tr class="separator:a5d72929696e1de3ab3b8ad39a684dded"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad042d2d456ea6186716a5071c0151370"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#ad042d2d456ea6186716a5071c0151370">JSON_mergeJSON</a> (<a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *target, <a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *source, <a class="el" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a> deep)</td></tr>
+<tr class="separator:ad042d2d456ea6186716a5071c0151370"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6b5d6ad33f7765b65e275785b40ef8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="json_8h.html#acb7eaa79e9cdd0740c01726c3ba06e3e">JSONValue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="json_8h.html#af6b5d6ad33f7765b65e275785b40ef8b">JSON_valueOf</a> (<a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *object, char *key)</td></tr>
+<tr class="separator:af6b5d6ad33f7765b65e275785b40ef8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
+<div class="textblock"><p>JSON response type. </p>
+<dl class="section author"><dt>Autor</dt><dd>Adrian Eraden Woźniak </dd></dl>
+<dl class="section date"><dt>Data</dt><dd>21.12.2016 </dd></dl>
+</div><h2 class="groupheader">Dokumentacja definicji</h2>
+<a class="anchor" id="a8e13c5cdd8813b3cfc264836b70c94f5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define JSON_EACH</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ENTRY_INDEX, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ENTRY_NAME&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Wartość:</b><div class="fragment"><div class="line">{ <a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">\</a></div><div class="line"><a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">  JSON</a> *array = expr; \</div><div class="line">  if (array) { <a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">\</a></div><div class="line"><a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">    JSON</a> **childrenPtr = array-&gt;<a class="code" href="structsJSON.html#a4c8ba3fc09489bdb99aca27ef7fff535">array</a>.objects; \</div><div class="line">    for (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ENTRY_INDEX = 0; ENTRY_INDEX &lt; array-&gt;array.len; ENTRY_INDEX ++) { <a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">\</a></div><div class="line"><a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">      JSON</a> *ENTRY_NAME = *childrenPtr;</div><div class="ttc" id="json_8h_html_a883822215fcdb974b95ff5339b5ecab4"><div class="ttname"><a href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a></div><div class="ttdeci">struct sJSON JSON</div><div class="ttdef"><b>Definition:</b> json.h:48</div></div>
+<div class="ttc" id="structsJSON_html_a4c8ba3fc09489bdb99aca27ef7fff535"><div class="ttname"><a href="structsJSON.html#a4c8ba3fc09489bdb99aca27ef7fff535">sJSON::array</a></div><div class="ttdeci">struct sJSON::@3 array</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="a0970d8f80a6acb5006309383a51b9ed0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define JSON_EACH_PAIR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expr, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ENTRY_KEY, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ENTRY_NAME&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Wartość:</b><div class="fragment"><div class="line">{ <a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">\</a></div><div class="line"><a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">  JSON</a> *<span class="keywordtype">object</span> = expr; \</div><div class="line">  if (<span class="keywordtype">object</span>) { <a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">\</a></div><div class="line"><a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">    JSON</a> **childrenPtr = <span class="keywordtype">object</span>-&gt;<a class="code" href="structsJSON.html#a3c49fa17c184d6be197b183d759c4585">children</a>.objects; \</div><div class="line">    char **keysPtr = <span class="keywordtype">object</span>-&gt;<a class="code" href="structsJSON.html#a3c49fa17c184d6be197b183d759c4585">children</a>.<a class="code" href="structsJSON.html#a3db035c9589ee45acad7efa117cbf1a7">keys</a>; \</div><div class="line">    for (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> childIndex = 0; childIndex &lt; <span class="keywordtype">object</span>-&gt;children.len; childIndex ++) { <a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">\</a></div><div class="line"><a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">      JSON</a> *ENTRY_NAME = *childrenPtr; \</div><div class="line">      char *ENTRY_KEY = *keysPtr; \</div><div class="ttc" id="json_8h_html_a883822215fcdb974b95ff5339b5ecab4"><div class="ttname"><a href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a></div><div class="ttdeci">struct sJSON JSON</div><div class="ttdef"><b>Definition:</b> json.h:48</div></div>
+<div class="ttc" id="structsJSON_html_a3c49fa17c184d6be197b183d759c4585"><div class="ttname"><a href="structsJSON.html#a3c49fa17c184d6be197b183d759c4585">sJSON::children</a></div><div class="ttdeci">struct sJSON::@2 children</div></div>
+<div class="ttc" id="structsJSON_html_a3db035c9589ee45acad7efa117cbf1a7"><div class="ttname"><a href="structsJSON.html#a3db035c9589ee45acad7efa117cbf1a7">sJSON::keys</a></div><div class="ttdeci">char ** keys</div><div class="ttdef"><b>Definition:</b> json.h:118</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a class="anchor" id="aac48d6b2f8f0adbbd8437de1cb273667"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define JSON_EACH_PAIR_NEXT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Wartość:</b><div class="fragment"><div class="line">childrenPtr += 1; \</div><div class="line">      keysPtr += 1;</div></div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Dokumentacja definicji typów</h2>
+<a class="anchor" id="a883822215fcdb974b95ff5339b5ecab4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structsJSON.html">sJSON</a> <a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>JSON data </p>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a13">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a82504dc7a921c3161c7fd45d4215e7b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="json_8h.html#a7a8b3184f1ecbd8fcfdb66bd9514d2b3">eJSONCloneType</a>  <a class="el" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>How JSON should be cloned Simple indicates that complex object should not clone children </p>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a12">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a0f3747cfbfe6c68ae7b67184bd731728"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="structsJSONPath.html">sJSONPath</a> <a class="el" href="json_8h.html#a0f3747cfbfe6c68ae7b67184bd731728">JSONPath</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Path inside json</p>
+<div class="fragment"><div class="line"><a class="code" href="structsJSONPath.html">JSONPath</a> path[3] = {</div><div class="line">    { .type=JSON_STRING, .name=<span class="stringliteral">&quot;accounts&quot;</span> }, <span class="comment">// for object</span></div><div class="line">    { .type=JSON_NUMBER, .index=1 }, <span class="comment">// for array</span></div><div class="line">    { .type=JSON_UNDEFINED, .name=NULL } <span class="comment">// end of path</span></div><div class="line">};</div></div><!-- fragment --><dl class="section see"><dt>Zobacz również</dt><dd><a class="el" href="json_8h.html#a6ea42f7260d5909a1287aca8676a7f3c">JSON_find</a> </dd></dl>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a14">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="af761d54284482a1af5a01d8f52845b49"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="json_8h.html#acab6725e93cbfcfcf4273259977127a1">eJSONType</a> <a class="el" href="json_8h.html#af761d54284482a1af5a01d8f52845b49">JSONType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type of data stored by JSON </p>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a9">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="acb7eaa79e9cdd0740c01726c3ba06e3e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef union <a class="el" href="unioneJSONValue.html">eJSONValue</a> <a class="el" href="json_8h.html#acb7eaa79e9cdd0740c01726c3ba06e3e">JSONValue</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>JSON value variants </p>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a11">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<h2 class="groupheader">Dokumentacja typów wyliczanych</h2>
+<a class="anchor" id="a7a8b3184f1ecbd8fcfdb66bd9514d2b3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="json_8h.html#a7a8b3184f1ecbd8fcfdb66bd9514d2b3">eJSONCloneType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>How JSON should be cloned Simple indicates that complex object should not clone children </p>
+
+</div>
+</div>
+<a class="anchor" id="acab6725e93cbfcfcf4273259977127a1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="json_8h.html#acab6725e93cbfcfcf4273259977127a1">eJSONType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type of data stored by JSON </p>
+
+</div>
+</div>
+<h2 class="groupheader">Dokumentacja funkcji</h2>
+<a class="anchor" id="ad8fd00eaccc81958c5a65f805e5c00ba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a>* JSON_alloc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#af761d54284482a1af5a01d8f52845b49">JSONType</a>&#160;</td>
+          <td class="paramname"><em>type</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create new empty json object with given type </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">type</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd></dd></dl>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a1">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="ae9460db2cd54a7462fca0aab59aaea12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a>* JSON_append </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>entry</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Append object at end of given array</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">array</td><td></td></tr>
+    <tr><td class="paramname">entry</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd></dd></dl>
+<div class="fragment"><div class="line"><a class="code" href="structsJSON.html">JSON</a> *user = <a class="code" href="json_8h.html#ae9460db2cd54a7462fca0aab59aaea12">JSON_append</a>(array, <a class="code" href="json_8h.html#ad8fd00eaccc81958c5a65f805e5c00ba">JSON_alloc</a>(JSON_OBJECT));</div></div><!-- fragment --> <dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a3">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a5d72929696e1de3ab3b8ad39a684dded"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a>* JSON_clone </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>obj</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a>&#160;</td>
+          <td class="paramname"><em>deep</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>New object will be created with fallowing rules:</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td></td></tr>
+    <tr><td class="paramname">deep</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>new json object</dd></dl>
+<div class="fragment"><div class="line">* <span class="keywordtype">object</span> will be cloned with all keys and returned <span class="keywordflow">if</span> deep is <span class="keyword">set</span> to `JSON_DEEP`, otherwise empty <span class="keywordtype">object</span> will be returned</div><div class="line">* array will be cloned with all children and returned <span class="keywordflow">if</span> deep is <span class="keyword">set</span> to `JSON_DEEP`, otherwise empty array will be returned</div><div class="line">* <span class="keywordtype">string</span> will be cloned</div><div class="line">* value will be preserved</div></div><!-- fragment --> <dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a18">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="ac6e8a1f93227d3017c1e3b5e1bb03591"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* JSON_escape </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>string</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Escape all special characters</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd></dd></dl>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> *escaped = <a class="code" href="json_8h.html#ac6e8a1f93227d3017c1e3b5e1bb03591">JSON_escape</a>(<span class="stringliteral">&quot;Some paragraph\n Next paragraph&quot;</span>);</div><div class="line"><span class="comment">// #=&gt; &quot;Some paragraph\\n Next paragraph&quot;</span></div></div><!-- fragment --> <dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a17">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a6ea42f7260d5909a1287aca8676a7f3c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a>* JSON_find </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a0f3747cfbfe6c68ae7b67184bd731728">JSONPath</a> *&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Lookup for JSON path</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td></td></tr>
+    <tr><td class="paramname">path</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>json object or NULL if not found</dd></dl>
+<dl class="section see"><dt>Zobacz również</dt><dd><a class="el" href="json_8h.html#a0f3747cfbfe6c68ae7b67184bd731728">JSONPath</a></dd></dl>
+<div class="fragment"><div class="line"><a class="code" href="structsJSONPath.html">JSONPath</a> path[4] = {</div><div class="line">    { .type=JSON_STRING, .name=<span class="stringliteral">&quot;hello&quot;</span> },</div><div class="line">    { .type=JSON_STRING, .name=<span class="stringliteral">&quot;world&quot;</span> },</div><div class="line">    { .type=JSON_NUMBER, .index=1 },</div><div class="line">    { .type=JSON_UNDEFINED, .name=NULL },</div><div class="line">};</div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *child = <a class="code" href="json_8h.html#a6ea42f7260d5909a1287aca8676a7f3c">JSON_find</a>(source, path);</div></div><!-- fragment --> <dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a6">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="ac5db034af6e012802315e2e5587a54df"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void JSON_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>object</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Free object memory </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a8">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="ad042d2d456ea6186716a5071c0151370"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int JSON_mergeJSON </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>source</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a>&#160;</td>
+          <td class="paramname"><em>deep</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Merge two object with fallowing rules:</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td></td></tr>
+    <tr><td class="paramname">source</td><td></td></tr>
+    <tr><td class="paramname">deep</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>1 if succeed or 0 if not</dd></dl>
+<div class="fragment"><div class="line">* <span class="keywordtype">object</span> will be cloned and merged to target <span class="keywordflow">if</span> deep is <span class="keyword">set</span> to `JSON_DEEP`, otherwise empty <span class="keywordtype">object</span> will be merged</div><div class="line">* array will be cloned and merged to target <span class="keywordflow">if</span> deep is <span class="keyword">set</span> to `JSON_DEEP`, otherwise empty array will be merged</div><div class="line">* two <span class="keywordtype">string</span> will be concatenated without any separator</div><div class="line">* value will be replaced</div></div><!-- fragment --> <dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a19">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="abcecc56303be7d8c3b1e835d058d5a2d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a>* JSON_number </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>n</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create json object from float </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd></dd></dl>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a16">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a0b79fc03b1dffbc61cbbe9b817ef8ae6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a>* JSON_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">wchar_t *&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>json</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set new value for given key. Multiple values for key can exists and newest value will be at end of keys.</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td></td></tr>
+    <tr><td class="paramname">key</td><td></td></tr>
+    <tr><td class="paramname">json</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd></dd></dl>
+<div class="fragment"><div class="line"><a class="code" href="structsJSON.html">JSON</a> *users = <a class="code" href="json_8h.html#a0b79fc03b1dffbc61cbbe9b817ef8ae6">JSON_set</a>(root, L<span class="stringliteral">&quot;users&quot;</span>, <a class="code" href="json_8h.html#ad8fd00eaccc81958c5a65f805e5c00ba">JSON_alloc</a>(JSON_ARRAY));</div></div><!-- fragment --> <dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a2">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a8564e11a595dfb8e42182c28147b1d70"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a>* JSON_string </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create json string from string </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd></dd></dl>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a15">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="a88f3755b96cc3a6ca0adbd35e0092280"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* JSON_stringify </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>root</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create string from JSON object</p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">root</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd></dd></dl>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> *json = <a class="code" href="json_8h.html#a88f3755b96cc3a6ca0adbd35e0092280">JSON_stringify</a>(root);</div></div><!-- fragment --> <dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a7">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+<a class="anchor" id="af6b5d6ad33f7765b65e275785b40ef8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="json_8h.html#acb7eaa79e9cdd0740c01726c3ba06e3e">JSONValue</a> JSON_valueOf </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a> *&#160;</td>
+          <td class="paramname"><em>object</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns JSONValue for given key if missing empty JSONValue. </p><dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">object</td><td></td></tr>
+    <tr><td class="paramname">key</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd></dd></dl>
+<dl><dt><b>Przykłady: </b></dt><dd><a class="el" href="_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example.html#a20">/home/eraden/code/eraden/kore_query/json.h</a>.</dd>
+</dl>
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano przez &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>

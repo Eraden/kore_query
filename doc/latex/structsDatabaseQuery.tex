@@ -1,0 +1,109 @@
+\hypertarget{structsDatabaseQuery}{}\section{Dokumentacja struktury s\+Database\+Query}
+\label{structsDatabaseQuery}\index{s\+Database\+Query@{s\+Database\+Query}}
+
+
+{\ttfamily \#include $<$database\+\_\+query.\+h$>$}
+
+
+
+Diagram współpracy dla s\+Database\+Query\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structsDatabaseQuery__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Atrybuty publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsDatabaseQueryTable}{Database\+Query\+Table} $\ast$ \hyperlink{structsDatabaseQuery_a8d34ce4ad0e31c1bc8978ec03d4b5fbf}{table}
+\item 
+\hyperlink{structsDatabaseQueryDistinct}{Database\+Query\+Distinct} $\ast$ \hyperlink{structsDatabaseQuery_af873390ab854ce4a34f704971d271521}{distinct}
+\item 
+\hyperlink{structsDatabaseQueryField}{Database\+Query\+Field} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a2075e002e2ecbf166d9fbcc6f9780701}{fields}
+\item 
+unsigned int \hyperlink{structsDatabaseQuery_a052737bce106f2758ba5d5ac663ff57a}{fields\+Size}
+\item 
+\hyperlink{structsDatabaseQueryCondition}{Database\+Query\+Field\+Value} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a7bf7cf5cda36b6c6d3701926c35d8972}{field\+Values}
+\item 
+unsigned int \hyperlink{structsDatabaseQuery_aa203f0cb4e33b39d48e6674250d9f74d}{field\+Values\+Size}
+\item 
+\hyperlink{structsDatabaseQueryCondition}{Database\+Query\+Condition} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a54e52c15ffef2b87e3b2c7a4d0ffc2f9}{conditions}
+\item 
+unsigned int \hyperlink{structsDatabaseQuery_a7534216a1d5ad726447b73b6eb4fdbc4}{conditions\+Size}
+\item 
+\hyperlink{structsDatabaseQueryJoin}{Database\+Query\+Join} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_aa66192f20c6390fd1bd5f2db96860926}{joins}
+\item 
+unsigned int \hyperlink{structsDatabaseQuery_aca409db9b76aea5d1e83390e2a251fd3}{joins\+Size}
+\item 
+\hyperlink{structsDatabaseQueryField}{Database\+Query\+Field} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_ad88d21177dbe929109914b4b75665454}{returning}
+\item 
+unsigned int \hyperlink{structsDatabaseQuery_a08dafb08cb00fac230eaceb0dfd20c9f}{returning\+Size}
+\item 
+\hyperlink{structsDatabaseQueryOrder}{Database\+Query\+Order} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a4f2d3a55d0e7fcd151f7650c08ff7975}{orders}
+\item 
+unsigned int \hyperlink{structsDatabaseQuery_aecb5648962f556532a3a2c91b4970397}{orders\+Size}
+\item 
+\hyperlink{structsDatabaseQueryLimit}{Database\+Query\+Limit} $\ast$ \hyperlink{structsDatabaseQuery_aeca8178bae8fc02faae2bf64d6e7455a}{limit}
+\item 
+Database\+Query\+Type \hyperlink{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}{type}
+\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+Full query data 
+
+\subsection{Dokumentacja atrybutów składowych}
+\index{s\+Database\+Query@{s\+Database\+Query}!conditions@{conditions}}
+\index{conditions@{conditions}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{conditions}{conditions}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Condition}$\ast$$\ast$ s\+Database\+Query\+::conditions}\hypertarget{structsDatabaseQuery_a54e52c15ffef2b87e3b2c7a4d0ffc2f9}{}\label{structsDatabaseQuery_a54e52c15ffef2b87e3b2c7a4d0ffc2f9}
+Conditions \index{s\+Database\+Query@{s\+Database\+Query}!conditions\+Size@{conditions\+Size}}
+\index{conditions\+Size@{conditions\+Size}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{conditions\+Size}{conditionsSize}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int s\+Database\+Query\+::conditions\+Size}\hypertarget{structsDatabaseQuery_a7534216a1d5ad726447b73b6eb4fdbc4}{}\label{structsDatabaseQuery_a7534216a1d5ad726447b73b6eb4fdbc4}
+Number of conditions \index{s\+Database\+Query@{s\+Database\+Query}!distinct@{distinct}}
+\index{distinct@{distinct}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{distinct}{distinct}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Distinct}$\ast$ s\+Database\+Query\+::distinct}\hypertarget{structsDatabaseQuery_af873390ab854ce4a34f704971d271521}{}\label{structsDatabaseQuery_af873390ab854ce4a34f704971d271521}
+Distinct statement \index{s\+Database\+Query@{s\+Database\+Query}!fields@{fields}}
+\index{fields@{fields}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{fields}{fields}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Field}$\ast$$\ast$ s\+Database\+Query\+::fields}\hypertarget{structsDatabaseQuery_a2075e002e2ecbf166d9fbcc6f9780701}{}\label{structsDatabaseQuery_a2075e002e2ecbf166d9fbcc6f9780701}
+Select fields \index{s\+Database\+Query@{s\+Database\+Query}!fields\+Size@{fields\+Size}}
+\index{fields\+Size@{fields\+Size}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{fields\+Size}{fieldsSize}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int s\+Database\+Query\+::fields\+Size}\hypertarget{structsDatabaseQuery_a052737bce106f2758ba5d5ac663ff57a}{}\label{structsDatabaseQuery_a052737bce106f2758ba5d5ac663ff57a}
+Number of fields to select \index{s\+Database\+Query@{s\+Database\+Query}!field\+Values@{field\+Values}}
+\index{field\+Values@{field\+Values}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{field\+Values}{fieldValues}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Field\+Value}$\ast$$\ast$ s\+Database\+Query\+::field\+Values}\hypertarget{structsDatabaseQuery_a7bf7cf5cda36b6c6d3701926c35d8972}{}\label{structsDatabaseQuery_a7bf7cf5cda36b6c6d3701926c35d8972}
+Fields to update/insert \index{s\+Database\+Query@{s\+Database\+Query}!field\+Values\+Size@{field\+Values\+Size}}
+\index{field\+Values\+Size@{field\+Values\+Size}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{field\+Values\+Size}{fieldValuesSize}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int s\+Database\+Query\+::field\+Values\+Size}\hypertarget{structsDatabaseQuery_aa203f0cb4e33b39d48e6674250d9f74d}{}\label{structsDatabaseQuery_aa203f0cb4e33b39d48e6674250d9f74d}
+Number fields to update/insert \index{s\+Database\+Query@{s\+Database\+Query}!joins@{joins}}
+\index{joins@{joins}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{joins}{joins}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Join}$\ast$$\ast$ s\+Database\+Query\+::joins}\hypertarget{structsDatabaseQuery_aa66192f20c6390fd1bd5f2db96860926}{}\label{structsDatabaseQuery_aa66192f20c6390fd1bd5f2db96860926}
+Table to join \index{s\+Database\+Query@{s\+Database\+Query}!joins\+Size@{joins\+Size}}
+\index{joins\+Size@{joins\+Size}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{joins\+Size}{joinsSize}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int s\+Database\+Query\+::joins\+Size}\hypertarget{structsDatabaseQuery_aca409db9b76aea5d1e83390e2a251fd3}{}\label{structsDatabaseQuery_aca409db9b76aea5d1e83390e2a251fd3}
+Number of table to join \index{s\+Database\+Query@{s\+Database\+Query}!limit@{limit}}
+\index{limit@{limit}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{limit}{limit}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Limit}$\ast$ s\+Database\+Query\+::limit}\hypertarget{structsDatabaseQuery_aeca8178bae8fc02faae2bf64d6e7455a}{}\label{structsDatabaseQuery_aeca8178bae8fc02faae2bf64d6e7455a}
+Limit statements \index{s\+Database\+Query@{s\+Database\+Query}!orders@{orders}}
+\index{orders@{orders}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{orders}{orders}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Order}$\ast$$\ast$ s\+Database\+Query\+::orders}\hypertarget{structsDatabaseQuery_a4f2d3a55d0e7fcd151f7650c08ff7975}{}\label{structsDatabaseQuery_a4f2d3a55d0e7fcd151f7650c08ff7975}
+Order statements \index{s\+Database\+Query@{s\+Database\+Query}!orders\+Size@{orders\+Size}}
+\index{orders\+Size@{orders\+Size}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{orders\+Size}{ordersSize}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int s\+Database\+Query\+::orders\+Size}\hypertarget{structsDatabaseQuery_aecb5648962f556532a3a2c91b4970397}{}\label{structsDatabaseQuery_aecb5648962f556532a3a2c91b4970397}
+Number of order statements \index{s\+Database\+Query@{s\+Database\+Query}!returning@{returning}}
+\index{returning@{returning}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{returning}{returning}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Field}$\ast$$\ast$ s\+Database\+Query\+::returning}\hypertarget{structsDatabaseQuery_ad88d21177dbe929109914b4b75665454}{}\label{structsDatabaseQuery_ad88d21177dbe929109914b4b75665454}
+Columns to return after insert \index{s\+Database\+Query@{s\+Database\+Query}!returning\+Size@{returning\+Size}}
+\index{returning\+Size@{returning\+Size}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{returning\+Size}{returningSize}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int s\+Database\+Query\+::returning\+Size}\hypertarget{structsDatabaseQuery_a08dafb08cb00fac230eaceb0dfd20c9f}{}\label{structsDatabaseQuery_a08dafb08cb00fac230eaceb0dfd20c9f}
+Number of columns to return after insert \index{s\+Database\+Query@{s\+Database\+Query}!table@{table}}
+\index{table@{table}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{table}{table}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Table}$\ast$ s\+Database\+Query\+::table}\hypertarget{structsDatabaseQuery_a8d34ce4ad0e31c1bc8978ec03d4b5fbf}{}\label{structsDatabaseQuery_a8d34ce4ad0e31c1bc8978ec03d4b5fbf}
+Main table \index{s\+Database\+Query@{s\+Database\+Query}!type@{type}}
+\index{type@{type}!s\+Database\+Query@{s\+Database\+Query}}
+\subsubsection[{\texorpdfstring{type}{type}}]{\setlength{\rightskip}{0pt plus 5cm}Database\+Query\+Type s\+Database\+Query\+::type}\hypertarget{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}{}\label{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}
+Type of query 
+
+Dokumentacja dla tej struktury została wygenerowana z pliku\+:\begin{DoxyCompactItemize}
+\item 
+database\+\_\+query.\+h\end{DoxyCompactItemize}

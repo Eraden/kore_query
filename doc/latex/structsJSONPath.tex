@@ -1,0 +1,47 @@
+\hypertarget{structsJSONPath}{}\section{Dokumentacja struktury s\+J\+S\+O\+N\+Path}
+\label{structsJSONPath}\index{s\+J\+S\+O\+N\+Path@{s\+J\+S\+O\+N\+Path}}
+
+
+{\ttfamily \#include $<$json.\+h$>$}
+
+\subsection*{Atrybuty publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>char $\ast$ {\bfseries name}\\
+\>unsigned {\bfseries index}\\
+\}; \hypertarget{structsJSONPath_a4fc60e3341ab5e651d08fb83c79e2496}{}\label{structsJSONPath_a4fc60e3341ab5e651d08fb83c79e2496}
+\\
+
+\end{tabbing}\item 
+\hyperlink{json_8h_af761d54284482a1af5a01d8f52845b49}{J\+S\+O\+N\+Type} {\bfseries type}\hypertarget{structsJSONPath_a6c4879fb81a51a713dc7867761e3b295}{}\label{structsJSONPath_a6c4879fb81a51a713dc7867761e3b295}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+Path inside json
+
+
+\begin{DoxyCode}
+\hyperlink{structsJSONPath}{JSONPath} path[3] = \{
+    \{ .type=JSON\_STRING, .name=\textcolor{stringliteral}{"accounts"} \}, \textcolor{comment}{// for object}
+    \{ .type=JSON\_NUMBER, .index=1 \}, \textcolor{comment}{// for array}
+    \{ .type=JSON\_UNDEFINED, .name=NULL \} \textcolor{comment}{// end of path}
+\};
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{Zobacz również}
+\hyperlink{json_8h_a6ea42f7260d5909a1287aca8676a7f3c}{J\+S\+O\+N\+\_\+find} 
+\end{DoxySeeAlso}
+\begin{Desc}
+\item[Przykłady\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
+
+
+Dokumentacja dla tej struktury została wygenerowana z pliku\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{json_8h}{json.\+h}\end{DoxyCompactItemize}

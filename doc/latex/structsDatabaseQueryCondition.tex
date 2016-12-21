@@ -1,0 +1,48 @@
+\hypertarget{structsDatabaseQueryCondition}{}\section{Dokumentacja struktury s\+Database\+Query\+Condition}
+\label{structsDatabaseQueryCondition}\index{s\+Database\+Query\+Condition@{s\+Database\+Query\+Condition}}
+
+
+{\ttfamily \#include $<$database\+\_\+query.\+h$>$}
+
+
+
+Diagram współpracy dla s\+Database\+Query\+Condition\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=267pt]{structsDatabaseQueryCondition__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Atrybuty publiczne}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{structsDatabaseQueryTable}{Database\+Query\+Table} $\ast$ {\bfseries table}\hypertarget{structsDatabaseQueryCondition_a5b0abcb43e1a341d7fe41cd2fb234c00}{}\label{structsDatabaseQueryCondition_a5b0abcb43e1a341d7fe41cd2fb234c00}
+
+\item 
+\hyperlink{structsDatabaseQueryField}{Database\+Query\+Field} $\ast$ {\bfseries field}\hypertarget{structsDatabaseQueryCondition_a0899760067fd45e1e4a8924eed57e819}{}\label{structsDatabaseQueryCondition_a0899760067fd45e1e4a8924eed57e819}
+
+\item 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>char $\ast$ {\bfseries value}\\
+\>char $\ast$ {\bfseries pure}\\
+\>\hyperlink{structsDatabaseQueryField}{DatabaseQueryField} $\ast$ {\bfseries otherField}\\
+\}; \hypertarget{structsDatabaseQueryCondition_acc2dfbe9fa14322203a54d89a9d467c5}{}\label{structsDatabaseQueryCondition_acc2dfbe9fa14322203a54d89a9d467c5}
+\\
+
+\end{tabbing}\item 
+char $\ast$ {\bfseries operator}\hypertarget{structsDatabaseQueryCondition_aa252b90ac14f012ce02078dda403309d}{}\label{structsDatabaseQueryCondition_aa252b90ac14f012ce02078dda403309d}
+
+\item 
+Database\+Query\+Condition\+Type {\bfseries type}\hypertarget{structsDatabaseQueryCondition_a0d735a2c898a27fad8367293125349e6}{}\label{structsDatabaseQueryCondition_a0d735a2c898a27fad8367293125349e6}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Opis szczegółowy}
+Condition data 
+
+Dokumentacja dla tej struktury została wygenerowana z pliku\+:\begin{DoxyCompactItemize}
+\item 
+database\+\_\+query.\+h\end{DoxyCompactItemize}

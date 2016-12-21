@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.11"/>
+<title>KoreQuery: /home/eraden/code/eraden/kore_query/json.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">KoreQuery
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.11 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Strona&#160;główna</span></a></li>
+      <li><a href="annotated.html"><span>Klasy</span></a></li>
+      <li><a href="files.html"><span>Pliki</span></a></li>
+      <li><a href="examples.html"><span>Przykłady</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Szukaj" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">/home/eraden/code/eraden/kore_query/json.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="_a0"></a><a class="code" href="structsJSON.html">JSON</a> *root = <a name="a1"></a><a class="code" href="json_8h.html#ad8fd00eaccc81958c5a65f805e5c00ba">JSON_alloc</a>(JSON_OBJECT);</div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *array = <a class="code" href="json_8h.html#ad8fd00eaccc81958c5a65f805e5c00ba">JSON_alloc</a>(JSON_ARRAY);</div><div class="line"><a name="a2"></a><a class="code" href="json_8h.html#a0b79fc03b1dffbc61cbbe9b817ef8ae6">JSON_set</a>(root, L<span class="stringliteral">&quot;users&quot;</span>, array);</div><div class="line"></div><div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 2; i++) {</div><div class="line">  <a class="code" href="structsJSON.html">JSON</a> *child = <a class="code" href="json_8h.html#ad8fd00eaccc81958c5a65f805e5c00ba">JSON_alloc</a>(JSON_OBJECT);</div><div class="line">  <a name="a3"></a><a class="code" href="json_8h.html#ae9460db2cd54a7462fca0aab59aaea12">JSON_append</a>(array, child);</div><div class="line">}</div><div class="line"></div><div class="line">JSON_EACH_PAIR(root, rootKey, rootChild)</div><div class="line">    if (strcmp(rootKey, &quot;some-key&quot;) == 0) ...;</div><div class="line">    JSON_EACH_PAIR_NEXT</div><div class="line">JSON_END_EACH</div><div class="line"></div><div class="line">JSON_EACH(array, arrayIndex, arrayEntry)</div><div class="line">    if (arrayIndex != 0) kore_log(LOG_INFO, &quot;, &quot;);</div><div class="line">    JSON_EACH_NEXT</div><div class="line">JSON_END_EACH</div><div class="line"></div><div class="line"><a name="_a4"></a><a class="code" href="structsJSONPath.html">JSONPath</a> path[3] = {</div><div class="line">    { .<a name="a5"></a>type=JSON_STRING, .name=<span class="stringliteral">&quot;users&quot;</span> },</div><div class="line">    { .type=JSON_NUMBER, .index=1 },</div><div class="line">    { .type=JSON_UNDEFINED, .name=NULL },</div><div class="line">};</div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *child = <a name="a6"></a><a class="code" href="json_8h.html#a6ea42f7260d5909a1287aca8676a7f3c">JSON_find</a>(source, path);</div><div class="line"></div><div class="line"><span class="keywordtype">char</span> *json = <a name="a7"></a><a class="code" href="json_8h.html#a88f3755b96cc3a6ca0adbd35e0092280">JSON_stringify</a>(root); <span class="comment">//=&gt; {&quot;users&quot;:[{},{}]}</span></div><div class="line"><a name="a8"></a><a class="code" href="json_8h.html#ac5db034af6e012802315e2e5587a54df">JSON_free</a>(root);</div><div class="line">free(json);</div></div><!-- fragment --><div class="fragment"><div class="line"></div><div class="line"><span class="preprocessor">#pragma once</span></div><div class="line"></div><div class="line"><span class="preprocessor">#include &lt;string.h&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div><div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#include &quot;strings.h&quot;</span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsJSON.html">sJSON</a> <a class="code" href="structsJSON.html">JSON</a>;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsJSONPath.html">sJSONPath</a> <a class="code" href="structsJSONPath.html">JSONPath</a>;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="json_8h.html#acab6725e93cbfcfcf4273259977127a1">eJSONType</a> <a name="a9"></a><a class="code" href="json_8h.html#af761d54284482a1af5a01d8f52845b49">JSONType</a>;</div><div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a name="_a10"></a><a class="code" href="unioneJSONValue.html">eJSONValue</a> <a class="code" href="unioneJSONValue.html">JSONValue</a>;</div><div class="line"></div><div class="line"><span class="preprocessor">#define JSON_EACH_PAIR(expr, ENTRY_KEY, ENTRY_NAME) { \</span></div><div class="line"><span class="preprocessor">  JSON *object = expr; \</span></div><div class="line"><span class="preprocessor">  if (object) { \</span></div><div class="line"><span class="preprocessor">    JSON **childrenPtr = object-&gt;children.objects; \</span></div><div class="line"><span class="preprocessor">    char **keysPtr = object-&gt;children.keys; \</span></div><div class="line"><span class="preprocessor">    for (unsigned int childIndex = 0; childIndex &lt; object-&gt;children.len; childIndex ++) { \</span></div><div class="line"><span class="preprocessor">      JSON *ENTRY_NAME = *childrenPtr; \</span></div><div class="line"><span class="preprocessor">      char *ENTRY_KEY = *keysPtr; \</span></div><div class="line"><span class="preprocessor"></span></div><div class="line"><span class="preprocessor">#define JSON_EACH_PAIR_NEXT \</span></div><div class="line"><span class="preprocessor">      childrenPtr += 1; \</span></div><div class="line"><span class="preprocessor">      keysPtr += 1;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define JSON_EACH(expr, ENTRY_INDEX, ENTRY_NAME) { \</span></div><div class="line"><span class="preprocessor">  JSON *array = expr; \</span></div><div class="line"><span class="preprocessor">  if (array) { \</span></div><div class="line"><span class="preprocessor">    JSON **childrenPtr = array-&gt;array.objects; \</span></div><div class="line"><span class="preprocessor">    for (unsigned int ENTRY_INDEX = 0; ENTRY_INDEX &lt; array-&gt;array.len; ENTRY_INDEX ++) { \</span></div><div class="line"><span class="preprocessor">      JSON *ENTRY_NAME = *childrenPtr;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define JSON_EACH_NEXT childrenPtr += 1;</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define JSON_END_EACH } } }</span></div><div class="line"></div><div class="line"><span class="preprocessor">#define JSON_AS_NUMBER(obj) obj-&gt;jsonValue.value</span></div><div class="line"><span class="preprocessor">#define JSON_AS_STRING(obj) obj-&gt;jsonValue.string</span></div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">union </span><a class="code" href="unioneJSONValue.html">eJSONValue</a> {</div><div class="line">  <span class="keywordtype">char</span> *string;</div><div class="line">  <span class="keywordtype">float</span> value;</div><div class="line">} <a name="a11"></a><a class="code" href="json_8h.html#acb7eaa79e9cdd0740c01726c3ba06e3e">JSONValue</a>;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="json_8h.html#acab6725e93cbfcfcf4273259977127a1">eJSONType</a> {</div><div class="line">  JSON_UNDEFINED = 0,</div><div class="line">  JSON_STRING = 1,</div><div class="line">  JSON_NUMBER = 1 &lt;&lt; 1,</div><div class="line">  JSON_OBJECT = 1 &lt;&lt; 2,</div><div class="line">  JSON_ARRAY = 1 &lt;&lt; 3,</div><div class="line">  JSON_NULL = 1 &lt;&lt; 4,</div><div class="line">} <a class="code" href="json_8h.html#af761d54284482a1af5a01d8f52845b49">JSONType</a>;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> <a class="code" href="json_8h.html#a7a8b3184f1ecbd8fcfdb66bd9514d2b3">eJSONCloneType</a> {</div><div class="line">  JSON_SIMPLE = 0,</div><div class="line">  JSON_DEEP = 1</div><div class="line">} <a name="a12"></a><a class="code" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a>;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsJSON.html">sJSON</a> {</div><div class="line">  JSONType type; </div><div class="line">  <a class="code" href="unioneJSONValue.html">JSONValue</a> jsonValue; </div><div class="line">  <span class="keyword">struct </span>{</div><div class="line">    <a class="code" href="structsJSON.html">JSON</a> **objects; </div><div class="line">    <span class="keywordtype">char</span> **keys; </div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> len; </div><div class="line">  } children; </div><div class="line">  <span class="keyword">struct </span>{</div><div class="line">    <a class="code" href="structsJSON.html">JSON</a> **objects; </div><div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> len; </div><div class="line">  } array; </div><div class="line">} <a name="a13"></a><a class="code" href="json_8h.html#a883822215fcdb974b95ff5339b5ecab4">JSON</a>;</div><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structsJSONPath.html">sJSONPath</a> {</div><div class="line">  <span class="keyword">union </span>{</div><div class="line">    <span class="keywordtype">char</span> *name;</div><div class="line">    <span class="keywordtype">unsigned</span> index;</div><div class="line">  };</div><div class="line">  JSONType type;</div><div class="line">} <a name="a14"></a><a class="code" href="json_8h.html#a0f3747cfbfe6c68ae7b67184bd731728">JSONPath</a>;</div><div class="line"></div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *<a class="code" href="json_8h.html#ad8fd00eaccc81958c5a65f805e5c00ba">JSON_alloc</a>(JSONType type);</div><div class="line"></div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *<a name="a15"></a><a class="code" href="json_8h.html#a8564e11a595dfb8e42182c28147b1d70">JSON_string</a>(<span class="keywordtype">char</span> *str);</div><div class="line"></div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *<a name="a16"></a><a class="code" href="json_8h.html#abcecc56303be7d8c3b1e835d058d5a2d">JSON_number</a>(<span class="keywordtype">float</span> n);</div><div class="line"></div><div class="line"><span class="keywordtype">void</span> <a class="code" href="json_8h.html#ac5db034af6e012802315e2e5587a54df">JSON_free</a>(<a class="code" href="structsJSON.html">JSON</a> *<span class="keywordtype">object</span>);</div><div class="line"></div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *<a class="code" href="json_8h.html#a0b79fc03b1dffbc61cbbe9b817ef8ae6">JSON_set</a>(<a class="code" href="structsJSON.html">JSON</a> *parent, <span class="keywordtype">wchar_t</span> *key, <a class="code" href="structsJSON.html">JSON</a> *json);</div><div class="line"></div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *<a class="code" href="json_8h.html#ae9460db2cd54a7462fca0aab59aaea12">JSON_append</a>(<a class="code" href="structsJSON.html">JSON</a> *array, <a class="code" href="structsJSON.html">JSON</a> *entry);</div><div class="line"></div><div class="line"><span class="keywordtype">char</span> *<a class="code" href="json_8h.html#a88f3755b96cc3a6ca0adbd35e0092280">JSON_stringify</a>(<a class="code" href="structsJSON.html">JSON</a> *root);</div><div class="line"></div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *<a class="code" href="json_8h.html#a6ea42f7260d5909a1287aca8676a7f3c">JSON_find</a>(<a class="code" href="structsJSON.html">JSON</a> *source, <a class="code" href="structsJSONPath.html">JSONPath</a> *path);</div><div class="line"></div><div class="line"><span class="keywordtype">char</span> *<a name="a17"></a><a class="code" href="json_8h.html#ac6e8a1f93227d3017c1e3b5e1bb03591">JSON_escape</a>(<span class="keywordtype">char</span> *<span class="keywordtype">string</span>);</div><div class="line"></div><div class="line"><a class="code" href="structsJSON.html">JSON</a> *<a name="a18"></a><a class="code" href="json_8h.html#a5d72929696e1de3ab3b8ad39a684dded">JSON_clone</a>(<a class="code" href="structsJSON.html">JSON</a> *obj, <a class="code" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a> deep);</div><div class="line"></div><div class="line"><span class="keywordtype">int</span> <a name="a19"></a><a class="code" href="json_8h.html#ad042d2d456ea6186716a5071c0151370">JSON_mergeJSON</a>(<a class="code" href="structsJSON.html">JSON</a> *target, <a class="code" href="structsJSON.html">JSON</a> *source, <a class="code" href="json_8h.html#a82504dc7a921c3161c7fd45d4215e7b0">JSONCloneType</a> deep);</div><div class="line"></div><div class="line"><a class="code" href="unioneJSONValue.html">JSONValue</a> <a name="a20"></a><a class="code" href="json_8h.html#af6b5d6ad33f7765b65e275785b40ef8b">JSON_valueOf</a>(<a class="code" href="structsJSON.html">JSON</a> *<span class="keywordtype">object</span>, <span class="keywordtype">char</span> *key);</div></div><!-- fragment --> </div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano przez &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.11
+</small></address>
+</body>
+</html>
