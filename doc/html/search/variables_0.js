@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['array',['array',['../structsJSON.html#a4c8ba3fc09489bdb99aca27ef7fff535',1,'sJSON']]]
+  ['array',['array',['../structsJSON.html#a0c4e270679b9317e0ad2ad1373f7956e',1,'sJSON']]],
+  ['as',['as',['../structsDatabaseQueryField.html#a97d3648cdd9355173c5e1f2322050473',1,'sDatabaseQueryField']]]
 ];

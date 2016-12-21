@@ -1,4 +1,4 @@
-\hypertarget{structsDatabaseQuery}{}\section{Dokumentacja struktury s\+Database\+Query}
+\hypertarget{structsDatabaseQuery}{}\section{s\+Database\+Query Struct Reference}
 \label{structsDatabaseQuery}\index{s\+Database\+Query@{s\+Database\+Query}}
 
 
@@ -6,54 +6,57 @@
 
 
 
-Diagram współpracy dla s\+Database\+Query\+:\nopagebreak
+Collaboration diagram for s\+Database\+Query\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{structsDatabaseQuery__coll__graph}
 \end{center}
 \end{figure}
-\subsection*{Atrybuty publiczne}
+\subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{structsDatabaseQueryTable}{Database\+Query\+Table} $\ast$ \hyperlink{structsDatabaseQuery_a8d34ce4ad0e31c1bc8978ec03d4b5fbf}{table}
+\hyperlink{database__query_8h_a38971f81715db3c243144b5e840c2457}{Database\+Query\+Table} $\ast$ \hyperlink{structsDatabaseQuery_a8d34ce4ad0e31c1bc8978ec03d4b5fbf}{table}
 \item 
-\hyperlink{structsDatabaseQueryDistinct}{Database\+Query\+Distinct} $\ast$ \hyperlink{structsDatabaseQuery_af873390ab854ce4a34f704971d271521}{distinct}
+\hyperlink{database__query_8h_a92bb8d2a8239305ec30b4b8c58c4ceba}{Database\+Query\+Distinct} $\ast$ \hyperlink{structsDatabaseQuery_af873390ab854ce4a34f704971d271521}{distinct}
 \item 
-\hyperlink{structsDatabaseQueryField}{Database\+Query\+Field} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a2075e002e2ecbf166d9fbcc6f9780701}{fields}
+\hyperlink{database__query_8h_a88215d743b6fc63a879f730b4523dda1}{Database\+Query\+Field} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a2075e002e2ecbf166d9fbcc6f9780701}{fields}
 \item 
 unsigned int \hyperlink{structsDatabaseQuery_a052737bce106f2758ba5d5ac663ff57a}{fields\+Size}
 \item 
-\hyperlink{structsDatabaseQueryCondition}{Database\+Query\+Field\+Value} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a7bf7cf5cda36b6c6d3701926c35d8972}{field\+Values}
+\hyperlink{database__query_8h_a7b9951dae2f92c4aa4e05413557babba}{Database\+Query\+Field\+Value} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a7bf7cf5cda36b6c6d3701926c35d8972}{field\+Values}
 \item 
 unsigned int \hyperlink{structsDatabaseQuery_aa203f0cb4e33b39d48e6674250d9f74d}{field\+Values\+Size}
 \item 
-\hyperlink{structsDatabaseQueryCondition}{Database\+Query\+Condition} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a54e52c15ffef2b87e3b2c7a4d0ffc2f9}{conditions}
+\hyperlink{database__query_8h_a6266221c78d9f12aa27ae522162f414f}{Database\+Query\+Condition} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a54e52c15ffef2b87e3b2c7a4d0ffc2f9}{conditions}
 \item 
 unsigned int \hyperlink{structsDatabaseQuery_a7534216a1d5ad726447b73b6eb4fdbc4}{conditions\+Size}
 \item 
-\hyperlink{structsDatabaseQueryJoin}{Database\+Query\+Join} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_aa66192f20c6390fd1bd5f2db96860926}{joins}
+\hyperlink{database__query_8h_afa2dc6332756b689eaad7cbd2a4afe8f}{Database\+Query\+Join} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_aa66192f20c6390fd1bd5f2db96860926}{joins}
 \item 
 unsigned int \hyperlink{structsDatabaseQuery_aca409db9b76aea5d1e83390e2a251fd3}{joins\+Size}
 \item 
-\hyperlink{structsDatabaseQueryField}{Database\+Query\+Field} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_ad88d21177dbe929109914b4b75665454}{returning}
+\hyperlink{database__query_8h_a88215d743b6fc63a879f730b4523dda1}{Database\+Query\+Field} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_ad88d21177dbe929109914b4b75665454}{returning}
 \item 
 unsigned int \hyperlink{structsDatabaseQuery_a08dafb08cb00fac230eaceb0dfd20c9f}{returning\+Size}
 \item 
-\hyperlink{structsDatabaseQueryOrder}{Database\+Query\+Order} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a4f2d3a55d0e7fcd151f7650c08ff7975}{orders}
+\hyperlink{database__query_8h_aac44e68d851bc49c2e41823abd7c7ff1}{Database\+Query\+Order} $\ast$$\ast$ \hyperlink{structsDatabaseQuery_a4f2d3a55d0e7fcd151f7650c08ff7975}{orders}
 \item 
 unsigned int \hyperlink{structsDatabaseQuery_aecb5648962f556532a3a2c91b4970397}{orders\+Size}
 \item 
-\hyperlink{structsDatabaseQueryLimit}{Database\+Query\+Limit} $\ast$ \hyperlink{structsDatabaseQuery_aeca8178bae8fc02faae2bf64d6e7455a}{limit}
+\hyperlink{database__query_8h_a6537a6887a7467ccdea7b69ba4ae06d0}{Database\+Query\+Limit} $\ast$ \hyperlink{structsDatabaseQuery_aeca8178bae8fc02faae2bf64d6e7455a}{limit}
 \item 
-Database\+Query\+Type \hyperlink{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}{type}
+\hyperlink{database__query_8h_a5f3955e5fa142e79a9c639ea4eca234a}{Database\+Query\+Type} \hyperlink{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}{type}
 \end{DoxyCompactItemize}
 
 
-\subsection{Opis szczegółowy}
-Full query data 
+\subsection{Detailed Description}
+Full query data \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2database_exec_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/database\+\_\+exec.\+h}, \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2database_query_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/database\+\_\+query.\+h}, and \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2database_query_stringify_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/database\+\_\+query\+\_\+stringify.\+h}.\end{Desc}
 
-\subsection{Dokumentacja atrybutów składowych}
+
+\subsection{Member Data Documentation}
 \index{s\+Database\+Query@{s\+Database\+Query}!conditions@{conditions}}
 \index{conditions@{conditions}!s\+Database\+Query@{s\+Database\+Query}}
 \subsubsection[{\texorpdfstring{conditions}{conditions}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Condition}$\ast$$\ast$ s\+Database\+Query\+::conditions}\hypertarget{structsDatabaseQuery_a54e52c15ffef2b87e3b2c7a4d0ffc2f9}{}\label{structsDatabaseQuery_a54e52c15ffef2b87e3b2c7a4d0ffc2f9}
@@ -101,9 +104,9 @@ Number of columns to return after insert \index{s\+Database\+Query@{s\+Database\
 \subsubsection[{\texorpdfstring{table}{table}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Table}$\ast$ s\+Database\+Query\+::table}\hypertarget{structsDatabaseQuery_a8d34ce4ad0e31c1bc8978ec03d4b5fbf}{}\label{structsDatabaseQuery_a8d34ce4ad0e31c1bc8978ec03d4b5fbf}
 Main table \index{s\+Database\+Query@{s\+Database\+Query}!type@{type}}
 \index{type@{type}!s\+Database\+Query@{s\+Database\+Query}}
-\subsubsection[{\texorpdfstring{type}{type}}]{\setlength{\rightskip}{0pt plus 5cm}Database\+Query\+Type s\+Database\+Query\+::type}\hypertarget{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}{}\label{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}
+\subsubsection[{\texorpdfstring{type}{type}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Database\+Query\+Type} s\+Database\+Query\+::type}\hypertarget{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}{}\label{structsDatabaseQuery_a5b7daf6543a0c36ab9b6a2a948f953bb}
 Type of query 
 
-Dokumentacja dla tej struktury została wygenerowana z pliku\+:\begin{DoxyCompactItemize}
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-database\+\_\+query.\+h\end{DoxyCompactItemize}
+\hyperlink{database__query_8h}{database\+\_\+query.\+h}\end{DoxyCompactItemize}

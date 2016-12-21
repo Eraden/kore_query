@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['returning',['returning',['../structsDatabaseQuery.html#ad88d21177dbe929109914b4b75665454',1,'sDatabaseQuery']]],
-  ['returningsize',['returningSize',['../structsDatabaseQuery.html#a08dafb08cb00fac230eaceb0dfd20c9f',1,'sDatabaseQuery']]]
+  ['name',['name',['../structsDatabaseQueryTable.html#a4a57512c1cc994cf4cc526e55e246146',1,'sDatabaseQueryTable::name()'],['../structsDatabaseQueryField.html#a89dd83131d90a8d8aeabfcafdde956b0',1,'sDatabaseQueryField::name()'],['../structsJSONPath.html#a7fa6192b5aea8f8f69c3a3f668129f63',1,'sJSONPath::name()']]]
 ];

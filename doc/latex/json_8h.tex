@@ -1,4 +1,4 @@
-\hypertarget{json_8h}{}\section{Dokumentacja pliku json.\+h}
+\hypertarget{json_8h}{}\section{json.\+h File Reference}
 \label{json_8h}\index{json.\+h@{json.\+h}}
 
 
@@ -9,51 +9,51 @@ J\+S\+ON response type.
 {\ttfamily \#include $<$stdio.\+h$>$}\\*
 {\ttfamily \#include $<$stdlib.\+h$>$}\\*
 {\ttfamily \#include \char`\"{}strings.\+h\char`\"{}}\\*
-Wykres zależności załączania dla json.\+h\+:\nopagebreak
+Include dependency graph for json.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
 \includegraphics[width=350pt]{json_8h__incl}
 \end{center}
 \end{figure}
-Ten wykres pokazuje, które pliki bezpośrednio lub pośrednio załączają ten plik\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=274pt]{json_8h__dep__incl}
+\includegraphics[width=350pt]{json_8h__dep__incl}
 \end{center}
 \end{figure}
-\subsection*{Komponenty}
+\subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 union \hyperlink{unioneJSONValue}{e\+J\+S\+O\+N\+Value}
+\item 
+struct \hyperlink{structsJSONArrayData}{s\+J\+S\+O\+N\+Array\+Data}
+\item 
+struct \hyperlink{structsJSONObjectData}{s\+J\+S\+O\+N\+Object\+Data}
 \item 
 struct \hyperlink{structsJSON}{s\+J\+S\+ON}
 \item 
 struct \hyperlink{structsJSONPath}{s\+J\+S\+O\+N\+Path}
 \end{DoxyCompactItemize}
-\subsection*{Definicje}
+\subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define {\bfseries J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+IR}(expr,  E\+N\+T\+R\+Y\+\_\+\+K\+EY,  E\+N\+T\+R\+Y\+\_\+\+N\+A\+ME)
+\#define \hyperlink{json_8h_a0970d8f80a6acb5006309383a51b9ed0}{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+IR}(expr,  E\+N\+T\+R\+Y\+\_\+\+K\+EY,  E\+N\+T\+R\+Y\+\_\+\+N\+A\+ME)
 \item 
-\#define {\bfseries J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+I\+R\+\_\+\+N\+E\+XT}
+\#define \hyperlink{json_8h_aac48d6b2f8f0adbbd8437de1cb273667}{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+I\+R\+\_\+\+N\+E\+XT}
 \item 
-\#define {\bfseries J\+S\+O\+N\+\_\+\+E\+A\+CH}(expr,  E\+N\+T\+R\+Y\+\_\+\+I\+N\+D\+EX,  E\+N\+T\+R\+Y\+\_\+\+N\+A\+ME)
+\#define \hyperlink{json_8h_a8e13c5cdd8813b3cfc264836b70c94f5}{J\+S\+O\+N\+\_\+\+E\+A\+CH}(expr,  E\+N\+T\+R\+Y\+\_\+\+I\+N\+D\+EX,  E\+N\+T\+R\+Y\+\_\+\+N\+A\+ME)
 \item 
-\#define {\bfseries J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+N\+E\+XT}~children\+Ptr += 1;\hypertarget{json_8h_a5b53445a30bbe35cc742b3fb4fdb16c0}{}\label{json_8h_a5b53445a30bbe35cc742b3fb4fdb16c0}
-
+\#define \hyperlink{json_8h_a5b53445a30bbe35cc742b3fb4fdb16c0}{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+N\+E\+XT}~children\+Ptr += 1;
 \item 
-\#define {\bfseries J\+S\+O\+N\+\_\+\+E\+N\+D\+\_\+\+E\+A\+CH}~\} \} \}\hypertarget{json_8h_aaa83a532be60f2a03959b6d27bfc3625}{}\label{json_8h_aaa83a532be60f2a03959b6d27bfc3625}
-
+\#define \hyperlink{json_8h_aaa83a532be60f2a03959b6d27bfc3625}{J\+S\+O\+N\+\_\+\+E\+N\+D\+\_\+\+E\+A\+CH}~\} \} \}
 \item 
-\#define {\bfseries J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+N\+U\+M\+B\+ER}(obj)~obj-\/$>$json\+Value.\+value\hypertarget{json_8h_af2b3f23c713d7e12cea71d2c7ce6fb04}{}\label{json_8h_af2b3f23c713d7e12cea71d2c7ce6fb04}
-
+\#define \hyperlink{json_8h_af2b3f23c713d7e12cea71d2c7ce6fb04}{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+N\+U\+M\+B\+ER}(obj)~obj-\/$>$json\+Value.\+value
 \item 
-\#define {\bfseries J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+S\+T\+R\+I\+NG}(obj)~obj-\/$>$json\+Value.\+string\hypertarget{json_8h_aaf15341d57eda1e4826b2952e9339262}{}\label{json_8h_aaf15341d57eda1e4826b2952e9339262}
-
+\#define \hyperlink{json_8h_aaf15341d57eda1e4826b2952e9339262}{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+S\+T\+R\+I\+NG}(obj)~obj-\/$>$json\+Value.\+string
 \end{DoxyCompactItemize}
-\subsection*{Definicje typów}
+\subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 typedef struct \hyperlink{structsJSON}{s\+J\+S\+ON} \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{J\+S\+ON}
@@ -65,25 +65,29 @@ typedef enum \hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1}{e\+J\+S\+O\+N
 typedef union \hyperlink{unioneJSONValue}{e\+J\+S\+O\+N\+Value} \hyperlink{json_8h_acb7eaa79e9cdd0740c01726c3ba06e3e}{J\+S\+O\+N\+Value}
 \item 
 typedef enum \hyperlink{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3}{e\+J\+S\+O\+N\+Clone\+Type} \hyperlink{json_8h_a82504dc7a921c3161c7fd45d4215e7b0}{J\+S\+O\+N\+Clone\+Type}
+\item 
+typedef struct \hyperlink{structsJSONArrayData}{s\+J\+S\+O\+N\+Array\+Data} \hyperlink{json_8h_a8d5ddce2e622ca107422a7a136fcdc33}{J\+S\+O\+N\+Array\+Data}
+\item 
+typedef struct \hyperlink{structsJSONObjectData}{s\+J\+S\+O\+N\+Object\+Data} \hyperlink{json_8h_af22cd3b4d470b9136b3f3c689b753a59}{J\+S\+O\+N\+Object\+Data}
 \end{DoxyCompactItemize}
-\subsection*{Wyliczenia}
+\subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
 enum \hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1}{e\+J\+S\+O\+N\+Type} \{ \\*
-{\bfseries J\+S\+O\+N\+\_\+\+U\+N\+D\+E\+F\+I\+N\+ED} = 0, 
-{\bfseries J\+S\+O\+N\+\_\+\+S\+T\+R\+I\+NG} = 1, 
-{\bfseries J\+S\+O\+N\+\_\+\+N\+U\+M\+B\+ER} = 1 $<$$<$ 1, 
-{\bfseries J\+S\+O\+N\+\_\+\+O\+B\+J\+E\+CT} = 1 $<$$<$ 2, 
+\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1aef1b2fb1bcc9012effaae713daf7b458}{J\+S\+O\+N\+\_\+\+U\+N\+D\+E\+F\+I\+N\+ED} = 0, 
+\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a02bfd03b07e5b9ecd6ee0d257dc37daf}{J\+S\+O\+N\+\_\+\+S\+T\+R\+I\+NG} = 1, 
+\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a6670b3c9b7ba8ab3976a7521edcc7f97}{J\+S\+O\+N\+\_\+\+N\+U\+M\+B\+ER} = 1 $<$$<$ 1, 
+\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a7750125a86a953cfd57b3a4e1fa67bff}{J\+S\+O\+N\+\_\+\+O\+B\+J\+E\+CT} = 1 $<$$<$ 2, 
 \\*
-{\bfseries J\+S\+O\+N\+\_\+\+A\+R\+R\+AY} = 1 $<$$<$ 3, 
-{\bfseries J\+S\+O\+N\+\_\+\+N\+U\+LL} = 1 $<$$<$ 4
+\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a97462341a4eba4320d62d49597eabb6a}{J\+S\+O\+N\+\_\+\+A\+R\+R\+AY} = 1 $<$$<$ 3, 
+\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a03ddcc4e2eef955020a01e10c11bfe48}{J\+S\+O\+N\+\_\+\+N\+U\+LL} = 1 $<$$<$ 4
  \}
 \item 
-enum \hyperlink{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3}{e\+J\+S\+O\+N\+Clone\+Type} \{ {\bfseries J\+S\+O\+N\+\_\+\+S\+I\+M\+P\+LE} = 0, 
-{\bfseries J\+S\+O\+N\+\_\+\+D\+E\+EP} = 1
+enum \hyperlink{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3}{e\+J\+S\+O\+N\+Clone\+Type} \{ \hyperlink{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3afdaa910cf744404fa34e694c9e1bbf7f}{J\+S\+O\+N\+\_\+\+S\+I\+M\+P\+LE} = 0, 
+\hyperlink{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3a330459ba63a87c78d3d825d66b1c1fe8}{J\+S\+O\+N\+\_\+\+D\+E\+EP} = 1
  \}
 \end{DoxyCompactItemize}
-\subsection*{Funkcje}
+\subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{J\+S\+ON} $\ast$ \hyperlink{json_8h_ad8fd00eaccc81958c5a65f805e5c00ba}{J\+S\+O\+N\+\_\+alloc} (\hyperlink{json_8h_af761d54284482a1af5a01d8f52845b49}{J\+S\+O\+N\+Type} type)
@@ -112,19 +116,33 @@ int \hyperlink{json_8h_ad042d2d456ea6186716a5071c0151370}{J\+S\+O\+N\+\_\+merge\
 \end{DoxyCompactItemize}
 
 
-\subsection{Opis szczegółowy}
+\subsection{Detailed Description}
 J\+S\+ON response type. 
 
-\begin{DoxyAuthor}{Autor}
+\begin{DoxyAuthor}{Author}
 Adrian Eraden Woźniak 
 \end{DoxyAuthor}
-\begin{DoxyDate}{Data}
+\begin{DoxyDate}{Date}
 21.\+12.\+2016 
 \end{DoxyDate}
 
 
-\subsection{Dokumentacja definicji}
-\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+E\+A\+CH@{J\+S\+O\+N\+\_\+\+E\+A\+CH}}
+\subsection{Macro Definition Documentation}
+\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+N\+U\+M\+B\+ER@{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+N\+U\+M\+B\+ER}}
+\index{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+N\+U\+M\+B\+ER@{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+N\+U\+M\+B\+ER}!json.\+h@{json.\+h}}
+\subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+N\+U\+M\+B\+ER}{JSON_AS_NUMBER}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+N\+U\+M\+B\+ER(
+\begin{DoxyParamCaption}
+\item[{}]{obj}
+\end{DoxyParamCaption}
+)~obj-\/$>$json\+Value.\+value}\hypertarget{json_8h_af2b3f23c713d7e12cea71d2c7ce6fb04}{}\label{json_8h_af2b3f23c713d7e12cea71d2c7ce6fb04}
+Fetch json data as float \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+S\+T\+R\+I\+NG@{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+S\+T\+R\+I\+NG}}
+\index{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+S\+T\+R\+I\+NG@{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+S\+T\+R\+I\+NG}!json.\+h@{json.\+h}}
+\subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+S\+T\+R\+I\+NG}{JSON_AS_STRING}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+S\+O\+N\+\_\+\+A\+S\+\_\+\+S\+T\+R\+I\+NG(
+\begin{DoxyParamCaption}
+\item[{}]{obj}
+\end{DoxyParamCaption}
+)~obj-\/$>$json\+Value.\+string}\hypertarget{json_8h_aaf15341d57eda1e4826b2952e9339262}{}\label{json_8h_aaf15341d57eda1e4826b2952e9339262}
+Fetch json data as c string \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+E\+A\+CH@{J\+S\+O\+N\+\_\+\+E\+A\+CH}}
 \index{J\+S\+O\+N\+\_\+\+E\+A\+CH@{J\+S\+O\+N\+\_\+\+E\+A\+CH}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+\+E\+A\+CH}{JSON_EACH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+S\+O\+N\+\_\+\+E\+A\+CH(
 \begin{DoxyParamCaption}
@@ -133,16 +151,25 @@ Adrian Eraden Woźniak
 \item[{}]{E\+N\+T\+R\+Y\+\_\+\+N\+A\+ME}
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_a8e13c5cdd8813b3cfc264836b70c94f5}{}\label{json_8h_a8e13c5cdd8813b3cfc264836b70c94f5}
-{\bfseries Wartość\+:}
+{\bfseries Value\+:}
 \begin{DoxyCode}
 \{ \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{\(\backslash\)}
 \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{  JSON} *array = expr; \(\backslash\)
   if (array) \{ \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{\(\backslash\)}
-\hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{    JSON} **childrenPtr = array->\hyperlink{structsJSON_a4c8ba3fc09489bdb99aca27ef7fff535}{array}.objects; \(\backslash\)
+\hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{    JSON} **childrenPtr = array->\hyperlink{structsJSON_a0c4e270679b9317e0ad2ad1373f7956e}{array}.\hyperlink{structsJSONArrayData_a7cc0b11738f573d4bbf54819efdc0e17}{objects}; \(\backslash\)
     for (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} ENTRY\_INDEX = 0; ENTRY\_INDEX < array->array.len; ENTRY\_INDEX ++) \{ 
       \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{\(\backslash\)}
 \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{      JSON} *ENTRY\_NAME = *childrenPtr;
 \end{DoxyCode}
+Iterate via array entities \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
+\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+N\+E\+XT@{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+N\+E\+XT}}
+\index{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+N\+E\+XT@{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+N\+E\+XT}!json.\+h@{json.\+h}}
+\subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+N\+E\+XT}{JSON_EACH_NEXT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+N\+E\+XT~children\+Ptr += 1;}\hypertarget{json_8h_a5b53445a30bbe35cc742b3fb4fdb16c0}{}\label{json_8h_a5b53445a30bbe35cc742b3fb4fdb16c0}
+Next array entity \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+IR@{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+IR}}
 \index{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+IR@{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+IR}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+IR}{JSON_EACH_PAIR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+IR(
@@ -152,40 +179,64 @@ Adrian Eraden Woźniak
 \item[{}]{E\+N\+T\+R\+Y\+\_\+\+N\+A\+ME}
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_a0970d8f80a6acb5006309383a51b9ed0}{}\label{json_8h_a0970d8f80a6acb5006309383a51b9ed0}
-{\bfseries Wartość\+:}
+{\bfseries Value\+:}
 \begin{DoxyCode}
 \{ \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{\(\backslash\)}
 \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{  JSON} *\textcolor{keywordtype}{object} = expr; \(\backslash\)
   if (\textcolor{keywordtype}{object}) \{ \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{\(\backslash\)}
-\hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{    JSON} **childrenPtr = \textcolor{keywordtype}{object}->\hyperlink{structsJSON_a3c49fa17c184d6be197b183d759c4585}{children}.objects; \(\backslash\)
-    char **keysPtr = \textcolor{keywordtype}{object}->\hyperlink{structsJSON_a3c49fa17c184d6be197b183d759c4585}{children}.\hyperlink{structsJSON_a3db035c9589ee45acad7efa117cbf1a7}{keys}; \(\backslash\)
+\hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{    JSON} **childrenPtr = \textcolor{keywordtype}{object}->\hyperlink{structsJSON_ab7bcf99ed5e4560654fe406448ef3dac}{children}.\hyperlink{structsJSONObjectData_a63ae219e91d2efe24bd5d2721ee3c112}{objects}; \(\backslash\)
+    char **keysPtr = \textcolor{keywordtype}{object}->\hyperlink{structsJSON_ab7bcf99ed5e4560654fe406448ef3dac}{children}.\hyperlink{structsJSONObjectData_ae5520ee3eabd34cff5ed7602361e5cf4}{keys}; \(\backslash\)
     for (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} childIndex = 0; childIndex < \textcolor{keywordtype}{object}->children.len; childIndex ++) \{ 
       \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{\(\backslash\)}
 \hyperlink{json_8h_a883822215fcdb974b95ff5339b5ecab4}{      JSON} *ENTRY\_NAME = *childrenPtr; \(\backslash\)
       char *ENTRY\_KEY = *keysPtr; \(\backslash\)
 \end{DoxyCode}
+Iterate via object children \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+I\+R\+\_\+\+N\+E\+XT@{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+I\+R\+\_\+\+N\+E\+XT}}
 \index{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+I\+R\+\_\+\+N\+E\+XT@{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+I\+R\+\_\+\+N\+E\+XT}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+I\+R\+\_\+\+N\+E\+XT}{JSON_EACH_PAIR_NEXT}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+S\+O\+N\+\_\+\+E\+A\+C\+H\+\_\+\+P\+A\+I\+R\+\_\+\+N\+E\+XT}\hypertarget{json_8h_aac48d6b2f8f0adbbd8437de1cb273667}{}\label{json_8h_aac48d6b2f8f0adbbd8437de1cb273667}
-{\bfseries Wartość\+:}
+{\bfseries Value\+:}
 \begin{DoxyCode}
 childrenPtr += 1; \(\backslash\)
       keysPtr += 1;
 \end{DoxyCode}
+Next object child \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
+\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+E\+N\+D\+\_\+\+E\+A\+CH@{J\+S\+O\+N\+\_\+\+E\+N\+D\+\_\+\+E\+A\+CH}}
+\index{J\+S\+O\+N\+\_\+\+E\+N\+D\+\_\+\+E\+A\+CH@{J\+S\+O\+N\+\_\+\+E\+N\+D\+\_\+\+E\+A\+CH}!json.\+h@{json.\+h}}
+\subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+\+E\+N\+D\+\_\+\+E\+A\+CH}{JSON_END_EACH}}]{\setlength{\rightskip}{0pt plus 5cm}\#define J\+S\+O\+N\+\_\+\+E\+N\+D\+\_\+\+E\+A\+CH~\} \} \}}\hypertarget{json_8h_aaa83a532be60f2a03959b6d27bfc3625}{}\label{json_8h_aaa83a532be60f2a03959b6d27bfc3625}
+End iteration loop \begin{Desc}
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 
 
-\subsection{Dokumentacja definicji typów}
+\subsection{Typedef Documentation}
 \index{json.\+h@{json.\+h}!J\+S\+ON@{J\+S\+ON}}
 \index{J\+S\+ON@{J\+S\+ON}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+ON}{JSON}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf s\+J\+S\+ON} {\bf J\+S\+ON}}\hypertarget{json_8h_a883822215fcdb974b95ff5339b5ecab4}{}\label{json_8h_a883822215fcdb974b95ff5339b5ecab4}
 J\+S\+ON data \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
+\index{json.\+h@{json.\+h}!J\+S\+O\+N\+Array\+Data@{J\+S\+O\+N\+Array\+Data}}
+\index{J\+S\+O\+N\+Array\+Data@{J\+S\+O\+N\+Array\+Data}!json.\+h@{json.\+h}}
+\subsubsection[{\texorpdfstring{J\+S\+O\+N\+Array\+Data}{JSONArrayData}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf s\+J\+S\+O\+N\+Array\+Data}  {\bf J\+S\+O\+N\+Array\+Data}}\hypertarget{json_8h_a8d5ddce2e622ca107422a7a136fcdc33}{}\label{json_8h_a8d5ddce2e622ca107422a7a136fcdc33}
+J\+S\+ON Array additional data \begin{Desc}
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+Clone\+Type@{J\+S\+O\+N\+Clone\+Type}}
 \index{J\+S\+O\+N\+Clone\+Type@{J\+S\+O\+N\+Clone\+Type}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+O\+N\+Clone\+Type}{JSONCloneType}}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf e\+J\+S\+O\+N\+Clone\+Type}  {\bf J\+S\+O\+N\+Clone\+Type}}\hypertarget{json_8h_a82504dc7a921c3161c7fd45d4215e7b0}{}\label{json_8h_a82504dc7a921c3161c7fd45d4215e7b0}
 How J\+S\+ON should be cloned Simple indicates that complex object should not clone children \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
+\index{json.\+h@{json.\+h}!J\+S\+O\+N\+Object\+Data@{J\+S\+O\+N\+Object\+Data}}
+\index{J\+S\+O\+N\+Object\+Data@{J\+S\+O\+N\+Object\+Data}!json.\+h@{json.\+h}}
+\subsubsection[{\texorpdfstring{J\+S\+O\+N\+Object\+Data}{JSONObjectData}}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf s\+J\+S\+O\+N\+Object\+Data}  {\bf J\+S\+O\+N\+Object\+Data}}\hypertarget{json_8h_af22cd3b4d470b9136b3f3c689b753a59}{}\label{json_8h_af22cd3b4d470b9136b3f3c689b753a59}
+J\+S\+ON Object additional data \begin{Desc}
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+Path@{J\+S\+O\+N\+Path}}
 \index{J\+S\+O\+N\+Path@{J\+S\+O\+N\+Path}!json.\+h@{json.\+h}}
@@ -195,43 +246,69 @@ Path inside json
 
 \begin{DoxyCode}
 \hyperlink{structsJSONPath}{JSONPath} path[3] = \{
-    \{ .type=JSON\_STRING, .name=\textcolor{stringliteral}{"accounts"} \}, \textcolor{comment}{// for object}
-    \{ .type=JSON\_NUMBER, .index=1 \}, \textcolor{comment}{// for array}
-    \{ .type=JSON\_UNDEFINED, .name=NULL \} \textcolor{comment}{// end of path}
+    \{ .\hyperlink{structsJSONPath_a6c4879fb81a51a713dc7867761e3b295}{type}=\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a02bfd03b07e5b9ecd6ee0d257dc37daf}{JSON\_STRING}, .name=\textcolor{stringliteral}{"accounts"} \}, \textcolor{comment}{// for object}
+    \{ .type=\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a6670b3c9b7ba8ab3976a7521edcc7f97}{JSON\_NUMBER}, .index=1 \}, \textcolor{comment}{// for array}
+    \{ .type=\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1aef1b2fb1bcc9012effaae713daf7b458}{JSON\_UNDEFINED}, .name=NULL \} \textcolor{comment}{// end of path}
 \};
 \end{DoxyCode}
 
 
-\begin{DoxySeeAlso}{Zobacz również}
+\begin{DoxySeeAlso}{See also}
 \hyperlink{json_8h_a6ea42f7260d5909a1287aca8676a7f3c}{J\+S\+O\+N\+\_\+find} 
 \end{DoxySeeAlso}
 \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+Type@{J\+S\+O\+N\+Type}}
 \index{J\+S\+O\+N\+Type@{J\+S\+O\+N\+Type}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+O\+N\+Type}{JSONType}}]{\setlength{\rightskip}{0pt plus 5cm}typedef enum {\bf e\+J\+S\+O\+N\+Type} {\bf J\+S\+O\+N\+Type}}\hypertarget{json_8h_af761d54284482a1af5a01d8f52845b49}{}\label{json_8h_af761d54284482a1af5a01d8f52845b49}
 Type of data stored by J\+S\+ON \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+Value@{J\+S\+O\+N\+Value}}
 \index{J\+S\+O\+N\+Value@{J\+S\+O\+N\+Value}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+O\+N\+Value}{JSONValue}}]{\setlength{\rightskip}{0pt plus 5cm}typedef union {\bf e\+J\+S\+O\+N\+Value} {\bf J\+S\+O\+N\+Value}}\hypertarget{json_8h_acb7eaa79e9cdd0740c01726c3ba06e3e}{}\label{json_8h_acb7eaa79e9cdd0740c01726c3ba06e3e}
 J\+S\+ON value variants \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 
 
-\subsection{Dokumentacja typów wyliczanych}
+\subsection{Enumeration Type Documentation}
 \index{json.\+h@{json.\+h}!e\+J\+S\+O\+N\+Clone\+Type@{e\+J\+S\+O\+N\+Clone\+Type}}
 \index{e\+J\+S\+O\+N\+Clone\+Type@{e\+J\+S\+O\+N\+Clone\+Type}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{e\+J\+S\+O\+N\+Clone\+Type}{eJSONCloneType}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf e\+J\+S\+O\+N\+Clone\+Type}}\hypertarget{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3}{}\label{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3}
-How J\+S\+ON should be cloned Simple indicates that complex object should not clone children \index{json.\+h@{json.\+h}!e\+J\+S\+O\+N\+Type@{e\+J\+S\+O\+N\+Type}}
+How J\+S\+ON should be cloned Simple indicates that complex object should not clone children \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{J\+S\+O\+N\+\_\+\+S\+I\+M\+P\+LE@{J\+S\+O\+N\+\_\+\+S\+I\+M\+P\+LE}!json.\+h@{json.\+h}}\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+S\+I\+M\+P\+LE@{J\+S\+O\+N\+\_\+\+S\+I\+M\+P\+LE}}\item[{\em 
+J\+S\+O\+N\+\_\+\+S\+I\+M\+P\+LE\hypertarget{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3afdaa910cf744404fa34e694c9e1bbf7f}{}\label{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3afdaa910cf744404fa34e694c9e1bbf7f}
+}]Do not clone children \index{J\+S\+O\+N\+\_\+\+D\+E\+EP@{J\+S\+O\+N\+\_\+\+D\+E\+EP}!json.\+h@{json.\+h}}\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+D\+E\+EP@{J\+S\+O\+N\+\_\+\+D\+E\+EP}}\item[{\em 
+J\+S\+O\+N\+\_\+\+D\+E\+EP\hypertarget{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3a330459ba63a87c78d3d825d66b1c1fe8}{}\label{json_8h_a7a8b3184f1ecbd8fcfdb66bd9514d2b3a330459ba63a87c78d3d825d66b1c1fe8}
+}]Clone everything \end{description}
+\end{Desc}
+\index{json.\+h@{json.\+h}!e\+J\+S\+O\+N\+Type@{e\+J\+S\+O\+N\+Type}}
 \index{e\+J\+S\+O\+N\+Type@{e\+J\+S\+O\+N\+Type}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{e\+J\+S\+O\+N\+Type}{eJSONType}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf e\+J\+S\+O\+N\+Type}}\hypertarget{json_8h_acab6725e93cbfcfcf4273259977127a1}{}\label{json_8h_acab6725e93cbfcfcf4273259977127a1}
-Type of data stored by J\+S\+ON 
+Type of data stored by J\+S\+ON \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{J\+S\+O\+N\+\_\+\+U\+N\+D\+E\+F\+I\+N\+ED@{J\+S\+O\+N\+\_\+\+U\+N\+D\+E\+F\+I\+N\+ED}!json.\+h@{json.\+h}}\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+U\+N\+D\+E\+F\+I\+N\+ED@{J\+S\+O\+N\+\_\+\+U\+N\+D\+E\+F\+I\+N\+ED}}\item[{\em 
+J\+S\+O\+N\+\_\+\+U\+N\+D\+E\+F\+I\+N\+ED\hypertarget{json_8h_acab6725e93cbfcfcf4273259977127a1aef1b2fb1bcc9012effaae713daf7b458}{}\label{json_8h_acab6725e93cbfcfcf4273259977127a1aef1b2fb1bcc9012effaae713daf7b458}
+}]used by path to mark end of path \index{J\+S\+O\+N\+\_\+\+S\+T\+R\+I\+NG@{J\+S\+O\+N\+\_\+\+S\+T\+R\+I\+NG}!json.\+h@{json.\+h}}\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+S\+T\+R\+I\+NG@{J\+S\+O\+N\+\_\+\+S\+T\+R\+I\+NG}}\item[{\em 
+J\+S\+O\+N\+\_\+\+S\+T\+R\+I\+NG\hypertarget{json_8h_acab6725e93cbfcfcf4273259977127a1a02bfd03b07e5b9ecd6ee0d257dc37daf}{}\label{json_8h_acab6725e93cbfcfcf4273259977127a1a02bfd03b07e5b9ecd6ee0d257dc37daf}
+}]json object is string \index{J\+S\+O\+N\+\_\+\+N\+U\+M\+B\+ER@{J\+S\+O\+N\+\_\+\+N\+U\+M\+B\+ER}!json.\+h@{json.\+h}}\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+N\+U\+M\+B\+ER@{J\+S\+O\+N\+\_\+\+N\+U\+M\+B\+ER}}\item[{\em 
+J\+S\+O\+N\+\_\+\+N\+U\+M\+B\+ER\hypertarget{json_8h_acab6725e93cbfcfcf4273259977127a1a6670b3c9b7ba8ab3976a7521edcc7f97}{}\label{json_8h_acab6725e93cbfcfcf4273259977127a1a6670b3c9b7ba8ab3976a7521edcc7f97}
+}]json object is number aka. float \index{J\+S\+O\+N\+\_\+\+O\+B\+J\+E\+CT@{J\+S\+O\+N\+\_\+\+O\+B\+J\+E\+CT}!json.\+h@{json.\+h}}\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+O\+B\+J\+E\+CT@{J\+S\+O\+N\+\_\+\+O\+B\+J\+E\+CT}}\item[{\em 
+J\+S\+O\+N\+\_\+\+O\+B\+J\+E\+CT\hypertarget{json_8h_acab6725e93cbfcfcf4273259977127a1a7750125a86a953cfd57b3a4e1fa67bff}{}\label{json_8h_acab6725e93cbfcfcf4273259977127a1a7750125a86a953cfd57b3a4e1fa67bff}
+}]json object is Object with keys and children \index{J\+S\+O\+N\+\_\+\+A\+R\+R\+AY@{J\+S\+O\+N\+\_\+\+A\+R\+R\+AY}!json.\+h@{json.\+h}}\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+A\+R\+R\+AY@{J\+S\+O\+N\+\_\+\+A\+R\+R\+AY}}\item[{\em 
+J\+S\+O\+N\+\_\+\+A\+R\+R\+AY\hypertarget{json_8h_acab6725e93cbfcfcf4273259977127a1a97462341a4eba4320d62d49597eabb6a}{}\label{json_8h_acab6725e93cbfcfcf4273259977127a1a97462341a4eba4320d62d49597eabb6a}
+}]json object is Array with children \index{J\+S\+O\+N\+\_\+\+N\+U\+LL@{J\+S\+O\+N\+\_\+\+N\+U\+LL}!json.\+h@{json.\+h}}\index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+\+N\+U\+LL@{J\+S\+O\+N\+\_\+\+N\+U\+LL}}\item[{\em 
+J\+S\+O\+N\+\_\+\+N\+U\+LL\hypertarget{json_8h_acab6725e93cbfcfcf4273259977127a1a03ddcc4e2eef955020a01e10c11bfe48}{}\label{json_8h_acab6725e93cbfcfcf4273259977127a1a03ddcc4e2eef955020a01e10c11bfe48}
+}]json object is null \end{description}
+\end{Desc}
 
-\subsection{Dokumentacja funkcji}
+
+\subsection{Function Documentation}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+alloc@{J\+S\+O\+N\+\_\+alloc}}
 \index{J\+S\+O\+N\+\_\+alloc@{J\+S\+O\+N\+\_\+alloc}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+alloc(\+J\+S\+O\+N\+Type type)}{JSON_alloc(JSONType type)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\+S\+ON}$\ast$ J\+S\+O\+N\+\_\+alloc (
@@ -240,16 +317,16 @@ Type of data stored by J\+S\+ON
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_ad8fd00eaccc81958c5a65f805e5c00ba}{}\label{json_8h_ad8fd00eaccc81958c5a65f805e5c00ba}
 Create new empty json object with given type 
-\begin{DoxyParams}{Parametry}
-{\em type} & \\
+\begin{DoxyParams}{Parameters}
+{\em type} & json object type \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-
+\begin{DoxyReturn}{Returns}
+new empty json object 
 \end{DoxyReturn}
 \begin{Desc}
-\item[Przykłady\+: ]\par
-\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
+\item[Examples\+: ]\par
+\hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}, and \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2serialize_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/serialize.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+append@{J\+S\+O\+N\+\_\+append}}
 \index{J\+S\+O\+N\+\_\+append@{J\+S\+O\+N\+\_\+append}!json.\+h@{json.\+h}}
 \subsubsection[{\texorpdfstring{J\+S\+O\+N\+\_\+append(\+J\+S\+O\+N $\ast$array, J\+S\+O\+N $\ast$entry)}{JSON_append(JSON *array, JSON *entry)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf J\+S\+ON}$\ast$ J\+S\+O\+N\+\_\+append (
@@ -261,21 +338,21 @@ Create new empty json object with given type
 Append object at end of given array
 
 
-\begin{DoxyParams}{Parametry}
-{\em array} & \\
+\begin{DoxyParams}{Parameters}
+{\em array} & json Array \\
 \hline
-{\em entry} & \\
+{\em entry} & child to append \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-
+\begin{DoxyReturn}{Returns}
+child json object
 \end{DoxyReturn}
 
 \begin{DoxyCode}
-\hyperlink{structsJSON}{JSON} *user = \hyperlink{json_8h_ae9460db2cd54a7462fca0aab59aaea12}{JSON\_append}(array, \hyperlink{json_8h_ad8fd00eaccc81958c5a65f805e5c00ba}{JSON\_alloc}(JSON\_OBJECT));
+\hyperlink{structsJSON}{JSON} *user = \hyperlink{json_8h_ae9460db2cd54a7462fca0aab59aaea12}{JSON\_append}(array, \hyperlink{json_8h_ad8fd00eaccc81958c5a65f805e5c00ba}{JSON\_alloc}(\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a7750125a86a953cfd57b3a4e1fa67bff}{JSON\_OBJECT}));
 \end{DoxyCode}
  \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+clone@{J\+S\+O\+N\+\_\+clone}}
 \index{J\+S\+O\+N\+\_\+clone@{J\+S\+O\+N\+\_\+clone}!json.\+h@{json.\+h}}
@@ -285,29 +362,28 @@ Append object at end of given array
 \item[{{\bf J\+S\+O\+N\+Clone\+Type}}]{deep}
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_a5d72929696e1de3ab3b8ad39a684dded}{}\label{json_8h_a5d72929696e1de3ab3b8ad39a684dded}
-New object will be created with fallowing rules\+:
+New object will be created with fallowing rules
 
 
-\begin{DoxyParams}{Parametry}
-{\em obj} & \\
+\begin{DoxyItemize}
+\item object will be cloned with all keys and returned if deep is set to {\ttfamily J\+S\+O\+N\+\_\+\+D\+E\+EP}, otherwise empty object will be returned
+\item array will be cloned with all children and returned if deep is set to {\ttfamily J\+S\+O\+N\+\_\+\+D\+E\+EP}, otherwise empty array will be returned
+\item string will be cloned
+\item value will be preserved
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & which will be cloned \\
 \hline
-{\em deep} & \\
+{\em deep} & clone with children? \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-new json object
+\begin{DoxyReturn}{Returns}
+new json object 
 \end{DoxyReturn}
-
-\begin{DoxyCode}
-* \textcolor{keywordtype}{object} will be cloned with all keys and returned \textcolor{keywordflow}{if} deep is \textcolor{keyword}{set} to `JSON\_DEEP`, otherwise empty \textcolor{keywordtype}{object} 
-      will be returned
-* array will be cloned with all children and returned \textcolor{keywordflow}{if} deep is \textcolor{keyword}{set} to `JSON\_DEEP`, otherwise empty array 
-      will be returned
-* \textcolor{keywordtype}{string} will be cloned
-* value will be preserved
-\end{DoxyCode}
- \begin{Desc}
-\item[Przykłady\+: ]\par
+\begin{Desc}
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+escape@{J\+S\+O\+N\+\_\+escape}}
 \index{J\+S\+O\+N\+\_\+escape@{J\+S\+O\+N\+\_\+escape}!json.\+h@{json.\+h}}
@@ -319,12 +395,12 @@ new json object
 Escape all special characters
 
 
-\begin{DoxyParams}{Parametry}
+\begin{DoxyParams}{Parameters}
 {\em string} & \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-
+\begin{DoxyReturn}{Returns}
+string with escaped special characters like \textbackslash{}n, "
 \end{DoxyReturn}
 
 \begin{DoxyCode}
@@ -332,7 +408,7 @@ Escape all special characters
 \textcolor{comment}{// #=> "Some paragraph\(\backslash\)\(\backslash\)n Next paragraph"}
 \end{DoxyCode}
  \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+find@{J\+S\+O\+N\+\_\+find}}
 \index{J\+S\+O\+N\+\_\+find@{J\+S\+O\+N\+\_\+find}!json.\+h@{json.\+h}}
@@ -345,30 +421,30 @@ Escape all special characters
 Lookup for J\+S\+ON path
 
 
-\begin{DoxyParams}{Parametry}
-{\em source} & \\
+\begin{DoxyParams}{Parameters}
+{\em source} & json object \\
 \hline
-{\em path} & \\
+{\em path} & to lookup \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
+\begin{DoxyReturn}{Returns}
 json object or N\+U\+LL if not found
 \end{DoxyReturn}
-\begin{DoxySeeAlso}{Zobacz również}
+\begin{DoxySeeAlso}{See also}
 \hyperlink{json_8h_a0f3747cfbfe6c68ae7b67184bd731728}{J\+S\+O\+N\+Path}
 \end{DoxySeeAlso}
 
 \begin{DoxyCode}
 \hyperlink{structsJSONPath}{JSONPath} path[4] = \{
-    \{ .type=JSON\_STRING, .name=\textcolor{stringliteral}{"hello"} \},
-    \{ .type=JSON\_STRING, .name=\textcolor{stringliteral}{"world"} \},
-    \{ .type=JSON\_NUMBER, .index=1 \},
-    \{ .type=JSON\_UNDEFINED, .name=NULL \},
+    \{ .\hyperlink{structsJSONPath_a6c4879fb81a51a713dc7867761e3b295}{type}=\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a02bfd03b07e5b9ecd6ee0d257dc37daf}{JSON\_STRING}, .name=\textcolor{stringliteral}{"hello"} \},
+    \{ .type=\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a02bfd03b07e5b9ecd6ee0d257dc37daf}{JSON\_STRING}, .name=\textcolor{stringliteral}{"world"} \},
+    \{ .type=\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a6670b3c9b7ba8ab3976a7521edcc7f97}{JSON\_NUMBER}, .index=1 \},
+    \{ .type=\hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1aef1b2fb1bcc9012effaae713daf7b458}{JSON\_UNDEFINED}, .name=NULL \},
 \};
 \hyperlink{structsJSON}{JSON} *child = \hyperlink{json_8h_a6ea42f7260d5909a1287aca8676a7f3c}{JSON\_find}(source, path);
 \end{DoxyCode}
  \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+free@{J\+S\+O\+N\+\_\+free}}
 \index{J\+S\+O\+N\+\_\+free@{J\+S\+O\+N\+\_\+free}!json.\+h@{json.\+h}}
@@ -378,12 +454,12 @@ json object or N\+U\+LL if not found
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_ac5db034af6e012802315e2e5587a54df}{}\label{json_8h_ac5db034af6e012802315e2e5587a54df}
 Free object memory 
-\begin{DoxyParams}{Parametry}
-{\em object} & \\
+\begin{DoxyParams}{Parameters}
+{\em object} & json object to free \\
 \hline
 \end{DoxyParams}
 \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+merge\+J\+S\+ON@{J\+S\+O\+N\+\_\+merge\+J\+S\+ON}}
 \index{J\+S\+O\+N\+\_\+merge\+J\+S\+ON@{J\+S\+O\+N\+\_\+merge\+J\+S\+ON}!json.\+h@{json.\+h}}
@@ -394,31 +470,30 @@ Free object memory
 \item[{{\bf J\+S\+O\+N\+Clone\+Type}}]{deep}
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_ad042d2d456ea6186716a5071c0151370}{}\label{json_8h_ad042d2d456ea6186716a5071c0151370}
-Merge two object with fallowing rules\+:
+Merge two object with fallowing rules
 
 
-\begin{DoxyParams}{Parametry}
-{\em target} & \\
+\begin{DoxyItemize}
+\item object will be cloned and merged to target if deep is set to {\ttfamily J\+S\+O\+N\+\_\+\+D\+E\+EP}, otherwise empty object will be merged
+\item array will be cloned and merged to target if deep is set to {\ttfamily J\+S\+O\+N\+\_\+\+D\+E\+EP}, otherwise empty array will be merged
+\item two string will be concatenated without any separator
+\item value will be replaced
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & data receiver \\
 \hline
-{\em source} & \\
+{\em source} & data source \\
 \hline
-{\em deep} & \\
+{\em deep} & clone with children? \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-1 if succeed or 0 if not
+\begin{DoxyReturn}{Returns}
+1 if succeed or 0 if not 
 \end{DoxyReturn}
-
-\begin{DoxyCode}
-* \textcolor{keywordtype}{object} will be cloned and merged to target \textcolor{keywordflow}{if} deep is \textcolor{keyword}{set} to `JSON\_DEEP`, otherwise empty \textcolor{keywordtype}{object} will be 
-      merged
-* array will be cloned and merged to target \textcolor{keywordflow}{if} deep is \textcolor{keyword}{set} to `JSON\_DEEP`, otherwise empty array will be 
-      merged
-* two \textcolor{keywordtype}{string} will be concatenated without any separator
-* value will be replaced
-\end{DoxyCode}
- \begin{Desc}
-\item[Przykłady\+: ]\par
+\begin{Desc}
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+number@{J\+S\+O\+N\+\_\+number}}
 \index{J\+S\+O\+N\+\_\+number@{J\+S\+O\+N\+\_\+number}!json.\+h@{json.\+h}}
@@ -428,15 +503,15 @@ Merge two object with fallowing rules\+:
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_abcecc56303be7d8c3b1e835d058d5a2d}{}\label{json_8h_abcecc56303be7d8c3b1e835d058d5a2d}
 Create json object from float 
-\begin{DoxyParams}{Parametry}
-{\em n} & \\
+\begin{DoxyParams}{Parameters}
+{\em n} & json object float data \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-
+\begin{DoxyReturn}{Returns}
+json object with number data 
 \end{DoxyReturn}
 \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+set@{J\+S\+O\+N\+\_\+set}}
 \index{J\+S\+O\+N\+\_\+set@{J\+S\+O\+N\+\_\+set}!json.\+h@{json.\+h}}
@@ -450,23 +525,24 @@ Create json object from float
 Set new value for given key. Multiple values for key can exists and newest value will be at end of keys.
 
 
-\begin{DoxyParams}{Parametry}
-{\em parent} & \\
+\begin{DoxyParams}{Parameters}
+{\em parent} & json Object \\
 \hline
-{\em key} & \\
+{\em key} & child key \\
 \hline
-{\em json} & \\
+{\em json} & child json object \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-
+\begin{DoxyReturn}{Returns}
+child json object
 \end{DoxyReturn}
 
 \begin{DoxyCode}
-\hyperlink{structsJSON}{JSON} *users = \hyperlink{json_8h_a0b79fc03b1dffbc61cbbe9b817ef8ae6}{JSON\_set}(root, L\textcolor{stringliteral}{"users"}, \hyperlink{json_8h_ad8fd00eaccc81958c5a65f805e5c00ba}{JSON\_alloc}(JSON\_ARRAY));
+\hyperlink{structsJSON}{JSON} *users = \hyperlink{json_8h_a0b79fc03b1dffbc61cbbe9b817ef8ae6}{JSON\_set}(root, L\textcolor{stringliteral}{"users"}, \hyperlink{json_8h_ad8fd00eaccc81958c5a65f805e5c00ba}{JSON\_alloc}(
+      \hyperlink{json_8h_acab6725e93cbfcfcf4273259977127a1a97462341a4eba4320d62d49597eabb6a}{JSON\_ARRAY}));
 \end{DoxyCode}
  \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+string@{J\+S\+O\+N\+\_\+string}}
 \index{J\+S\+O\+N\+\_\+string@{J\+S\+O\+N\+\_\+string}!json.\+h@{json.\+h}}
@@ -476,15 +552,15 @@ Set new value for given key. Multiple values for key can exists and newest value
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_a8564e11a595dfb8e42182c28147b1d70}{}\label{json_8h_a8564e11a595dfb8e42182c28147b1d70}
 Create json string from string 
-\begin{DoxyParams}{Parametry}
-{\em str} & \\
+\begin{DoxyParams}{Parameters}
+{\em str} & json object string data \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-
+\begin{DoxyReturn}{Returns}
+json object with string data 
 \end{DoxyReturn}
 \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+stringify@{J\+S\+O\+N\+\_\+stringify}}
 \index{J\+S\+O\+N\+\_\+stringify@{J\+S\+O\+N\+\_\+stringify}!json.\+h@{json.\+h}}
@@ -496,19 +572,19 @@ Create json string from string
 Create string from J\+S\+ON object
 
 
-\begin{DoxyParams}{Parametry}
-{\em root} & \\
+\begin{DoxyParams}{Parameters}
+{\em root} & json object to stringify \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-
+\begin{DoxyReturn}{Returns}
+string representation of json object
 \end{DoxyReturn}
 
 \begin{DoxyCode}
 \textcolor{keywordtype}{char} *json = \hyperlink{json_8h_a88f3755b96cc3a6ca0adbd35e0092280}{JSON\_stringify}(root);
 \end{DoxyCode}
  \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}
 \index{json.\+h@{json.\+h}!J\+S\+O\+N\+\_\+value\+Of@{J\+S\+O\+N\+\_\+value\+Of}}
 \index{J\+S\+O\+N\+\_\+value\+Of@{J\+S\+O\+N\+\_\+value\+Of}!json.\+h@{json.\+h}}
@@ -519,15 +595,15 @@ Create string from J\+S\+ON object
 \end{DoxyParamCaption}
 )}\hypertarget{json_8h_af6b5d6ad33f7765b65e275785b40ef8b}{}\label{json_8h_af6b5d6ad33f7765b65e275785b40ef8b}
 Returns J\+S\+O\+N\+Value for given key if missing empty J\+S\+O\+N\+Value. 
-\begin{DoxyParams}{Parametry}
-{\em object} & \\
+\begin{DoxyParams}{Parameters}
+{\em object} & field owner \\
 \hline
-{\em key} & \\
+{\em key} & field name \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Zwraca}
-
+\begin{DoxyReturn}{Returns}
+Value variant 
 \end{DoxyReturn}
 \begin{Desc}
-\item[Przykłady\+: ]\par
+\item[Examples\+: ]\par
 \hyperlink{_2home_2eraden_2code_2eraden_2kore_query_2json_8h-example}{/home/eraden/code/eraden/kore\+\_\+query/json.\+h}.\end{Desc}

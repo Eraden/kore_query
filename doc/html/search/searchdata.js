@@ -1,12 +1,14 @@
 var indexSectionsWithContent =
 {
-  0: "acdefjklorst",
+  0: "acdefijklnoprstvw",
   1: "es",
-  2: "j",
-  3: "j",
-  4: "acdfjklort",
-  5: "j",
-  6: "e"
+  2: "djs",
+  3: "acdjksw",
+  4: "acdfijklnoprstv",
+  5: "dj",
+  6: "e",
+  7: "dj",
+  8: "dj"
 };
 
 var indexSectionNames =
@@ -17,17 +19,21 @@ var indexSectionNames =
   3: "functions",
   4: "variables",
   5: "typedefs",
-  6: "enums"
+  6: "enums",
+  7: "enumvalues",
+  8: "defines"
 };
 
 var indexSectionLabels =
 {
   0: "All",
-  1: "Klasy",
-  2: "Pliki",
-  3: "Funkcje",
-  4: "Zmienne",
-  5: "Definicje typów",
-  6: "Wyliczenia"
+  1: "Classes",
+  2: "Files",
+  3: "Functions",
+  4: "Variables",
+  5: "Typedefs",
+  6: "Enumerations",
+  7: "Enumerator",
+  8: "Macros"
 };
 
