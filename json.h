@@ -1,3 +1,42 @@
+/**
+ * @file json.h
+ * @author Adrian Eraden Woźniak
+ * @date 21.12.2016
+ * @brief JSON response type
+ * @example
+ * @code
+ *  JSON *root = JSON_alloc(JSON_OBJECT);
+ *  JSON *array = JSON_alloc(JSON_ARRAY);
+ *  JSON_set(root, L"users", array);
+ *
+ *  for (int i = 0; i < 2; i++) {
+ *    JSON *child = JSON_alloc(JSON_OBJECT);
+ *    JSON_append(array, child);
+ *  }
+ *
+ *  JSON_EACH_PAIR(root, rootKey, rootChild)
+ *      if (strcmp(rootKey, "some-key") == 0) ...;
+ *      JSON_EACH_PAIR_NEXT
+ *  JSON_END_EACH
+ *
+ *  JSON_EACH(array, arrayIndex, arrayEntry)
+ *      if (arrayIndex != 0) kore_log(LOG_INFO, ", ");
+ *      JSON_EACH_NEXT
+ *  JSON_END_EACH
+ *
+ *  JSONPath path[3] = {
+ *      { .type=JSON_STRING, .name="users" },
+ *      { .type=JSON_NUMBER, .index=1 },
+ *      { .type=JSON_UNDEFINED, .name=NULL },
+ *  };
+ *  JSON *child = JSON_find(source, path);
+ *
+ *  char *json = JSON_stringify(root); //=> {"users":[{},{}]}
+ *  JSON_free(root);
+ *  free(json);
+ * @endcode
+ */
+
 #pragma once
 
 #include <string.h>
@@ -71,33 +110,33 @@ typedef enum eJSONCloneType {
  * JSON data
  */
 typedef struct sJSON {
-  JSONType type;
-  JSONValue jsonValue;
+  JSONType type; /** JSON type */
+  JSONValue jsonValue; /** stored value */
 
   struct {
-    JSON **objects;
-    char **keys;
-    unsigned int len;
-  } children;
+    JSON **objects; /** stored objects */
+    char **keys; /** children keys */
+    unsigned int len; /** number of children */
+  } children; /** object children */
 
   struct {
-    JSON **objects;
-    unsigned int len;
-  } array;
+    JSON **objects; /** array entities */
+    unsigned int len; /** array length */
+  } array; /** array data */
 } JSON;
 
 /**
  * Path inside json
- * @see
- *  JSON_find
  *
- * @example
- * @code
+ * @code{.c}
  *  JSONPath path[3] = {
  *      { .type=JSON_STRING, .name="accounts" }, // for object
  *      { .type=JSON_NUMBER, .index=1 }, // for array
  *      { .type=JSON_UNDEFINED, .name=NULL } // end of path
  *  };
+ * @endcode
+ *
+ * @see JSON_find
  */
 typedef struct sJSONPath {
   union {
@@ -143,9 +182,9 @@ void JSON_free(JSON *object);
  * @param json
  * @return
  *
- * @example
- * @code
+ * @code{.c}
  *  JSON *users = JSON_set(root, L"users", JSON_alloc(JSON_ARRAY));
+ * @endcode
  */
 JSON *JSON_set(JSON *parent, wchar_t *key, JSON *json);
 
@@ -156,9 +195,9 @@ JSON *JSON_set(JSON *parent, wchar_t *key, JSON *json);
  * @param entry
  * @return
  *
- * @example
- * @code
+ * @code{.c}
  *  JSON *user = JSON_append(array, JSON_alloc(JSON_OBJECT));
+ * @endcode
  */
 JSON *JSON_append(JSON *array, JSON *entry);
 
@@ -168,9 +207,9 @@ JSON *JSON_append(JSON *array, JSON *entry);
  * @param root
  * @return
  *
- * @example
- * @code
+ * @code{.c}
  *  char *json = JSON_stringify(root);
+ * @endcode
  */
 char *JSON_stringify(JSON *root);
 
@@ -181,11 +220,9 @@ char *JSON_stringify(JSON *root);
  * @param path
  * @return json object or NULL if not found
  *
- * @see
- *  JSONPath
+ * @see JSONPath
  *
- * @example
- * @code
+ * @code{.c}
  *  JSONPath path[4] = {
  *      { .type=JSON_STRING, .name="hello" },
  *      { .type=JSON_STRING, .name="world" },
@@ -193,7 +230,7 @@ char *JSON_stringify(JSON *root);
  *      { .type=JSON_UNDEFINED, .name=NULL },
  *  };
  *  JSON *child = JSON_find(source, path);
- *
+ * @endcode
  */
 JSON *JSON_find(JSON *source, JSONPath *path);
 
@@ -203,10 +240,10 @@ JSON *JSON_find(JSON *source, JSONPath *path);
  * @param string
  * @return
  *
- * @example
- * @code
+ * @code{.c}
  *  char *escaped = JSON_escape("Some paragraph\n Next paragraph");
  *  // #=> "Some paragraph\\n Next paragraph"
+ * @endcode
  */
 char *JSON_escape(char *string);
 
@@ -217,11 +254,12 @@ char *JSON_escape(char *string);
  * @param deep
  * @return new json object
  *
- * @code
+ * @code{.c}
  *  * object will be cloned with all keys and returned if deep is set to `JSON_DEEP`, otherwise empty object will be returned
  *  * array will be cloned with all children and returned if deep is set to `JSON_DEEP`, otherwise empty array will be returned
  *  * string will be cloned
  *  * value will be preserved
+ * @endcode
  */
 JSON *JSON_clone(JSON *obj, JSONCloneType deep);
 
@@ -233,11 +271,12 @@ JSON *JSON_clone(JSON *obj, JSONCloneType deep);
  * @param deep
  * @return 1 if succeed or 0 if not
  *
- * @code
+ * @code{.c}
  *  * object will be cloned and merged to target if deep is set to `JSON_DEEP`, otherwise empty object will be merged
  *  * array will be cloned and merged to target if deep is set to `JSON_DEEP`, otherwise empty array will be merged
  *  * two string will be concatenated without any separator
  *  * value will be replaced
+ * @endcode
  */
 int JSON_mergeJSON(JSON *target, JSON *source, JSONCloneType deep);
 
