@@ -25,7 +25,7 @@ static void print_joins(DatabaseJoinChains *joinChains) {
 #endif
 
 #ifdef INSPECT_SQL
-#define PRINT_SQL(sql) kore_log(LOG_INFO, "SQL: %s", sql)
+#define PRINT_SQL(sql) fprintf(stderr, "SQL: %s\n", sql)
 #else
 #define PRINT_SQL(sql)
 #endif

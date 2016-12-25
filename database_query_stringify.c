@@ -1,6 +1,33 @@
 #include "./database_query_stringify.h"
 
 static char __attribute__((__used__)) *
+DatabaseQuery_stringifyDatabaseQueryCondition(DatabaseQueryCondition *condition);
+
+static char __attribute__((__used__)) *
+DatabaseQuery_stringifyDatabaseQueryJoinForUpdate(DatabaseQueryJoin *join) {
+  char *joined = NULL;
+  DatabaseQueryCondition **conditions = join->conditions;
+
+  joined = append_cstr(joined, "FROM ");
+  joined = append_cstr(joined, join->table->name);
+  joined = append_cstr(joined, " WHERE ");
+
+  for (unsigned int fieldIndex = 0; fieldIndex < join->conditionsSize; fieldIndex++) {
+    if (fieldIndex > 0) {
+      joined = append_cstr(joined, " AND ");
+    }
+
+    char *condition = DatabaseQuery_stringifyDatabaseQueryCondition(*conditions);
+    joined = append_cstr(joined, condition);
+    free(condition);
+
+    conditions += 1;
+  }
+
+  return joined;
+}
+
+static char __attribute__((__used__)) *
 DatabaseQuery_stringifyDatabaseQueryField(DatabaseQueryField *field) {
   char *joined = NULL;
 
@@ -261,6 +288,7 @@ DatabaseQuery_stringifyUpdate(DatabaseQuery *query) {
   if (query == NULL || query->fieldValues == NULL) return NULL;
   char *sql = clone_cstr("UPDATE ");
   sql = append_cstr(sql, query->table->name);
+
   sql = append_cstr(sql, " SET ");
 
   DatabaseQueryFieldValue **fields = query->fieldValues;
@@ -272,8 +300,22 @@ DatabaseQuery_stringifyUpdate(DatabaseQuery *query) {
     fields += 1;
   }
 
+  DatabaseQueryJoin **joins = query->joins;
+  if (joins) {
+    sql = append_cstr(sql, " ");
+    char *generated = DatabaseQuery_stringifyDatabaseQueryJoinForUpdate(*joins);
+    sql = append_cstr(sql, generated);
+    free(generated);
+  }
+
   DatabaseQueryCondition **conditions = query->conditions;
-  if (conditions) sql = append_cstr(sql, "WHERE ");
+  if (conditions) {
+    if (joins) {
+      sql = append_cstr(sql, " AND ");
+    } else {
+      sql = append_cstr(sql, " WHERE ");
+    }
+  }
   for (unsigned int conditionIndex = 0; conditionIndex < query->conditionsSize; ++conditionIndex) {
     if (conditionIndex > 0) sql = append_cstr(sql, " AND ");
     char *condition = DatabaseQuery_stringifyDatabaseQueryCondition(*conditions);
