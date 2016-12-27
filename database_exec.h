@@ -63,7 +63,7 @@ typedef struct sDatabaseJoinChains {
  *  JSON *root = Database_exec(query);
  * @endcode
  */
-JSON *Database_execQuery(DatabaseQuery *query);
+JSON *Database_execQuery(const DatabaseQuery *query);
 
 /**
  * Execute SQL and parse response

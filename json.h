@@ -168,6 +168,8 @@ typedef struct sJSON {
   JSONObjectData children;
   /** array data */
   JSONArrayData array;
+  /** parent node */
+  JSON *parent;
 } JSON;
 
 /**
@@ -331,3 +333,20 @@ int JSON_mergeJSON(JSON *target, JSON *source, JSONCloneType deep);
  * @return Value variant
  */
 JSONValue JSON_valueOf(JSON *object, char *key);
+
+/**
+ * Check is json Object has defined property
+ * @param object json Object
+ * @param key property name
+ * @return 1 if has property, otherwise 0
+ */
+char JSON_hasProperty(JSON *object, const char *key);
+
+/**
+ * Rename node
+ * @param root json object
+ * @param name new name
+ * @param path path to node
+ * @return 1 if succeed, otherwise 0
+ */
+char JSON_renameNode(JSON *root, const char *name, JSONPath *path);

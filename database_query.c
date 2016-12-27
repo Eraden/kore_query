@@ -297,7 +297,7 @@ DATABASE_QUERY_APPEND(DatabaseQueryDistinct, DatabaseQueryField, fields);
 DATABASE_QUERY_APPEND(DatabaseQuery, DatabaseQueryOrder, orders);
 
 static DatabaseQuery *
-DatabaseQuery_start(char *tableName, DatabaseQueryType type) {
+DatabaseQuery_start(const char *tableName, DatabaseQueryType type) {
   DatabaseQuery *q = DatabaseQuery_createDatabaseQuery();
   q->table = DatabaseQuery_createDatabaseQueryTable();
   q->table->name = clone_cstr(tableName);
@@ -305,19 +305,19 @@ DatabaseQuery_start(char *tableName, DatabaseQueryType type) {
   return q;
 }
 
-DatabaseQuery *DatabaseQuery_startSelect(char *tableName) {
+DatabaseQuery *DatabaseQuery_startSelect(const char *tableName) {
   return DatabaseQuery_start(tableName, DATABASE_QUERY_TYPE_SELECT);
 }
 
-DatabaseQuery *DatabaseQuery_startInsert(char *tableName) {
+DatabaseQuery *DatabaseQuery_startInsert(const char *tableName) {
   return DatabaseQuery_start(tableName, DATABASE_QUERY_TYPE_INSERT);
 }
 
-DatabaseQuery *DatabaseQuery_startUpdate(char *tableName) {
+DatabaseQuery *DatabaseQuery_startUpdate(const char *tableName) {
   return DatabaseQuery_start(tableName, DATABASE_QUERY_TYPE_UPDATE);
 }
 
-DatabaseQuery *DatabaseQuery_startDelete(char *tableName) {
+DatabaseQuery *DatabaseQuery_startDelete(const char *tableName) {
   return DatabaseQuery_start(tableName, DATABASE_QUERY_TYPE_DELETE);
 }
 
@@ -390,7 +390,7 @@ DatabaseQuery_whereFieldWithCall(
 }
 
 DatabaseQueryCondition __attribute__((__used__)) *
-DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure) {
+DatabaseQuery_whereSQL(DatabaseQuery *query, const char *pure) {
   DatabaseQueryCondition *condition = DatabaseQuery_createDatabaseQueryCondition();
   condition->pure = SQL_escape_string(pure);
   condition->type = DATABASE_QUERY_CONDITION_TYPE_PURE_SQL;
@@ -401,10 +401,10 @@ DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure) {
 DatabaseQueryJoin *
 DatabaseQuery_join(
     DatabaseQuery *query,
-    char *joinTableName,
-    char *joinFieldName,
-    char *queriedTableName,
-    char *queriedFieldName,
+    const char *joinTableName,
+    const char *joinFieldName,
+    const char *queriedTableName,
+    const char *queriedFieldName,
     DatabaseQueryJoinType type
 ) {
   DatabaseQueryJoin *join = DatabaseQuery_createDatabaseQueryJoin();
@@ -437,9 +437,9 @@ DatabaseQuery_join(
 DatabaseQueryField *
 DatabaseQuery_select(
     DatabaseQuery *query,
-    char *tableName,
-    char *fieldName,
-    char *as, JSONType type
+    const char *tableName,
+    const char *fieldName,
+    const char *as, JSONType type
 ) {
   DatabaseQueryTable *table = DatabaseQuery_createDatabaseQueryTable();
   table->name = clone_cstr(tableName);
@@ -453,53 +453,53 @@ DatabaseQuery_select(
 }
 
 DatabaseQueryFieldValue __attribute__((__used__)) *
-DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, JSONType type) {
-  value = clone_cstr(value);
+DatabaseQuery_insert(DatabaseQuery *query, const char *fieldName, const char *value, JSONType type) {
+  char *val = clone_cstr(value);
   if (type == JSON_STRING) {
     char *joined = clone_cstr("'");
-    char *escaped = SQL_escape_string(value);
+    char *escaped = SQL_escape_string(val);
     joined = append_cstr(joined, escaped);
     joined = append_cstr(joined, "'");
-    free(value);
+    free(val);
     free(escaped);
-    value = joined;
+    val = joined;
   }
 
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->name = clone_cstr(fieldName);
   DatabaseQueryFieldValue *fieldValue = DatabaseQuery_createDatabaseQueryFieldValue();
   fieldValue->field = field;
-  fieldValue->value = value;
+  fieldValue->value = val;
 
   DatabaseQuery_append_DatabaseQueryFieldValue_to_DatabaseQuery_fieldValues(query, fieldValue);
   return fieldValue;
 }
 
 DatabaseQueryFieldValue __attribute__((__used__)) *
-DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, JSONType type) {
-  value = clone_cstr(value);
+DatabaseQuery_update(DatabaseQuery *query, const char *fieldName, const char *value, JSONType type) {
+  char *val = clone_cstr(value);
   if (type == JSON_STRING) {
     char *joined = clone_cstr("'");
-    char *escaped = SQL_escape_string(value);
+    char *escaped = SQL_escape_string(val);
     joined = append_cstr(joined, escaped);
     joined = append_cstr(joined, "'");
-    free(value);
+    free(val);
     free(escaped);
-    value = joined;
+    val = joined;
   }
 
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->name = clone_cstr(fieldName);
   DatabaseQueryFieldValue *fieldValue = DatabaseQuery_createDatabaseQueryFieldValue();
   fieldValue->field = field;
-  fieldValue->value = value;
+  fieldValue->value = val;
 
   DatabaseQuery_append_DatabaseQueryFieldValue_to_DatabaseQuery_fieldValues(query, fieldValue);
   return fieldValue;
 }
 
 DatabaseQueryLimit __attribute__((__used__)) *
-DatabaseQuery_limit(DatabaseQuery *query, char *value) {
+DatabaseQuery_limit(DatabaseQuery *query, const char *value) {
   DatabaseQueryLimit *limit = DatabaseQuery_createDatabaseQueryLimit();
   limit->limit = clone_cstr(value);
   query->limit = limit;
@@ -507,7 +507,7 @@ DatabaseQuery_limit(DatabaseQuery *query, char *value) {
 }
 
 DatabaseQueryField __attribute__((__used__)) *
-DatabaseQuery_returning(DatabaseQuery *query, char *tableName, char *fieldName) {
+DatabaseQuery_returning(DatabaseQuery *query, const char *tableName, const char *fieldName) {
   DatabaseQueryField *returning = DatabaseQuery_createDatabaseQueryField();
   returning->table = DatabaseQuery_createDatabaseQueryTable();
   returning->table->name = clone_cstr(tableName);
@@ -518,7 +518,7 @@ DatabaseQuery_returning(DatabaseQuery *query, char *tableName, char *fieldName) 
 }
 
 DatabaseQueryDistinct __attribute__((__used__)) *
-DatabaseQuery_distinctOn(DatabaseQuery *query, char *tableName, char *fieldName) {
+DatabaseQuery_distinctOn(DatabaseQuery *query, const char *tableName, const char *fieldName) {
   DatabaseQueryDistinct *distinct = query->distinct;
   if (!distinct) {
     query->distinct = distinct = DatabaseQuery_createDatabaseQueryDistinct();
@@ -536,7 +536,7 @@ DatabaseQuery_distinctOn(DatabaseQuery *query, char *tableName, char *fieldName)
 }
 
 DatabaseQueryOrder __attribute__((__used__)) *
-DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, DatabaseQueryOrderDirection direction) {
+DatabaseQuery_order(DatabaseQuery *query, const char *tableName, const char *fieldName, DatabaseQueryOrderDirection direction) {
   DatabaseQueryOrder *order = DatabaseQuery_createDatabaseQueryOrder();
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->table = DatabaseQuery_createDatabaseQueryTable();

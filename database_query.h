@@ -398,7 +398,7 @@ DEF_DATABASE_QUERY_DEALLOC_START(DatabaseQueryTable);
  *  DatabaseQuery *query = DatabaseQuery_startSelect("accounts");
  * @endcode
  */
-DatabaseQuery *DatabaseQuery_startSelect(char *tableName);
+DatabaseQuery *DatabaseQuery_startSelect(const char *tableName);
 
 /**
  * Start insert query for table
@@ -409,7 +409,7 @@ DatabaseQuery *DatabaseQuery_startSelect(char *tableName);
  *  DatabaseQuery *query = DatabaseQuery_startInsert("accounts");
  * @endcode
  */
-DatabaseQuery *DatabaseQuery_startInsert(char *tableName);
+DatabaseQuery *DatabaseQuery_startInsert(const char *tableName);
 
 /**
  * Start update query for table
@@ -420,7 +420,7 @@ DatabaseQuery *DatabaseQuery_startInsert(char *tableName);
  *  DatabaseQuery *query = DatabaseQuery_startUpdate("accounts");
  * @endcode
  */
-DatabaseQuery *DatabaseQuery_startUpdate(char *tableName);
+DatabaseQuery *DatabaseQuery_startUpdate(const char *tableName);
 
 /**
  * Start delete query for table
@@ -431,7 +431,7 @@ DatabaseQuery *DatabaseQuery_startUpdate(char *tableName);
  *  DatabaseQuery *query = DatabaseQuery_startDelete("accounts");
  * @endcode
  */
-DatabaseQuery *DatabaseQuery_startDelete(char *tableName);
+DatabaseQuery *DatabaseQuery_startDelete(const char *tableName);
 
 /**
  * Add where condition to query
@@ -500,7 +500,7 @@ DatabaseQuery_whereFieldWithCall(
  * @endcode
  */
 DatabaseQueryCondition *
-DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure);
+DatabaseQuery_whereSQL(DatabaseQuery *query, const char *pure);
 
 /**
  * Add join statement
@@ -521,10 +521,10 @@ DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure);
 DatabaseQueryJoin *
 DatabaseQuery_join(
     DatabaseQuery *query,
-    char *joinTableName,
-    char *joinFieldName,
-    char *queriedTableName,
-    char *queriedFieldName,
+    const char *joinTableName,
+    const char *joinFieldName,
+    const char *queriedTableName,
+    const char *queriedFieldName,
     DatabaseQueryJoinType type
 );
 
@@ -544,7 +544,7 @@ DatabaseQuery_join(
  * @endcode
  */
 DatabaseQueryLimit *
-DatabaseQuery_limit(DatabaseQuery *query, char *value);
+DatabaseQuery_limit(DatabaseQuery *query, const char *value);
 
 /**
  * Add returning statement
@@ -560,7 +560,7 @@ DatabaseQuery_limit(DatabaseQuery *query, char *value);
  * @endcode
  */
 DatabaseQueryField *
-DatabaseQuery_returning(DatabaseQuery *query, char *tableName, char *fieldName);
+DatabaseQuery_returning(DatabaseQuery *query, const char *tableName, const char *fieldName);
 
 /**
  * Add column to select
@@ -577,7 +577,7 @@ DatabaseQuery_returning(DatabaseQuery *query, char *tableName, char *fieldName);
  * @endcode
  */
 DatabaseQueryField *
-DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as, JSONType type);
+DatabaseQuery_select(DatabaseQuery *query, const char *tableName, const char *fieldName, const char *as, JSONType type);
 
 /**
  * Add insert value
@@ -593,7 +593,7 @@ DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, cha
  * @endcode
  */
 DatabaseQueryFieldValue *
-DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, JSONType type);
+DatabaseQuery_insert(DatabaseQuery *query, const char *fieldName, const char *value, JSONType type);
 
 /**
  * Add distinct on statement
@@ -609,7 +609,7 @@ DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, JSONTyp
  * @endcode
  */
 DatabaseQueryDistinct *
-DatabaseQuery_distinctOn(DatabaseQuery *query, char *tableName, char *fieldName);
+DatabaseQuery_distinctOn(DatabaseQuery *query, const char *tableName, const char *fieldName);
 
 /**
  * Add order by statement
@@ -626,7 +626,7 @@ DatabaseQuery_distinctOn(DatabaseQuery *query, char *tableName, char *fieldName)
  * @endcode
  */
 DatabaseQueryOrder *
-DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, DatabaseQueryOrderDirection direction);
+DatabaseQuery_order(DatabaseQuery *query, const char *tableName, const char *fieldName, DatabaseQueryOrderDirection direction);
 
 /**
  * Add update value
@@ -642,7 +642,7 @@ DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, Data
  * @endcode
  */
 DatabaseQueryFieldValue *
-DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, JSONType type);
+DatabaseQuery_update(DatabaseQuery *query, const char *fieldName, const char *value, JSONType type);
 
 /**
  * Check if value can be harmful for database

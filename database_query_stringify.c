@@ -1,10 +1,10 @@
 #include "./database_query_stringify.h"
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyDatabaseQueryCondition(DatabaseQueryCondition *condition);
+DatabaseQuery_stringifyDatabaseQueryCondition(const DatabaseQueryCondition *condition);
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyDatabaseQueryJoinForUpdate(DatabaseQueryJoin *join) {
+DatabaseQuery_stringifyDatabaseQueryJoinForUpdate(const DatabaseQueryJoin *join) {
   char *joined = NULL;
   DatabaseQueryCondition **conditions = join->conditions;
 
@@ -28,7 +28,7 @@ DatabaseQuery_stringifyDatabaseQueryJoinForUpdate(DatabaseQueryJoin *join) {
 }
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyDatabaseQueryField(DatabaseQueryField *field) {
+DatabaseQuery_stringifyDatabaseQueryField(const DatabaseQueryField *field) {
   char *joined = NULL;
 
   if (field->table) {
@@ -46,7 +46,7 @@ DatabaseQuery_stringifyDatabaseQueryField(DatabaseQueryField *field) {
 }
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyDatabaseQueryCondition(DatabaseQueryCondition *condition) {
+DatabaseQuery_stringifyDatabaseQueryCondition(const DatabaseQueryCondition *condition) {
   char *joined = NULL, *fieldA = NULL, *value = NULL;
 
   switch (condition->type) {
@@ -78,7 +78,7 @@ DatabaseQuery_stringifyDatabaseQueryCondition(DatabaseQueryCondition *condition)
 }
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyDatabaseQueryJoin(DatabaseQueryJoin *join) {
+DatabaseQuery_stringifyDatabaseQueryJoin(const DatabaseQueryJoin *join) {
   char *joined = NULL;
   DatabaseQueryCondition **conditions = join->conditions;
 
@@ -135,7 +135,7 @@ DatabaseQuery_stringifyDatabaseQueryJoin(DatabaseQueryJoin *join) {
 }
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyDatabaseQueryDistinct(DatabaseQueryDistinct *distinct) {
+DatabaseQuery_stringifyDatabaseQueryDistinct(const DatabaseQueryDistinct *distinct) {
   if (!distinct) return NULL;
   char *joined = clone_cstr(" DISTINCT ON (");
   DatabaseQueryField **fields = distinct->fields;
@@ -157,7 +157,7 @@ DatabaseQuery_stringifyDatabaseQueryDistinct(DatabaseQueryDistinct *distinct) {
 }
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifySelect(DatabaseQuery *query) {
+DatabaseQuery_stringifySelect(const DatabaseQuery *query) {
   if (!query || !query->table) return NULL;
 
   char *joined = clone_cstr("SELECT "), *generated = NULL;
@@ -245,7 +245,7 @@ DatabaseQuery_stringifySelect(DatabaseQuery *query) {
 }
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyInsert(DatabaseQuery *query) {
+DatabaseQuery_stringifyInsert(const DatabaseQuery *query) {
   if (!query || !query->table || !query->fieldValues) return NULL;
 
   char *joined = clone_cstr("INSERT INTO ");
@@ -284,7 +284,7 @@ DatabaseQuery_stringifyInsert(DatabaseQuery *query) {
 }
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyUpdate(DatabaseQuery *query) {
+DatabaseQuery_stringifyUpdate(const DatabaseQuery *query) {
   if (query == NULL || query->fieldValues == NULL) return NULL;
   char *sql = clone_cstr("UPDATE ");
   sql = append_cstr(sql, query->table->name);
@@ -333,7 +333,7 @@ DatabaseQuery_stringifyUpdate(DatabaseQuery *query) {
 }
 
 static char __attribute__((__used__)) *
-DatabaseQuery_stringifyDelete(DatabaseQuery *query) {
+DatabaseQuery_stringifyDelete(const DatabaseQuery *query) {
   if (query == NULL) return NULL;
 
   char *sql = clone_cstr("DELETE FROM ");
@@ -353,7 +353,7 @@ DatabaseQuery_stringifyDelete(DatabaseQuery *query) {
 }
 
 char __attribute__((__used__)) *
-DatabaseQuery_stringify(DatabaseQuery *query) {
+DatabaseQuery_stringify(const DatabaseQuery *query) {
   switch (query->type) {
     case DATABASE_QUERY_TYPE_SELECT:
       return DatabaseQuery_stringifySelect(query);

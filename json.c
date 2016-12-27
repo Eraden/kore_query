@@ -10,6 +10,7 @@ JSON *JSON_alloc(JSONType type) {
   json->children.objects = NULL;
   json->array.len = 0;
   json->array.objects = NULL;
+  json->parent = NULL;
   return json;
 }
 
@@ -60,6 +61,7 @@ JSON *JSON_set(JSON *parent, wchar_t *key, JSON *json) {
     parent->children.objects[parent->children.len - 1] = json;
     parent->children.objects[parent->children.len] = 0;
   }
+  json->parent = parent;
   return json;
 }
 
@@ -75,6 +77,7 @@ JSON *JSON_append(JSON *array, JSON *entry) {
     array->array.objects[array->array.len - 1] = entry;
     array->array.objects[array->array.len] = 0;
   }
+  entry->parent = array;
   return entry;
 }
 
@@ -373,4 +376,32 @@ JSONValue JSON_valueOf(JSON *obj, char *key) {
   JSONValue blank;
   blank.value = 0;
   return blank;
+}
+
+char JSON_hasProperty(JSON *obj, const char *key) {
+  JSON_EACH_PAIR(obj, fieldName, fieldObject)
+        if (strcmp(key, fieldName) == 0)
+          return 1;
+        JSON_EACH_PAIR_NEXT
+  JSON_END_EACH
+  return 0;
+}
+
+char JSON_renameNode(JSON *root, const char *name, JSONPath *path) {
+  JSON *node = JSON_find(root, path);
+  if (node == NULL) return 0;
+  JSON *parent = node->parent;
+  char *key = NULL;
+  while ((*path).type != JSON_UNDEFINED) {
+    key = path->name;
+    path += 1;
+  }
+  char **keys = parent->children.keys;
+  while (keys && *keys && strcmp(*keys, key) != 0) {
+    keys += 1;
+  }
+  if (keys == NULL || *keys == NULL) return 0;
+  free(*keys);
+  *keys = clone_cstr(name);
+  return 1;
 }

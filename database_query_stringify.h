@@ -26,7 +26,7 @@
  *  printf("%s", sql); // => SELECT accounts.id AS id FROM accounts;
  * @endcode
  */
-char *DatabaseQuery_stringify(DatabaseQuery *query);
+char *DatabaseQuery_stringify(const DatabaseQuery *query);
 
 /**
  * Deallocate SQL string

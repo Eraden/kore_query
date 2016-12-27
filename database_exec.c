@@ -254,17 +254,19 @@ Database_setObjectValue(
     char *value,
     DatabaseQueryField *field
 ) {
-  switch (field->jsonType) {
-    case JSON_NUMBER: {
-      wchar_t *fieldName = cstr2wcstr(currentFieldAs);
-      JSON_set(object, fieldName, JSON_number((float) atof(value)));
-      free(fieldName);
-      break;
-    }
-    default: {
-      wchar_t *fieldName = cstr2wcstr(currentFieldAs);
-      JSON_set(object, fieldName, JSON_string(value));
-      free(fieldName);
+  if (!JSON_hasProperty(object, currentFieldAs)) {
+    switch (field->jsonType) {
+      case JSON_NUMBER: {
+        wchar_t *fieldName = cstr2wcstr(currentFieldAs);
+        JSON_set(object, fieldName, JSON_number((float) atof(value)));
+        free(fieldName);
+        break;
+      }
+      default: {
+        wchar_t *fieldName = cstr2wcstr(currentFieldAs);
+        JSON_set(object, fieldName, JSON_string(value));
+        free(fieldName);
+      }
     }
   }
 }
@@ -640,7 +642,7 @@ Database_buildResult(const DatabaseQuery *query, struct kore_pgsql *kore_sql) {
 }
 
 JSON __attribute__((__used__)) *
-Database_execQuery(DatabaseQuery *query) {
+Database_execQuery(const DatabaseQuery *query) {
   char *sql = DatabaseQuery_stringify(query);
   JSON *result = JSON_alloc(JSON_OBJECT);
   struct kore_pgsql kore_sql;
