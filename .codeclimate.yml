@@ -6,4 +6,7 @@ ratings:
   paths: []
 exclude_paths:
 - tests/
+- vendor/
+- cmake/
+- build/
 
