@@ -548,7 +548,7 @@ DatabaseQuery_order(DatabaseQuery *query, const char *tableName, const char *fie
   return order;
 }
 
-char __attribute__((__used__))
+char
 DatabaseQuery_isDirty(const char *value) {
   const char *ptr = value;
   while (ptr && *ptr) if (*ptr == '\'') return 1; else ptr += 1;

@@ -50,6 +50,22 @@ START_TEST(join_select_query)
   DatabaseQuery_freeDatabaseQuery(query);
 END_TEST
 
+START_TEST(test_order)
+  DatabaseQuery *query = DatabaseQuery_startSelect("users");
+  DatabaseQuery_select(query, "users", "id", "id", JSON_NUMBER);
+  DatabaseQuery_select(query, "users", "login", "login", JSON_STRING);
+  DatabaseQuery_select(query, "users", "updated_at", "updated_at", JSON_STRING);
+  DatabaseQuery_select(query, "users", "created_at", "created_at", JSON_STRING);
+  DatabaseQuery_order(query, "users", "id", DATABASE_QUERY_ORDER_DESC);
+  DatabaseQuery_freeDatabaseQuery(query);
+END_TEST
+
+START_TEST(test_DatabaseQuery_isDirty)
+  ck_assert_int_eq(DatabaseQuery_isDirty(""), 0);
+  ck_assert_int_eq(DatabaseQuery_isDirty("hello"), 0);
+  ck_assert_int_eq(DatabaseQuery_isDirty("hello'"), 1);
+END_TEST
+
 void test_database_query(Suite *s) {
   TCase *tc_query = tcase_create("Database query");
   tcase_add_test(tc_query, empty_select_query);
@@ -58,6 +74,8 @@ void test_database_query(Suite *s) {
   tcase_add_test(tc_query, empty_delete_query);
   tcase_add_test(tc_query, simple_select_query);
   tcase_add_test(tc_query, join_select_query);
+  tcase_add_test(tc_query, test_order);
+  tcase_add_test(tc_query, test_DatabaseQuery_isDirty);
   suite_add_tcase(s, tc_query);
 }
 

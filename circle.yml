@@ -1,0 +1,15 @@
+general:
+  branches:
+    ignore:
+      - /experimental\/.*/
+dependencies:
+  cache_directories:
+    - tmp
+    - tmp/cmake-3.6.1
+  override:
+    - bash ./.circle/install.sh
+test:
+  pre:
+    - bash ./.circle/build.sh
+  override:
+    - bash ./.circle/check.sh
