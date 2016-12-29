@@ -551,6 +551,7 @@ DatabaseQuery_limit(DatabaseQuery *query, const char *value);
  * @param query database query object
  * @param tableName table
  * @param fieldName column
+ * @param type how returned value should be parsed
  * @return new database query returning instance
  *
  * @code{.c}
@@ -560,7 +561,7 @@ DatabaseQuery_limit(DatabaseQuery *query, const char *value);
  * @endcode
  */
 DatabaseQueryField *
-DatabaseQuery_returning(DatabaseQuery *query, const char *tableName, const char *fieldName);
+DatabaseQuery_returning(DatabaseQuery *query, const char *tableName, const char *fieldName, JSONType type);
 
 /**
  * Add column to select

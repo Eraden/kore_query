@@ -102,6 +102,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
       ./database_query_stringify.c
       ./serialize.c
 
+      test/test_strings.c
       test/test_json.c
       test/test_database_query.c
       test/test_database_query_stringify.c

@@ -52,6 +52,45 @@ SQL_escape_string(const char *string) {
   return sql;
 }
 
+static void
+SQL_fetchArgIndex(const char *query, u_long len, u_long *i, char **indexStr) {
+  (*indexStr) = NULL;
+  u_long indexStrLen = 0;
+  volatile char lookupIndexValue = 1;
+  while ((*i) < len && lookupIndexValue) {
+    if ((*i) >= len) break;
+    char n = query[(*i) + 1];
+    switch (n) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9': {
+        (*i) += 1;
+        char *b = calloc(sizeof(char), indexStrLen + 1 + 1);
+        if (*indexStr) {
+          strcpy(b, (*indexStr));
+          free((*indexStr));
+        }
+        b[indexStrLen] = n;
+        (*indexStr) = b;
+        indexStrLen += 1;
+        break;
+
+      }
+      default: {
+        lookupIndexValue = 0;
+        break;
+      }
+    }
+  }
+}
+
 char *
 SQL_prepare_sql(const char *query, const int argsSize, const char **args) {
   char *sql = NULL;
@@ -60,43 +99,8 @@ SQL_prepare_sql(const char *query, const int argsSize, const char **args) {
     char c = query[i];
     switch (c) {
       case '$': {
-        char *indexStr = NULL;
-        u_long indexStrLen = 0;
-        volatile char lookupIndexValue = 1;
-        while (i < len && lookupIndexValue) {
-          if (i >= len) break;
-          char n = query[i + 1];
-          switch (n) {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9': {
-              i += 1;
-              char *b = calloc(sizeof(char), indexStrLen + 1 + 1);
-              if (indexStr) {
-                strcpy(b, indexStr);
-                free(indexStr);
-
-              }
-              b[indexStrLen] = n;
-              indexStr = b;
-              indexStrLen += 1;
-              break;
-
-            }
-            default: {
-              lookupIndexValue = 0;
-              break;
-
-            }
-          }
-        }
+        char *indexStr;
+        SQL_fetchArgIndex(query, len, &i, &indexStr);
 
         int index = atoi(indexStr) - 1;
         free(indexStr);
@@ -108,13 +112,13 @@ SQL_prepare_sql(const char *query, const int argsSize, const char **args) {
           if (sql) {
             strcpy(b, sql);
             free(sql);
-
           }
           strcat(b, "'");
           strcat(b, escaped);
           strcat(b, "'");
           size += escapedLen + 2;
           sql = b;
+          free(escaped);
         }
         break;
       }
@@ -124,13 +128,11 @@ SQL_prepare_sql(const char *query, const int argsSize, const char **args) {
         if (sql) {
           strcpy(buff, sql);
           free(sql);
-
         }
         buff[size - 1] = c;
         buff[size] = 0;
         sql = buff;
         break;
-
       }
     }
   }
@@ -507,12 +509,13 @@ DatabaseQuery_limit(DatabaseQuery *query, const char *value) {
 }
 
 DatabaseQueryField __attribute__((__used__)) *
-DatabaseQuery_returning(DatabaseQuery *query, const char *tableName, const char *fieldName) {
+DatabaseQuery_returning(DatabaseQuery *query, const char *tableName, const char *fieldName, JSONType type) {
   DatabaseQueryField *returning = DatabaseQuery_createDatabaseQueryField();
   returning->table = DatabaseQuery_createDatabaseQueryTable();
   returning->table->name = clone_cstr(tableName);
   returning->name = clone_cstr(fieldName);
   returning->as = clone_cstr(fieldName);
+  returning->jsonType = type;
   DatabaseQuery_append_DatabaseQueryField_to_DatabaseQuery_returning(query, returning);
   return returning;
 }
@@ -536,7 +539,8 @@ DatabaseQuery_distinctOn(DatabaseQuery *query, const char *tableName, const char
 }
 
 DatabaseQueryOrder __attribute__((__used__)) *
-DatabaseQuery_order(DatabaseQuery *query, const char *tableName, const char *fieldName, DatabaseQueryOrderDirection direction) {
+DatabaseQuery_order(DatabaseQuery *query, const char *tableName, const char *fieldName,
+                    DatabaseQueryOrderDirection direction) {
   DatabaseQueryOrder *order = DatabaseQuery_createDatabaseQueryOrder();
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->table = DatabaseQuery_createDatabaseQueryTable();

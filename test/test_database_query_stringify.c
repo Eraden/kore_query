@@ -2,6 +2,19 @@
 
 #ifdef TEST_KORE_QUERY
 
+START_TEST(test_update_with_join)
+  DatabaseQuery *query = DatabaseQuery_startUpdate("posts");
+  DatabaseQuery_join(query, "accounts", "id", "posts", "author_id", DATABASE_QUERY_JOIN_TYPE_INNER);
+  DatabaseQuery_update(query, "title", "Updated", JSON_STRING);
+  DatabaseQuery_whereField(query, "accounts.id", "=", "123", JSON_NUMBER);
+  char *sql = DatabaseQuery_stringify(query);
+  ck_assert_cstr_contains(sql, "title = 'Updated'");
+  ck_assert_cstr_contains(sql, "FROM accounts WHERE accounts.id = posts.author_id");
+  ck_assert_cstr_contains(sql, "accounts.id = 123");
+  free(sql);
+  DatabaseQuery_freeDatabaseQuery(query);
+END_TEST
+
 START_TEST(complex_select_stringify)
   DatabaseQuery *query = DatabaseQuery_startSelect("users");
   DatabaseQuery_join(query, "posts", "user_id", "users", "id", DATABASE_QUERY_JOIN_TYPE_LEFT);
@@ -54,6 +67,7 @@ void test_database_query_stringify(Suite *s) {
   tcase_add_test(tc_query, complex_select_stringify);
   tcase_add_test(tc_query, insert_stringify);
   tcase_add_test(tc_query, update_stringify);
+  tcase_add_test(tc_query, test_update_with_join);
   suite_add_tcase(s, tc_query);
 }
 

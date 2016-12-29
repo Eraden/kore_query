@@ -29,8 +29,8 @@ for word in $(echo ${coll}); do
         color="#4c1"
         shield_color="green"
         val=$(echo ${word} | sed 's/\.[0-9]%//g')
-        if [[ "${val}" -le "80" ]]; then color="#dfb317"; shield_color="yellow"; fi
-        if [[ "${val}" -lt "40" ]]; then color="#e05d44"; shield_color="red"; fi
+        if [[ "${val}" -lt "90" ]]; then color="#dfb317"; shield_color="yellow"; fi
+        if [[ "${val}" -lt "75" ]]; then color="#e05d44"; shield_color="red"; fi
         val="$( echo ${word} | sed 's/%/%25/g' )"
 
         content=$(echo ${content} | sed "s/VALUE/${word}/g")
