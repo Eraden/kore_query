@@ -37,6 +37,6 @@ for word in $(echo ${coll}); do
         shield_link="$(echo ${shield_link} | sed "s/VALUE/${val}/g")"
         shield_link="$(echo ${shield_link} | sed "s/COLOR/${shield_color}/g")"
         echo ${content} >> $2/${name}.svg
-        echo "[![Lcov ${name}]([${shield_link})](./.badges/${name}.svg)"
+        echo "[![Lcov ${name}](${shield_link})](./.badges/${name}.svg)"
     fi
 done
