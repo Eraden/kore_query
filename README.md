@@ -1,5 +1,6 @@
 # Kore Query
 
+[![Issue Count](https://codeclimate.com/github/Eraden/kore_query/badges/issue_count.svg)](https://codeclimate.com/github/Eraden/kore_query)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./License.md)
 
 ## Using
