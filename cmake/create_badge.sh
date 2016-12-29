@@ -14,15 +14,16 @@ coll="$(\
 
 name=""
 shield_link="https://img.shields.io/badge/NAME-VALUE-COLOR.svg"
+
 content="${XML}"
 for file in $(ls $2 | grep '.svg'); do
     rm $2/${file}
 done
 
 for word in $(echo ${coll}); do
-    if [[ "$word" = "lines" || "$word" = "functions" ]]; then
+    if [ "$word" = "lines" ] || [ "$word" = "functions" ]; then
         name=${word}
-        shield_link="$(echo ${shield_link} | sed "s/NAME/Lcov%20${word}/g")"
+        link="$(echo ${shield_link} | sed "s/NAME/Lcov%20${name}/g")"
         content=$(echo ${XML} | sed "s/NAME/Lcov ${word}/g")
     else
         color="#4c1"
@@ -34,9 +35,9 @@ for word in $(echo ${coll}); do
 
         content=$(echo ${content} | sed "s/VALUE/${word}/g")
         content=$(echo ${content} | sed "s/COLOR/${color}/g")
-        shield_link="$(echo ${shield_link} | sed "s/VALUE/${val}/g")"
-        shield_link="$(echo ${shield_link} | sed "s/COLOR/${shield_color}/g")"
+        link="$(echo ${link} | sed "s/VALUE/${val}/g")"
+        link="$(echo ${link} | sed "s/COLOR/${shield_color}/g")"
         echo ${content} >> $2/${name}.svg
-        echo "[![Lcov ${name}](${shield_link})](./.badges/${name}.svg)"
+        echo "[![Lcov ${name}](${link})](./.badges/${name}.svg)"
     fi
 done
