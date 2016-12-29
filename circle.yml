@@ -13,3 +13,5 @@ test:
     - bash ./.circle/build.sh
   override:
     - bash ./.circle/check.sh
+  post:
+    - bash <(curl -s https://codecov.io/bash)
