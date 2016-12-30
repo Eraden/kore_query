@@ -22,6 +22,11 @@ then
     mkdir -p ${root}/build
 fi
 
+if [[ ! -f ${root}/vendor ]];
+then
+    mkdir -p ${root}/vendor
+fi
+
 if [[ ! -f ${root}/tmp ]];
 then
     mkdir -p ${root}/tmp
@@ -31,25 +36,25 @@ if [[ "$(cmake --version | grep -E '[0-9]+.[0-9]+.[0-9]+' | sed 's/[a-z ]//gi')"
 then
   echo "Valid cmake"
 else
-  if [[ ! -f ${root}/tmp/cmake ]]
+  if [[ ! -f ${root}/vendor/cmake-3.6.1 ]]
   then
-    cd tmp
+    cd vendor
     wget https://cmake.org/files/v3.6/cmake-3.6.1.tar.gz
     tar -xvf cmake-3.6.1.tar.gz &> /dev/null
-    mv ${root}/tmp/cmake-3.6.1 ${root}/tmp/cmake
-    cd cmake
+    cd ${root}/vendor/cmake-3.6.1
     echo "Configure cmake..."
     ./configure #&> /dev/null
     echo "Building cmake..."
     make -j 10 #&> /dev/null
     cd ${root}
   fi
-  cd ${root}/tmp/cmake
+  cd ${root}/vendor/cmake-3.6.1
   echo "Installing cmake..."
   sudo make install #&> /dev/null
   echo "  done"
   cd ${root}
 fi
+
 export PATH="/usr/local/bin:/usr/bin:$PATH"
 export PATH="/usr/lib/llvm-3.8/bin:$PATH"
 
