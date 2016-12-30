@@ -14,19 +14,26 @@ sudo apt-get --yes install kore
 root="$PWD"
 echo "$(cmake --version)"
 
-mkdir -p build
-mkdir -p tmp
+if [[ ! -f ${root}/build ]];
+then
+    mkdir -p ${root}/build
+fi
+
+if [[ ! -f ${root}/tmp ]];
+then
+    mkdir -p ${root}/tmp
+fi
 
 if [[ "$(cmake --version | grep -E '[0-9]+.[0-9]+.[0-9]+' | sed 's/[a-z ]//gi')" == "3.6.1" ]]
 then
   echo "Valid cmake"
 else
-  if [[ ! -f ./tmp/cmake-3.6.1 ]]
+  if [[ ! -f ${root}/tmp/cmake ]]
   then
     cd tmp
     wget https://cmake.org/files/v3.6/cmake-3.6.1.tar.gz
     tar -xvf cmake-3.6.1.tar.gz &> /dev/null
-    mv ./tmp/cmake-3.6.1 ./tmp/cmake
+    mv ${root}/tmp/cmake-3.6.1 ${root}/tmp/cmake
     cd cmake
     echo "Configure cmake..."
     ./configure &> /dev/null
@@ -34,8 +41,7 @@ else
     make -j 20 &> /dev/null
     cd ${root}
   fi
-  mv ./tmp/cmake-3.6.1 ./tmp/cmake
-  cd tmp/cmake
+  cd ${root}/tmp/cmake
   echo "Installing cmake..."
   sudo make install &> /dev/null
   echo "  done"
