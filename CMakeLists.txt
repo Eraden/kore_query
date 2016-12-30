@@ -45,7 +45,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE -D_MBCS)
   ADD_DEFINITIONS(-DLIBS=-ldl)
 
-  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -coverage -fprofile-arcs -ftest-coverage")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -coverage -fprofile-arcs -ftest-coverage -std=c11")
   IF (CMAKE_C_COMPILER MATCHES "clang")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
   ELSE()
