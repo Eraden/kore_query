@@ -11,6 +11,9 @@ sudo apt-get --yes install libpq-dev
 sudo apt-get --yes install postgresql-server-dev-9.4
 sudo apt-get --yes install kore
 
+export CPP=$(which cpp)
+export CC=$(which cc)
+
 root="$PWD"
 echo "$(cmake --version)"
 
@@ -36,9 +39,9 @@ else
     mv ${root}/tmp/cmake-3.6.1 ${root}/tmp/cmake
     cd cmake
     echo "Configure cmake..."
-    ./configure --prefix=/usr #&> /dev/null
+    ./configure #&> /dev/null
     echo "Building cmake..."
-    make -j 20 #&> /dev/null
+    make -j 10 #&> /dev/null
     cd ${root}
   fi
   cd ${root}/tmp/cmake
