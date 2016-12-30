@@ -2,13 +2,14 @@
 
 echo "$(lsb_release -a)"
 
+sudo apt-get --yes update &> /dev/null
 sudo apt-get --yes install check
 sudo apt-get --yes remove clang
 sudo apt-get --yes install clang-3.8
 sudo apt-get --yes install libyajl-dev
 sudo apt-get --yes install libyajl2
 sudo apt-get --yes install libpq-dev
-sudo apt-get --yes install postgresql-server-dev-9.4
+sudo apt-get --yes install postgresql-server-dev-9.6
 sudo apt-get --yes install kore
 
 export CPP=$(which cpp)
