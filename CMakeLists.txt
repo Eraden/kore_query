@@ -10,7 +10,6 @@ SET(TEST_KORE_QUERY "TRUE")
 IF (CMAKE_BUILD_TYPE MATCHES "Debug")
   execute_process(COMMAND psql postgres -f ${CMAKE_CURRENT_SOURCE_DIR}/test/create.psql)
   execute_process(COMMAND psql kore_query_test -f ${CMAKE_CURRENT_SOURCE_DIR}/test/setup.psql)
-  execute_process(COMMAND psql kore_query_test -f ${CMAKE_CURRENT_SOURCE_DIR}/test/seed.psql)
 
   SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 

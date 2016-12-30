@@ -11,6 +11,7 @@ sudo apt-get --yes install libyajl2
 sudo apt-get --yes install libpq-dev
 sudo apt-get --yes install postgresql-server-dev-9.6
 sudo apt-get --yes install kore
+sudo apt-get --yes install lcov
 
 export CPP=$(which cpp)
 export CC=$(which cc)
