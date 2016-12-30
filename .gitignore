@@ -88,3 +88,4 @@ cmake-build-debug/
 
 vendor/kore/*
 doc
+build
