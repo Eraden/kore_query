@@ -66,7 +66,7 @@ char *append_cstr(char *str, char *part) {
   }
   char *res = realloc(str, sizeof(char) * (strlen(str) + strlen(part) + 1));
   if (res == NULL) {
-    exit(10);
+    fprintf(stderr, "Re-allocation failed!");
   } else {
     str = res;
   }

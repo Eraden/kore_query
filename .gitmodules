@@ -1,0 +1,3 @@
+[submodule "vendor/kore"]
+	path = vendor/kore
+	url = git@github.com:jorisvink/kore.git

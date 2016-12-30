@@ -50,7 +50,45 @@ SQL_escape_string(const char *string) {
   free(sql);
   sql = buff;
   return sql;
+}
 
+static void
+SQL_fetchArgIndex(const char *query, u_long len, u_long *i, char **indexStr) {
+  (*indexStr) = NULL;
+  u_long indexStrLen = 0;
+  volatile char lookupIndexValue = 1;
+  while ((*i) < len && lookupIndexValue) {
+    if ((*i) >= len) break;
+    char n = query[(*i) + 1];
+    switch (n) {
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9': {
+        (*i) += 1;
+        char *b = calloc(sizeof(char), indexStrLen + 1 + 1);
+        if (*indexStr) {
+          strcpy(b, (*indexStr));
+          free((*indexStr));
+        }
+        b[indexStrLen] = n;
+        (*indexStr) = b;
+        indexStrLen += 1;
+        break;
+
+      }
+      default: {
+        lookupIndexValue = 0;
+        break;
+      }
+    }
+  }
 }
 
 char *
@@ -61,61 +99,26 @@ SQL_prepare_sql(const char *query, const int argsSize, const char **args) {
     char c = query[i];
     switch (c) {
       case '$': {
-        char *indexStr = NULL;
-        u_long indexStrLen = 0;
-        volatile char lookupIndexValue = 1;
-        while (i < len && lookupIndexValue) {
-          if (i >= len) break;
-          char n = query[i + 1];
-          switch (n) {
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9': {
-              i += 1;
-              char *b = calloc(sizeof(char), indexStrLen + 1 + 1);
-              if (indexStr) {
-                strcpy(b, indexStr);
-                free(indexStr);
-
-              }
-              b[indexStrLen] = n;
-              indexStr = b;
-              indexStrLen += 1;
-              break;
-
-            }
-            default: {
-              lookupIndexValue = 0;
-              break;
-
-            }
-          }
-        }
+        char *indexStr;
+        SQL_fetchArgIndex(query, len, &i, &indexStr);
 
         int index = atoi(indexStr) - 1;
         free(indexStr);
         if (index > -1 && index < argsSize) {
           char *escaped = SQL_escape_string(args[index]);
-          u_long escapedLen = strlen(escaped);
           if (!escaped) break;
+          u_long escapedLen = strlen(escaped);
           char *b = calloc(sizeof(char), size + 2 + escapedLen + 1);
           if (sql) {
             strcpy(b, sql);
             free(sql);
-
           }
           strcat(b, "'");
           strcat(b, escaped);
           strcat(b, "'");
           size += escapedLen + 2;
           sql = b;
+          free(escaped);
         }
         break;
       }
@@ -125,13 +128,11 @@ SQL_prepare_sql(const char *query, const int argsSize, const char **args) {
         if (sql) {
           strcpy(buff, sql);
           free(sql);
-
         }
         buff[size - 1] = c;
         buff[size] = 0;
         sql = buff;
         break;
-
       }
     }
   }
@@ -152,6 +153,7 @@ DATABASE_QUERY_ALLOC_START(DatabaseQueryField)
   instance->name = NULL;
   instance->as = NULL;
   instance->table = NULL;
+  instance->jsonType = JSON_STRING;
 DATABASE_QUERY_ALLOC_END()
 
 DATABASE_QUERY_DEALLOC_START(DatabaseQueryField)
@@ -181,7 +183,18 @@ DATABASE_QUERY_ALLOC_END()
 DATABASE_QUERY_DEALLOC_START(DatabaseQueryCondition)
   DATABASE_QUERY_DEALLOC_IF_EXISTS(DatabaseQueryTable, instance->table);
   DATABASE_QUERY_DEALLOC_IF_EXISTS(DatabaseQueryField, instance->field);
-  if (instance->value) free(instance->value);
+  switch (instance->type) {
+    case DATABASE_QUERY_CONDITION_TYPE_PURE_SQL:
+      if (instance->pure) free(instance->pure);
+      break;
+    case DATABASE_QUERY_CONDITION_TYPE_VALUE:
+      if (instance->value) free(instance->value);
+      break;
+    case DATABASE_QUERY_CONDITION_TYPE_OTHER_FIELD:
+      if (instance->otherField) DatabaseQuery_freeDatabaseQueryField(instance->otherField);
+      break;
+  }
+
   if (instance->operator) free(instance->operator);
 DATABASE_QUERY_DEALLOC_END()
 
@@ -286,7 +299,7 @@ DATABASE_QUERY_APPEND(DatabaseQueryDistinct, DatabaseQueryField, fields);
 DATABASE_QUERY_APPEND(DatabaseQuery, DatabaseQueryOrder, orders);
 
 static DatabaseQuery *
-DatabaseQuery_start(char *tableName, DatabaseQueryType type) {
+DatabaseQuery_start(const char *tableName, DatabaseQueryType type) {
   DatabaseQuery *q = DatabaseQuery_createDatabaseQuery();
   q->table = DatabaseQuery_createDatabaseQueryTable();
   q->table->name = clone_cstr(tableName);
@@ -294,27 +307,29 @@ DatabaseQuery_start(char *tableName, DatabaseQueryType type) {
   return q;
 }
 
-DatabaseQuery *DatabaseQuery_startSelect(char *tableName) {
+DatabaseQuery *DatabaseQuery_startSelect(const char *tableName) {
   return DatabaseQuery_start(tableName, DATABASE_QUERY_TYPE_SELECT);
 }
 
-DatabaseQuery *DatabaseQuery_startInsert(char *tableName) {
+DatabaseQuery *DatabaseQuery_startInsert(const char *tableName) {
   return DatabaseQuery_start(tableName, DATABASE_QUERY_TYPE_INSERT);
 }
 
-DatabaseQuery *DatabaseQuery_startUpdate(char *tableName) {
+DatabaseQuery *DatabaseQuery_startUpdate(const char *tableName) {
   return DatabaseQuery_start(tableName, DATABASE_QUERY_TYPE_UPDATE);
 }
 
-DatabaseQuery *DatabaseQuery_startDelete(char *tableName) {
+DatabaseQuery *DatabaseQuery_startDelete(const char *tableName) {
   return DatabaseQuery_start(tableName, DATABASE_QUERY_TYPE_DELETE);
 }
 
-DatabaseQueryCondition *
+DatabaseQueryCondition __attribute__((__used__)) *
 DatabaseQuery_whereField(
     DatabaseQuery *query,
-    const char *field, const char *operator, const char *value,
-    unsigned short int isString
+    const char *field,
+    const char *operator,
+    const char *value,
+    JSONType type
 ) {
   DatabaseQueryCondition *condition = DatabaseQuery_createDatabaseQueryCondition();
   condition->field = DatabaseQuery_createDatabaseQueryField();
@@ -323,16 +338,12 @@ DatabaseQuery_whereField(
   char *v = NULL;
   if (value) {
     v = SQL_escape_string(value);
-    if (isString) {
-      char *tmp;
-
-      tmp = join_cstr("'", v);
+    if (type == JSON_STRING) {
+      char *tmp = clone_cstr("'");
+      tmp = append_cstr(tmp, v);
+      tmp = append_cstr(tmp, "'");
       free(v);
-      SWAP_CSTR(tmp, v);
-
-      tmp = join_cstr(v, "'");
-      free(v);
-      SWAP_CSTR(tmp, v);
+      v = tmp;
     }
   } else {
     v = clone_cstr("NULL");
@@ -344,14 +355,14 @@ DatabaseQuery_whereField(
   return condition;
 }
 
-DatabaseQueryCondition *
+DatabaseQueryCondition __attribute__((__used__)) *
 DatabaseQuery_whereFieldWithCall(
     DatabaseQuery *query,
     const char *field,
     const char *operator,
     const char *value,
     const char *caller,
-    unsigned short int isString
+    JSONType type
 ) {
   DatabaseQueryCondition *condition = DatabaseQuery_createDatabaseQueryCondition();
   condition->field = DatabaseQuery_createDatabaseQueryField();
@@ -359,25 +370,12 @@ DatabaseQuery_whereFieldWithCall(
 
   char *v = NULL;
   if (value) {
-    if (isString) {
-      char *tmp, *escaped = SQL_escape_string(value);
-
-      tmp = join_cstr(NULL, caller);
-      free(v);
-      SWAP_CSTR(tmp, v);
-
-      tmp = join_cstr(v, "('");
-      free(v);
-      SWAP_CSTR(tmp, v);
-
-      tmp = join_cstr(v, escaped);
-      free(v);
-      SWAP_CSTR(tmp, v);
-
-      tmp = join_cstr(v, "')");
-      free(v);
-      SWAP_CSTR(tmp, v);
-
+    if (type == JSON_STRING) {
+      char *escaped = SQL_escape_string(value);
+      v = clone_cstr(caller);
+      v = append_cstr(v, "('");
+      v = append_cstr(v, escaped);
+      v = append_cstr(v, "')");
       free(escaped);
     } else {
       v = SQL_escape_string(value);
@@ -393,7 +391,8 @@ DatabaseQuery_whereFieldWithCall(
   return condition;
 }
 
-DatabaseQueryCondition *DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure) {
+DatabaseQueryCondition __attribute__((__used__)) *
+DatabaseQuery_whereSQL(DatabaseQuery *query, const char *pure) {
   DatabaseQueryCondition *condition = DatabaseQuery_createDatabaseQueryCondition();
   condition->pure = SQL_escape_string(pure);
   condition->type = DATABASE_QUERY_CONDITION_TYPE_PURE_SQL;
@@ -402,10 +401,13 @@ DatabaseQueryCondition *DatabaseQuery_whereSQL(DatabaseQuery *query, char *pure)
 }
 
 DatabaseQueryJoin *
-DatabaseQuery_join(DatabaseQuery *query,
-                   char *joinTableName, char *joinFieldName,
-                   char *queriedTableName, char *queriedFieldName,
-                   DatabaseQueryJoinType type
+DatabaseQuery_join(
+    DatabaseQuery *query,
+    const char *joinTableName,
+    const char *joinFieldName,
+    const char *queriedTableName,
+    const char *queriedFieldName,
+    DatabaseQueryJoinType type
 ) {
   DatabaseQueryJoin *join = DatabaseQuery_createDatabaseQueryJoin();
 
@@ -434,76 +436,92 @@ DatabaseQuery_join(DatabaseQuery *query,
   return join;
 }
 
-DatabaseQueryField *DatabaseQuery_select(DatabaseQuery *query, char *tableName, char *fieldName, char *as) {
+DatabaseQueryField *
+DatabaseQuery_select(
+    DatabaseQuery *query,
+    const char *tableName,
+    const char *fieldName,
+    const char *as, JSONType type
+) {
   DatabaseQueryTable *table = DatabaseQuery_createDatabaseQueryTable();
   table->name = clone_cstr(tableName);
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->name = clone_cstr(fieldName);
   field->as = clone_cstr(as == NULL ? fieldName : as);
   field->table = table;
+  field->jsonType = type;
   DatabaseQuery_append_DatabaseQueryField_to_DatabaseQuery_fields(query, field);
   return field;
 }
 
-DatabaseQueryFieldValue *
-DatabaseQuery_insert(DatabaseQuery *query, char *fieldName, char *value, unsigned char isString) {
-  value = clone_cstr(value);
-  if (isString) {
-    char *joined = join_cstr("'", value);
-    SWAP_CSTR(value, joined);
-    free(joined);
-    value = append_cstr(value, "'");
+DatabaseQueryFieldValue __attribute__((__used__)) *
+DatabaseQuery_insert(DatabaseQuery *query, const char *fieldName, const char *value, JSONType type) {
+  char *val = clone_cstr(value);
+  if (type == JSON_STRING) {
+    char *joined = clone_cstr("'");
+    char *escaped = SQL_escape_string(val);
+    joined = append_cstr(joined, escaped);
+    joined = append_cstr(joined, "'");
+    free(val);
+    free(escaped);
+    val = joined;
   }
 
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->name = clone_cstr(fieldName);
   DatabaseQueryFieldValue *fieldValue = DatabaseQuery_createDatabaseQueryFieldValue();
   fieldValue->field = field;
-  fieldValue->value = value;
+  fieldValue->value = val;
 
   DatabaseQuery_append_DatabaseQueryFieldValue_to_DatabaseQuery_fieldValues(query, fieldValue);
   return fieldValue;
 }
 
-DatabaseQueryFieldValue *
-DatabaseQuery_update(DatabaseQuery *query, char *fieldName, char *value, unsigned char isString) {
-  value = clone_cstr(value);
-  if (isString) {
-    char *joined = join_cstr("'", value);
-    free(value);
-    value =  joined;
-    value = append_cstr(value, "'");
+DatabaseQueryFieldValue __attribute__((__used__)) *
+DatabaseQuery_update(DatabaseQuery *query, const char *fieldName, const char *value, JSONType type) {
+  char *val = clone_cstr(value);
+  if (type == JSON_STRING) {
+    char *joined = clone_cstr("'");
+    char *escaped = SQL_escape_string(val);
+    joined = append_cstr(joined, escaped);
+    joined = append_cstr(joined, "'");
+    free(val);
+    free(escaped);
+    val = joined;
   }
 
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->name = clone_cstr(fieldName);
   DatabaseQueryFieldValue *fieldValue = DatabaseQuery_createDatabaseQueryFieldValue();
   fieldValue->field = field;
-  fieldValue->value = value;
+  fieldValue->value = val;
 
   DatabaseQuery_append_DatabaseQueryFieldValue_to_DatabaseQuery_fieldValues(query, fieldValue);
   return fieldValue;
 }
 
-DatabaseQueryLimit *DatabaseQuery_limit(DatabaseQuery *query, char *value) {
+DatabaseQueryLimit __attribute__((__used__)) *
+DatabaseQuery_limit(DatabaseQuery *query, const char *value) {
   DatabaseQueryLimit *limit = DatabaseQuery_createDatabaseQueryLimit();
   limit->limit = clone_cstr(value);
   query->limit = limit;
   return limit;
 }
 
-DatabaseQueryField *DatabaseQuery_returning(DatabaseQuery *query, char *tableName, char *fieldName) {
+DatabaseQueryField __attribute__((__used__)) *
+DatabaseQuery_returning(DatabaseQuery *query, const char *tableName, const char *fieldName, JSONType type) {
   DatabaseQueryField *returning = DatabaseQuery_createDatabaseQueryField();
   returning->table = DatabaseQuery_createDatabaseQueryTable();
   returning->table->name = clone_cstr(tableName);
   returning->name = clone_cstr(fieldName);
   returning->as = clone_cstr(fieldName);
+  returning->jsonType = type;
   DatabaseQuery_append_DatabaseQueryField_to_DatabaseQuery_returning(query, returning);
   return returning;
 }
 
-DatabaseQueryDistinct *
-DatabaseQuery_distinctOn(DatabaseQuery *query, char *tableName, char *fieldName) {
+DatabaseQueryDistinct __attribute__((__used__)) *
+DatabaseQuery_distinctOn(DatabaseQuery *query, const char *tableName, const char *fieldName) {
   DatabaseQueryDistinct *distinct = query->distinct;
   if (!distinct) {
     query->distinct = distinct = DatabaseQuery_createDatabaseQueryDistinct();
@@ -520,8 +538,9 @@ DatabaseQuery_distinctOn(DatabaseQuery *query, char *tableName, char *fieldName)
   return distinct;
 }
 
-DatabaseQueryOrder *
-DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, DatabaseQueryOrderDirection direction) {
+DatabaseQueryOrder __attribute__((__used__)) *
+DatabaseQuery_order(DatabaseQuery *query, const char *tableName, const char *fieldName,
+                    DatabaseQueryOrderDirection direction) {
   DatabaseQueryOrder *order = DatabaseQuery_createDatabaseQueryOrder();
   DatabaseQueryField *field = DatabaseQuery_createDatabaseQueryField();
   field->table = DatabaseQuery_createDatabaseQueryTable();
@@ -533,478 +552,9 @@ DatabaseQuery_order(DatabaseQuery *query, char *tableName, char *fieldName, Data
   return order;
 }
 
-static char *DatabaseQuery_stringifyDatabaseQueryField(DatabaseQueryField *field) {
-  char *joined = NULL, *tmp = NULL;
-
-  if (field->table) {
-    tmp = join_cstr(joined, field->table->name);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    tmp = join_cstr(joined, ".");
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-  }
-
-  tmp = join_cstr(joined, field->name);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  if (field->as) {
-    tmp = join_cstr(joined, " AS ");
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    tmp = join_cstr(joined, field->as);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-  }
-
-  return joined;
-}
-
-static char *DatabaseQuery_stringifyDatabaseQueryCondition(DatabaseQueryCondition *condition) {
-  char *joined = NULL, *tmp = NULL, *fieldA = NULL, *value = NULL;
-
-  switch (condition->type) {
-    case DATABASE_QUERY_CONDITION_TYPE_PURE_SQL: {
-      return clone_cstr(condition->pure);
-    }
-    case DATABASE_QUERY_CONDITION_TYPE_VALUE: {
-      value = clone_cstr(condition->value);
-      break;
-    }
-    case DATABASE_QUERY_CONDITION_TYPE_OTHER_FIELD: {
-      value = DatabaseQuery_stringifyDatabaseQueryField(condition->otherField);
-      break;
-    }
-  }
-
-  fieldA = DatabaseQuery_stringifyDatabaseQueryField(condition->field);
-
-  tmp = join_cstr(NULL, fieldA);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, " ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, condition->operator);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, " ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, value);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  free(fieldA);
-  free(value);
-
-  return joined;
-}
-
-static char *DatabaseQuery_stringifyDatabaseQueryJoin(DatabaseQueryJoin *join) {
-  char *joined = NULL, *tmp = NULL;
-  DatabaseQueryCondition **conditions = join->conditions;
-
-  switch (join->type) {
-    case DATABASE_QUERY_JOIN_TYPE_NORMAL:
-      break;
-    case DATABASE_QUERY_JOIN_TYPE_INNER: {
-      tmp = join_cstr(joined, " INNER");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-      break;
-    }
-    case DATABASE_QUERY_JOIN_TYPE_LEFT: {
-      tmp = join_cstr(joined, " LEFT");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-      break;
-    }
-    case DATABASE_QUERY_JOIN_TYPE_LEFT_OUTER: {
-      tmp = join_cstr(joined, " LEFT OUTER");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-      break;
-    }
-    case DATABASE_QUERY_JOIN_TYPE_RIGHT: {
-      tmp = join_cstr(joined, " RIGHT");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-      break;
-    }
-    case DATABASE_QUERY_JOIN_TYPE_RIGHT_OUTER: {
-      tmp = join_cstr(joined, " RIGHT OUTER");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-      break;
-    }
-    case DATABASE_QUERY_JOIN_TYPE_FULL: {
-      tmp = join_cstr(joined, " FULL");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-      break;
-    }
-    case DATABASE_QUERY_JOIN_TYPE_FULL_OUTER: {
-      tmp = join_cstr(joined, " FULL OUTER");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-      break;
-    }
-  }
-
-  tmp = join_cstr(joined, " JOIN ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, join->table->name);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, " ON ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  for (unsigned int fieldIndex = 0; fieldIndex < join->conditionsSize; fieldIndex++) {
-    if (fieldIndex > 0) {
-      tmp = join_cstr(joined, " AND ");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-    }
-
-    tmp = join_cstr(joined, DatabaseQuery_stringifyDatabaseQueryCondition(conditions[0]));
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    conditions += 1;
-  }
-
-  return joined;
-}
-
-static char *DatabaseQuery_stringifyDatabaseQueryDistinct(DatabaseQueryDistinct *distinct) {
-  if (!distinct) return NULL;
-  char *joined = NULL, *tmp = NULL, *generated = NULL;
-
-  tmp = join_cstr(joined, " DISTINCT ON (");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  DatabaseQueryField **fields = distinct->fields;
-  DatabaseQueryField *field = NULL;
-  for (unsigned int fieldIndex = 0; fieldIndex < distinct->fieldsSize; fieldIndex++) {
-    if (fieldIndex > 0) {
-      tmp = join_cstr(joined, ", ");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-    }
-
-    field = fields[0];
-
-    if (field->table) {
-      tmp = join_cstr(joined, field->table->name);
-      free(generated);
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-
-      tmp = join_cstr(joined, ".");
-      free(generated);
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-    }
-
-    tmp = join_cstr(joined, field->name);
-    free(generated);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    fields += 1;
-  }
-
-  tmp = join_cstr(joined, ") ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  return joined;
-}
-
-static char *DatabaseQuery_stringifySelect(DatabaseQuery *query) {
-  if (!query || !query->table) return NULL;
-
-  char *joined = join_cstr(NULL, "SELECT "), *tmp = NULL, *generated = NULL;
-
-  if (query->distinct) {
-    generated = DatabaseQuery_stringifyDatabaseQueryDistinct(query->distinct);
-    tmp = join_cstr(joined, generated);
-    free(generated);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-  }
-
-  DatabaseQueryField **fields = query->fields;
-  for (unsigned int fieldIndex = 0; fieldIndex < query->fieldsSize; fieldIndex++) {
-    if (fieldIndex > 0) {
-      tmp = join_cstr(joined, ", ");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-    }
-
-    generated = DatabaseQuery_stringifyDatabaseQueryField(fields[0]);
-    tmp = join_cstr(joined, generated);
-    free(generated);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    fields += 1;
-  }
-
-  tmp = join_cstr(joined, " FROM ");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, query->table->name);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  DatabaseQueryJoin **joins = query->joins;
-  for (unsigned int joinIndex = 0; joinIndex < query->joinsSize; joinIndex++) {
-    if (joinIndex > 0) {
-      tmp = join_cstr(joined, " ");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-    }
-
-    generated = DatabaseQuery_stringifyDatabaseQueryJoin(joins[0]);
-    tmp = join_cstr(joined, generated);
-    free(generated);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    joins += 1;
-  }
-
-  if (query->conditionsSize) {
-    DatabaseQueryCondition **conditions = query->conditions;
-    tmp = join_cstr(joined, " WHERE ");
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    for (unsigned int conditionIndex = 0; conditionIndex < query->conditionsSize; conditionIndex++) {
-      if (conditionIndex > 0) {
-        tmp = join_cstr(joined, " AND ");
-        free(joined);
-        SWAP_CSTR(tmp, joined);
-      }
-
-      generated = DatabaseQuery_stringifyDatabaseQueryCondition(conditions[0]);
-      tmp = join_cstr(joined, generated);
-      free(generated);
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-
-      conditions += 1;
-    }
-  }
-
-  if (query->ordersSize) {
-    tmp = join_cstr(joined, " ORDER BY ");
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    DatabaseQueryOrder **orders = query->orders;
-    DatabaseQueryOrder *order = NULL;
-    for (unsigned int i = 0; i < query->ordersSize; i++) {
-      order = orders[0];
-
-      if (i > 0) {
-        tmp = join_cstr(joined, ", ");
-        free(joined);
-        SWAP_CSTR(tmp, joined);
-      }
-
-      if (order->pure) {
-        tmp = join_cstr(joined, order->pure);
-        free(joined);
-        SWAP_CSTR(tmp, joined);
-      } else if (order->field) {
-        generated = DatabaseQuery_stringifyDatabaseQueryField(order->field);
-        tmp = join_cstr(joined, generated);
-        free(generated);
-        free(joined);
-        SWAP_CSTR(tmp, joined);
-
-        switch (order->direction) {
-          case DATABASE_QUERY_ORDER_ASC: {
-            tmp = join_cstr(joined, " ASC");
-            free(joined);
-            SWAP_CSTR(tmp, joined);
-            break;
-          }
-          case DATABASE_QUERY_ORDER_DESC: {
-            tmp = join_cstr(joined, " DESC");
-            free(joined);
-            SWAP_CSTR(tmp, joined);
-            break;
-          }
-        }
-      }
-
-      orders += 1;
-    }
-  }
-
-  if (query->limit) {
-    tmp = join_cstr(joined, " LIMIT ");
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    tmp = join_cstr(joined, query->limit->limit);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-  }
-
-  return joined;
-}
-
-static char *DatabaseQuery_stringifyInsert(DatabaseQuery *query) {
-  if (!query || !query->table || !query->fieldValues) return NULL;
-
-  char *joined = join_cstr(NULL, "INSERT INTO "), *tmp = NULL, *generated = NULL;
-
-  DatabaseQueryFieldValue **fields;
-  DatabaseQueryField **returning;
-
-  tmp = join_cstr(joined, query->table->name);
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  tmp = join_cstr(joined, " (");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  fields = query->fieldValues;
-  for (unsigned int fieldIndex = 0; fieldIndex < query->fieldValuesSize; fieldIndex++) {
-    if (fieldIndex > 0) {
-      tmp = join_cstr(joined, ", ");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-    }
-
-    tmp = join_cstr(joined, fields[0]->field->name);
-    free(generated);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    fields += 1;
-  }
-
-
-  tmp = join_cstr(joined, ") VALUES (");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  fields = query->fieldValues;
-  for (unsigned int fieldIndex = 0; fieldIndex < query->fieldValuesSize; fieldIndex++) {
-    if (fieldIndex > 0) {
-      tmp = join_cstr(joined, ", ");
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-    }
-
-    tmp = join_cstr(joined, fields[0]->value);
-    free(generated);
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    fields += 1;
-  }
-
-  tmp = join_cstr(joined, ")");
-  free(joined);
-  SWAP_CSTR(tmp, joined);
-
-  returning = query->returning;
-  if (returning) {
-    tmp = join_cstr(joined, " RETURNING ");
-    free(joined);
-    SWAP_CSTR(tmp, joined);
-
-    for (unsigned int fieldIndex = 0; fieldIndex < query->returningSize; fieldIndex++) {
-      if (fieldIndex > 0) {
-        tmp = join_cstr(joined, ", ");
-        free(joined);
-        SWAP_CSTR(tmp, joined);
-      }
-
-      tmp = join_cstr(joined, returning[0]->as);
-      free(generated);
-      free(joined);
-      SWAP_CSTR(tmp, joined);
-
-      returning += 1;
-    }
-  }
-
-  return joined;
-}
-
-static char *DatabaseQuery_stringifyUpdate(DatabaseQuery *query) {
-  if (query == NULL || query->fieldValues == NULL) return NULL;
-  char *sql = clone_cstr("UPDATE ");
-  sql = append_cstr(sql, query->table->name);
-  sql = append_cstr(sql, " SET ");
-
-  DatabaseQueryFieldValue **fields = query->fieldValues;
-  for (unsigned int fieldIndex = 0; fieldIndex < query->fieldValuesSize; fieldIndex++) {
-    if (fieldIndex > 0) sql = append_cstr(sql, ", ");
-    sql = join_cstr(sql, (*fields)->field->name);
-    sql = join_cstr(sql, " = ");
-    sql = join_cstr(sql, (*fields)->value);
-    fields += 1;
-  }
-
-  DatabaseQueryCondition **conditions = query->conditions;
-  if (conditions) sql = append_cstr(sql, "WHERE ");
-  for (unsigned int conditionIndex = 0; conditionIndex < query->conditionsSize; conditionIndex++) {
-    if (conditionIndex > 0) sql = append_cstr(sql, " AND ");
-    char *condition = DatabaseQuery_stringifyDatabaseQueryCondition(*conditions);
-    sql = append_cstr(sql, condition);
-    free(condition);
-    conditions += 1;
-  }
-
-  if (query->limit) {
-    sql = append_cstr(sql, "LIMIT ");
-    sql = append_cstr(sql, query->limit->limit);
-  }
-
-  return sql;
-}
-
-static char *DatabaseQuery_stringifyDelete(DatabaseQuery *query) {
-  return NULL;
-}
-
-char *DatabaseQuery_stringify(DatabaseQuery *query) {
-  switch (query->type) {
-    case DATABASE_QUERY_TYPE_SELECT:
-      return DatabaseQuery_stringifySelect(query);
-    case DATABASE_QUERY_TYPE_INSERT:
-      return DatabaseQuery_stringifyInsert(query);
-    case DATABASE_QUERY_TYPE_UPDATE:
-      return DatabaseQuery_stringifyUpdate(query);
-    case DATABASE_QUERY_TYPE_DELETE:
-      return DatabaseQuery_stringifyDelete(query);
-    default:
-      return NULL;
-  }
-}
-
-void DatabaseQuery_freeSQL(char *sql) {
-  free((void *) sql);
+char
+DatabaseQuery_isDirty(const char *value) {
+  const char *ptr = value;
+  while (ptr && *ptr) if (*ptr == '\'') return 1; else ptr += 1;
+  return 0;
 }
