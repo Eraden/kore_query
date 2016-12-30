@@ -46,7 +46,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE -D_MBCS)
   ADD_DEFINITIONS(-DLIBS=-ldl)
 
-  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -ldl")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -ldl -coverage")
   IF (CMAKE_C_COMPILER MATCHES "clang")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
   ELSE()
@@ -127,7 +127,6 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
       ${PostgreSQL_LIBRARIES}
       ${LIBS} -ldl
   )
-  if(CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(test_kore_query gcov)
-  endif()
+
+  target_link_libraries(test_kore_query gcov)
 ENDIF ()

@@ -17,4 +17,4 @@ echo "  clone submodules done"
 cd build
 cmake -DCMAKE_C_COMPILER=$(which clang) -DCMAKE_CXX_COMPILER=$(which clang++) -DVALIDATE_MEMORY=FALSE -DVALIDATE_ADDRESS=FALSE -DCMAKE_BUILD_TYPE=Debug ..
 make -j20
-
+./test_kore_query

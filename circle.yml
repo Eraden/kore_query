@@ -5,13 +5,12 @@ general:
 dependencies:
   cache_directories:
     - tmp
-    - tmp/cmake-3.6.1
+    - tmp/cmake
   override:
     - bash ./.circle/install.sh
 test:
-  pre:
-    - bash ./.circle/build.sh
   override:
-    - bash ./.circle/check.sh
+    - bash ./.circle/memory_check.sh
+    - bash ./.circle/coverage_check.sh
   post:
     - bash <(curl -s https://codecov.io/bash)
