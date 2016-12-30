@@ -32,39 +32,39 @@ then
     mkdir -p ${root}/tmp
 fi
 
-if [[ "$(cmake --version | grep -E '[0-9]+.[0-9]+.[0-9]+' | sed 's/[a-z ]//gi')" == "3.6.1" ]]
-then
-  echo "Valid cmake"
-else
-  if [[ ! -f ${root}/vendor/cmake-3.6.1 ]]
-  then
-    cd vendor
-    wget https://cmake.org/files/v3.6/cmake-3.6.1.tar.gz
-    tar -xvf cmake-3.6.1.tar.gz &> /dev/null
-    cd ${root}/vendor/cmake-3.6.1
-    echo "Configure cmake..."
-    ./configure &> /dev/null
-    echo "Building cmake..."
-    make -j 4 &> /dev/null
-    cd ${root}
-  fi
-  cd ${root}/vendor/cmake-3.6.1
-  echo "Installing cmake..."
-  sudo make install &> /dev/null
-  echo "  done"
-  cd ${root}
-fi
-
-export PATH="/usr/local/bin:/usr/bin:$PATH"
-export PATH="/usr/lib/llvm-3.8/bin:$PATH"
-
-version="$(cmake --version | grep -E '[0-9]+.[0-9]+.[0-9]+' | sed 's/[a-z ]//gi')"
+#if [[ "$(cmake --version | grep -E '[0-9]+.[0-9]+.[0-9]+' | sed 's/[a-z ]//gi')" == "3.6.1" ]]
+#then
+#  echo "Valid cmake"
+#else
+#  if [[ ! -f ${root}/vendor/cmake-3.6.1 ]]
+#  then
+#    cd vendor
+#    wget https://cmake.org/files/v3.6/cmake-3.6.1.tar.gz
+#    tar -xvf cmake-3.6.1.tar.gz &> /dev/null
+#    cd ${root}/vendor/cmake-3.6.1
+#    echo "Configure cmake..."
+#    ./configure &> /dev/null
+#    echo "Building cmake..."
+#    make -j 4 &> /dev/null
+#    cd ${root}
+#  fi
+#  cd ${root}/vendor/cmake-3.6.1
+#  echo "Installing cmake..."
+#  sudo make install &> /dev/null
+#  echo "  done"
+#  cd ${root}
+#fi
+#
+#export PATH="/usr/local/bin:/usr/bin:$PATH"
+#export PATH="/usr/lib/llvm-3.8/bin:$PATH"
+#
+#version="$(cmake --version | grep -E '[0-9]+.[0-9]+.[0-9]+' | sed 's/[a-z ]//gi')"
 echo "cmake version: '$version'"
 
-if [[ "$version" == "3.6.1" ]]
-then
-  echo "CMake is valid"
-else
-  echo "Failed to install cmake"
-  exit 1
-fi
+#if [[ "$version" == "3.6.1" ]]
+#then
+#  echo "CMake is valid"
+#else
+#  echo "Failed to install cmake"
+#  exit 1
+#fi
