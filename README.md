@@ -3,8 +3,8 @@
 [![Issue Count](https://codeclimate.com/github/Eraden/kore_query/badges/issue_count.svg)](https://codeclimate.com/github/Eraden/kore_query)
 [![CircleCI](https://circleci.com/gh/Eraden/kore_query.svg?style=svg&circle-token=524c468f247f7505351394cc37c884c77178e81e)](https://circleci.com/gh/Eraden/kore_query)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./License.md)
-[![Lcov lines](https://img.shields.io/badge/Lcov%20lines-77.8%25-yellow.svg)](./.badges/lines.svg)
-[![Lcov functions](https://img.shields.io/badge/Lcov%20functions-88.1%25-yellow.svg)](./.badges/functions.svg)
+[![codecov](https://codecov.io/gh/Eraden/kore_query/branch/master/graph/badge.svg)](https://codecov.io/gh/Eraden/kore_query)
+
 
 ## Using
 
