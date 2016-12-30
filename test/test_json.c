@@ -162,6 +162,60 @@ START_TEST(test_find_path)
   JSON_free(root);
 END_TEST
 
+START_TEST(test_find_path_incompatible)
+  JSON *root = JSON_alloc(JSON_OBJECT);
+  JSON *a = JSON_set(root, (wchar_t *) L"a", JSON_alloc(JSON_OBJECT));
+  JSON *b = JSON_set(a, (wchar_t *) L"b", JSON_alloc(JSON_ARRAY));
+  JSON *c = JSON_set(a, (wchar_t *) L"c", JSON_alloc(JSON_OBJECT));
+  JSON_append(b, JSON_string("c"));
+  JSONPath pathToObjectGoesToArray[4] = {
+      {.type=JSON_STRING, .name="a"},
+      {.type=JSON_STRING, .name="b"},
+      {.type=JSON_STRING, .name="missing"},
+      {.type=JSON_UNDEFINED, .name=NULL}
+  };
+  JSON *found = NULL;
+
+  found = JSON_find(root, pathToObjectGoesToArray);
+  ck_assert_ptr_eq(found, NULL);
+
+  JSONPath pathToArrayGoesToObject[3] = {
+      {.type=JSON_STRING, .name="a"},
+      {.type=JSON_NUMBER, .index=0},
+      {.type=JSON_UNDEFINED, .name=NULL}
+  };
+  found = JSON_find(root, pathToArrayGoesToObject);
+  ck_assert_ptr_eq(found, NULL);
+
+  JSONPath arrayPathIndexTooLarge[4] = {
+      {.type=JSON_STRING, .name="a"},
+      {.type=JSON_STRING, .name="b"},
+      {.type=JSON_NUMBER, .index=100},
+      {.type=JSON_UNDEFINED, .name=NULL}
+  };
+  found = JSON_find(root, arrayPathIndexTooLarge);
+  ck_assert_ptr_eq(found, NULL);
+
+  JSONPath notExistingKeyPath[3] = {
+      {.type=JSON_STRING, .name="a"},
+      {.type=JSON_STRING, .name="-----"},
+      {.type=JSON_UNDEFINED, .name=NULL}
+  };
+  found = JSON_find(root, notExistingKeyPath);
+  ck_assert_ptr_eq(found, NULL);
+
+  JSONPath noKeysPath[4] = {
+      {.type=JSON_STRING, .name="a"},
+      {.type=JSON_STRING, .name="c"},
+      {.type=JSON_STRING, .name="d"},
+      {.type=JSON_UNDEFINED, .name=NULL}
+  };
+  found = JSON_find(root, noKeysPath);
+  ck_assert_ptr_eq(found, NULL);
+
+  JSON_free(root);
+END_TEST
+
 START_TEST(test_escape_json)
   char *buffer = "\"hello\"\nworld";
   char *json = JSON_escape(buffer);
@@ -169,6 +223,80 @@ START_TEST(test_escape_json)
   ck_assert_ptr_ne(json, buffer);
   ck_assert_cstr_contains(json, "\\\"hello\\\"\\nworld");
   free(json);
+END_TEST
+
+START_TEST(test_simple_clone_array)
+  JSON *array = JSON_alloc(JSON_ARRAY);
+  JSON_append(array, JSON_string("hello"));
+  JSON_append(array, JSON_number(123));
+  JSON_append(array, JSON_alloc(JSON_OBJECT));
+  JSON *clone = JSON_clone(array, JSON_SIMPLE);
+
+  ck_assert_ptr_ne(clone, NULL);
+  ck_assert_ptr_ne(clone, array);
+  ck_assert_ptr_eq(clone->array.objects, NULL);
+  ck_assert_uint_eq(clone->array.len, 0);
+  JSON_free(clone);
+  JSON_free(array);
+END_TEST
+
+START_TEST(test_deep_clone_array)
+  JSON *array = JSON_alloc(JSON_ARRAY);
+  JSON_append(array, JSON_string("hello"));
+  JSON_append(array, JSON_number(123));
+  JSON_append(array, JSON_alloc(JSON_OBJECT));
+  JSON *clone = JSON_clone(array, JSON_DEEP);
+
+  ck_assert_ptr_ne(clone, NULL);
+  ck_assert_ptr_ne(clone, array);
+  ck_assert_ptr_ne(clone->array.objects, NULL);
+  ck_assert_uint_eq(clone->array.len, 3);
+  JSON_free(clone);
+  JSON_free(array);
+END_TEST
+
+START_TEST(test_simple_clone_object)
+  JSON *object = JSON_alloc(JSON_OBJECT);
+  JSON_set(object, (wchar_t *) L"a", JSON_string("hello"));
+  JSON_set(object, (wchar_t *) L"b", JSON_number(123));
+  JSON_set(object, (wchar_t *) L"c", JSON_alloc(JSON_OBJECT));
+  JSON *clone = JSON_clone(object, JSON_SIMPLE);
+
+  ck_assert_ptr_ne(clone, NULL);
+  ck_assert_ptr_ne(clone, object);
+  ck_assert_ptr_eq(clone->children.objects, NULL);
+  ck_assert_uint_eq(clone->children.len, 0);
+  JSON_free(clone);
+  JSON_free(object);
+END_TEST
+
+START_TEST(test_deep_clone_object)
+  JSON *object = JSON_alloc(JSON_OBJECT);
+  JSON_set(object, (wchar_t *) L"a", JSON_string("hello"));
+  JSON_set(object, (wchar_t *) L"b", JSON_number(123));
+  JSON_set(object, (wchar_t *) L"c", JSON_alloc(JSON_OBJECT));
+  JSON *clone = JSON_clone(object, JSON_DEEP);
+
+  ck_assert_ptr_ne(clone, NULL);
+  ck_assert_ptr_ne(clone, object);
+  ck_assert_ptr_ne(clone->children.objects, NULL);
+  ck_assert_uint_eq(clone->children.len, 3);
+  JSON_free(clone);
+  JSON_free(object);
+END_TEST
+
+START_TEST(test_renameNode)
+  JSON *object = JSON_alloc(JSON_OBJECT);
+  JSON_set(object, (wchar_t *) L"a", JSON_string("hello"));
+  JSONPath path[2] = {
+      { .type=JSON_STRING, .name="a" },
+      { .type=JSON_UNDEFINED, .name=NULL }
+  };
+  JSON_renameNode(object, "b", path);
+  ck_assert_ptr_ne(object->children.keys, NULL);
+  ck_assert_ptr_ne(*object->children.keys, NULL);
+  ck_assert_cstr_contains(*object->children.keys, "b");
+  JSON_free(object);
 END_TEST
 
 void test_json(Suite *s) {
@@ -183,7 +311,13 @@ void test_json(Suite *s) {
   tcase_add_test(tc_json, test_stringify_null);
   tcase_add_test(tc_json, test_stringify_undefined);
   tcase_add_test(tc_json, test_find_path);
+  tcase_add_test(tc_json, test_find_path_incompatible);
   tcase_add_test(tc_json, test_escape_json);
+  tcase_add_test(tc_json, test_simple_clone_array);
+  tcase_add_test(tc_json, test_deep_clone_array);
+  tcase_add_test(tc_json, test_simple_clone_object);
+  tcase_add_test(tc_json, test_deep_clone_object);
+  tcase_add_test(tc_json, test_renameNode);
   suite_add_tcase(s, tc_json);
 }
 

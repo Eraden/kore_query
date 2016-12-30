@@ -15,15 +15,6 @@ kore_serialization_scrapeAndMerge(
 }
 
 int
-kore_serialization_createCounter(
-    JSON *target,
-    JSON *source,
-    JSONPath *path
-) {
-  return 0;
-}
-
-int
 kore_serialization_mergePaths(
     JSON *target,
     JSON *source,

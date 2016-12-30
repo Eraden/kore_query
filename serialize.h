@@ -35,14 +35,6 @@
 int kore_serialization_scrapeAndMerge(JSON *target, JSON *source, JSONPath *path, JSONCloneType deep);
 
 /**
- * WIP (do not use)
- * @param target
- * @param source
- * @param path
- */
-int kore_serialization_createCounter(JSON *target, JSON *source, JSONPath *path);
-
-/**
  * Lookup for paths in target and source, then merge source to target.
  *
  * @param target json object or array

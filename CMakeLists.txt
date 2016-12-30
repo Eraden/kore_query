@@ -46,12 +46,14 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
   ADD_DEFINITIONS(-DLIBS=-ldl)
 
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -coverage -fprofile-arcs -ftest-coverage -std=c11")
+
   IF (CMAKE_C_COMPILER MATCHES "clang")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
   ELSE()
     MESSAGE(INFO " No memory tests will be performed!")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ldl -fprofile-arcs -ftest-coverage")
   ENDIF()
+
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DKORE_NO_TLS")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DKORE_USE_PGSQL")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DKORE_USE_TASKS")
@@ -101,8 +103,12 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
       ./database_query_stringify.c
       ./serialize.c
 
+      ./version.h
+      ./kore_mockup.h
+
       test/test_strings.c
       test/test_json.c
+      test/test_serialize.c
       test/test_database_query.c
       test/test_database_query_stringify.c
       test/test_database_exec.c
