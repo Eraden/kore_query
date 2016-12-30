@@ -36,7 +36,7 @@ else
     mv ${root}/tmp/cmake-3.6.1 ${root}/tmp/cmake
     cd cmake
     echo "Configure cmake..."
-    ./configure &> /dev/null
+    ./configure --prefix=/usr &> /dev/null
     echo "Building cmake..."
     make -j 20 &> /dev/null
     cd ${root}
@@ -47,7 +47,7 @@ else
   echo "  done"
   cd ${root}
 fi
-export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/bin:/usr/bin:$PATH"
 export PATH="/usr/lib/llvm-3.8/bin:$PATH"
 
 version="$(cmake --version | grep -E '[0-9]+.[0-9]+.[0-9]+' | sed 's/[a-z ]//gi')"
