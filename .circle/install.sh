@@ -36,14 +36,14 @@ else
     mv ${root}/tmp/cmake-3.6.1 ${root}/tmp/cmake
     cd cmake
     echo "Configure cmake..."
-    ./configure --prefix=/usr &> /dev/null
+    ./configure --prefix=/usr #&> /dev/null
     echo "Building cmake..."
-    make -j 20 &> /dev/null
+    make -j 20 #&> /dev/null
     cd ${root}
   fi
   cd ${root}/tmp/cmake
   echo "Installing cmake..."
-  sudo make install &> /dev/null
+  sudo make install #&> /dev/null
   echo "  done"
   cd ${root}
 fi
