@@ -41,7 +41,6 @@ else
   echo "  done"
   cd ${root}
 fi
-./tmp/cmake-3.6.1
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/lib/llvm-3.8/bin:$PATH"
 
