@@ -46,12 +46,12 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE -D_MBCS)
   ADD_DEFINITIONS(-DLIBS=-ldl)
 
-  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -ldl -coverage")
+  SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -coverage -fprofile-arcs -ftest-coverage")
   IF (CMAKE_C_COMPILER MATCHES "clang")
     SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
   ELSE()
     MESSAGE(INFO " No memory tests will be performed!")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fprofile-arcs -ftest-coverage")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ldl -fprofile-arcs -ftest-coverage")
   ENDIF()
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DKORE_NO_TLS")
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DKORE_USE_PGSQL")
@@ -125,8 +125,6 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
       ${CHECK_LIBRARIES}
       ${${YAJL_LIBRARY}}
       ${PostgreSQL_LIBRARIES}
-      ${LIBS} -ldl
+      ${LIBS} -ldl gcov
   )
-
-  target_link_libraries(test_kore_query gcov)
 ENDIF ()

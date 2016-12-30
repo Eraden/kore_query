@@ -43,14 +43,14 @@ else
     tar -xvf cmake-3.6.1.tar.gz &> /dev/null
     cd ${root}/vendor/cmake-3.6.1
     echo "Configure cmake..."
-    ./configure #&> /dev/null
+    ./configure &> /dev/null
     echo "Building cmake..."
-    make -j 10 #&> /dev/null
+    make -j 4 &> /dev/null
     cd ${root}
   fi
   cd ${root}/vendor/cmake-3.6.1
   echo "Installing cmake..."
-  sudo make install #&> /dev/null
+  sudo make install &> /dev/null
   echo "  done"
   cd ${root}
 fi

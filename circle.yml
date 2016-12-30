@@ -5,7 +5,7 @@ general:
 dependencies:
   cache_directories:
     - tmp
-    - tmp/cmake
+    - vendor
   override:
     - bash ./.circle/install.sh
 test:
