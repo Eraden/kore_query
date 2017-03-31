@@ -7,6 +7,19 @@ SET(KORE_USE_TASKS "TRUE")
 SET(_GNU_SOURCE "TRUE")
 SET(TEST_KORE_QUERY "TRUE")
 
+SET(
+    KORO_SRC
+    ./src/json.c
+    ./src/strings.c
+    ./src/database_exec.c
+    ./src/database_query.c
+    ./src/database_query_stringify.c
+    ./src/serialize.c
+)
+
+INCLUDE_DIRECTORIES(includes)
+ADD_LIBRARY(kore_query SHARED ${KORO_SRC})
+
 IF (CMAKE_BUILD_TYPE MATCHES "Debug")
   execute_process(COMMAND psql postgres -f ${CMAKE_CURRENT_SOURCE_DIR}/test/create.psql)
   execute_process(COMMAND psql kore_query_test -f ${CMAKE_CURRENT_SOURCE_DIR}/test/setup.psql)
@@ -96,15 +109,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
       #      ./vendor/kore/src/websocket.c
       ./vendor/kore/src/worker.c
 
-      ./json.c
-      ./strings.c
-      ./database_exec.c
-      ./database_query.c
-      ./database_query_stringify.c
-      ./serialize.c
-
-      ./version.h
-      ./kore_mockup.h
+      kore_mockup.h
 
       test/test_strings.c
       test/test_json.c
@@ -126,6 +131,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Debug")
 
   target_link_libraries(
       test_kore_query
+      kore_query
       ${CMAKE_THREAD_LIBS_INIT}
       ${CHECK_LIBRARIES}
       ${${YAJL_LIBRARY}}

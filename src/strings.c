@@ -1,4 +1,4 @@
-#include "./strings.h"
+#include <kore_query/strings.h>
 
 wchar_t *cstr2wcstr(const char *cstr) {
   if (!cstr) return NULL;

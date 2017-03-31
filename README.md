@@ -9,8 +9,29 @@
 ## Using
 
 ```bash
-cd src
-git submodule add git@github.com:Eraden/kore_query.git
+git clone git@github.com:Eraden/kore_query.git
+mkdir kore_query/build
+cd kore_query/build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make -j10
+cd ../my_project
+mkdir vendor
+cp ../kore_query/includes/kore_query ./vendor
+cp ../kore_query/build/libkore_query.so ./vendor
+```
+
+Load library to config file:
+
+```
+// conf/my_project.conf
+load ./vendor/libkore_query.so
+```
+
+Add headers to project build:
+
+```
+// config/build.conf
+cflags=-I./vendor
 ```
 
 ## Kore Database Query
@@ -18,6 +39,8 @@ git submodule add git@github.com:Eraden/kore_query.git
 ### Building `insert`
 
 ```cpp
+#include <kore_query/database_exec.h>
+
 DatabaseQuery *query = DatabaseQuery_startInsert("posts");
 DatabaseQuery_insert(query, "title", "O'Connor Memory", JSON_STRING);
 DatabaseQuery_insert(query, "content", "Nothing special", JSON_STRING);
@@ -33,6 +56,8 @@ INSERT INTO posts (title, content) VALUES ('O''Connor Memory', 'Nothing special'
 ### Building `select`
 
 ```cpp
+#include <kore_query/database_exec.h>
+
 DatabaseQuery *query = DatabaseQuery_startSelect("posts");
 DatabaseQuery_select(query, "posts", "id", "id", JSON_NUMBER);
 DatabaseQuery_select(query, "posts", "title", "title", JSON_STRING);
@@ -51,6 +76,8 @@ SELECT posts.id AS id, posts.title AS title, posts.content AS content, posts.cre
 ### Building `update`
 
 ```cpp
+#include <kore_query/database_exec.h>
+
 DatabaseQuery *query = DatabaseQuery_startUpdate("posts");
 DatabaseQuery_update(query, "title", "O'Connor Memory", JSON_STRING);
 DatabaseQuery_update(query, "content", "Nothing special", JSON_STRING);
@@ -67,6 +94,8 @@ UPDATE posts SET title = 'O''Connor Memory', content = 'Nothing special'
 ### Building `delete`
 
 ```cpp
+#include <kore_query/database_exec.h>
+
 DatabaseQuery *query = DatabaseQuery_startDelete("posts");
 DatabaseQuery_whereField(query, "id", "=", 10, JSON_NUMBER);
 char *sql = DatabaseQuery_stringify(query);

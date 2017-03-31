@@ -1,5 +1,5 @@
-#include "json.h"
-#include "./database_exec.h"
+#include <kore_query/json.h>
+#include <kore_query/database_exec.h>
 
 #ifdef TEST_KORE_QUERY
 static void print_joins(DatabaseJoinChains *joinChains) {

@@ -3,7 +3,7 @@
 #if defined(TEST_KORE_QUERY)
 
 #include "./test.h"
-#include "../serialize.h"
+#include <kore_query/serialize.h>
 
 void test_serialize(Suite *s);
 

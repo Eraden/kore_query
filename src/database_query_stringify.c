@@ -1,4 +1,4 @@
-#include "./database_query_stringify.h"
+#include <kore_query/database_query_stringify.h>
 
 static char __attribute__((__used__)) *
 DatabaseQuery_stringifyDatabaseQueryCondition(const DatabaseQueryCondition *condition);

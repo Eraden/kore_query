@@ -12,10 +12,9 @@
 #include <sys/types.h>
 #include <check.h>
 
-#include "../strings.h"
-#include "../json.h"
+#include <kore_query/strings.h>
+#include <kore_query/json.h>
 #include "../kore_mockup.h"
-
 #include "./support/ck_string.h"
 
 #endif
