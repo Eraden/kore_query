@@ -1,5 +1,5 @@
-#include "./strings.h"
-#include "json.h"
+#include <kore_query/strings.h>
+#include <kore_query/json.h>
 
 JSON *JSON_alloc(JSONType type) {
   JSON *json = calloc(sizeof(JSON), 1);

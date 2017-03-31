@@ -2,7 +2,7 @@
 
 #if defined(TEST_KORE_QUERY)
 
-#include "../database_query_stringify.h"
+#include <kore_query/database_query_stringify.h>
 
 #include "./test.h"
 

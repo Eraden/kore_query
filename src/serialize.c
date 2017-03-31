@@ -1,4 +1,4 @@
-#include "./serialize.h"
+#include <kore_query/serialize.h>
 
 int
 kore_serialization_scrapeAndMerge(

@@ -1,4 +1,4 @@
-#include "database_query.h"
+#include <kore_query/database_query.h>
 
 char *
 SQL_escape_string(const char *string) {
